@@ -1,0 +1,22 @@
+TO DO:
+
+[X] reduce magical auto clicker speed
+[ ] add duck nest enhancement
+[ ] add strong cursor enhancement
+[ ] make reinforced clicker increase DPC by percentage
+[ ] make duck coop increase DPS by percentage
+[ ] add cursor size enhancement
+[ ] add more DPS enhancements
+
+
+ANALYSIS:
+
+2/3/26 - Tested the game for 25 minutes, noticed magical auto clickers 
+were far too fast for how cheap they were, making manual duck clicking
+not needed. The strong cursor and duck nest upgrades became obsolete 
+after buying some enhancements, since they increased DPS and DPC
+drastically, which isnt exactly a problem, since I want them to be 
+powerful, but those enhancements made the strstrong cursor and duck 
+nest upgrades useless when buying. Enhancements were a little too 
+expensive as well, mostly after Radiant Plunge(I) enhancement, 
+though its likely I didnt test long enough.
