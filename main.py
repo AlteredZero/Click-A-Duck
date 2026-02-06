@@ -275,8 +275,12 @@ def draw_upgrade_rows(screen, game_data, manager):
 
         level = game_data.get(key, 0)
         icon = manager.get_upgrade_icon(key)
+        description = manager.get_upgrade_description(key)
 
         if not icon:
+            continue
+
+        if not description:
             continue
 
         for i in range(level):
@@ -527,13 +531,14 @@ while running:
     #----upgrade icon tooltips----#
     for rect, key in upgrade_hover_rects:
         if rect.collidepoint(mouse_pos):
-            info = upgrade_info.get(key)
+            description = upgade_manager.get_upgrade_description(key)
 
-            if info:
+
+            if description:
                 padding = sx(8)
                 max_width = sx(600)
 
-                lines = wrap_text(info["description"], fonts["verysmall"], max_width)
+                lines = wrap_text(description, fonts["verysmall"], max_width)
 
                 line_height = fonts["verysmall"].get_height()
                 surfaces = [fonts["verysmall"].render(line, True, (255,255,255)) for line in lines]

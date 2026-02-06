@@ -1,12 +1,28 @@
+NOTES
+
+
 TO DO:
 
 [X] reduce magical auto clicker speed
 [X] add duck nest enhancement
 [X] add strong cursor enhancement
-[ ] make reinforced clicker increase DPC by percentage
-[ ] make duck coop increase DPS by percentage
+[X] make reinforced clicker increase DPC by percentage
+[X] make duck coop increase DPS by percentage
 [ ] add cursor size enhancement
-[ ] add more DPS enhancements
+[/] add more DPS enhancements
+[ ] add two duck spawn chance for duck beacon
+[/] add shiny effect for when shiny duck clicked
+[ ] add animations and effects for clicking duck
+[ ] add animations and effects for gui
+
+
+
+KEY:
+
+[ ] = to be complete
+[X] = complete
+[/] = partially complete / needs work
+
 
 
 ANALYSIS:

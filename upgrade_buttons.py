@@ -14,13 +14,13 @@ enhancement_effects = {
     "GoldenStrongCursorB": {
         "target_upgrade_title": "Stronger Cursor",
         "bonus_dpc": 5,
-        "description": "Forged from pure gold, makes the Strong Cursor upgrade improved to +5 Ducks per click rather than +1.",
+        "description": "Forged from pure gold, making your cursor even stronger. Grants +5 Ducks per click.",
         "icon": "assets/Images/StrongGoldCursor.png"
     },
     "LuxuryNestGroundB": {
         "target_upgrade_title": "Duck Nest",
         "bonus_dps": 5,
-        "description": "Makes the duck nests more luxurious, making the Duck Nest upgrade improve to +5 Ducks per second, rather than +1.",
+        "description": "A luxurious duck nest raising little ducklings, who happily multiply. Grants +5 Duck per second.",
         "icon": "assets/Images/PremiumDuckNest.png"
     }   
 }
