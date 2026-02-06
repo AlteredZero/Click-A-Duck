@@ -1,8 +1,8 @@
 TO DO:
 
 [X] reduce magical auto clicker speed
-[ ] add duck nest enhancement
-[ ] add strong cursor enhancement
+[X] add duck nest enhancement
+[X] add strong cursor enhancement
 [ ] make reinforced clicker increase DPC by percentage
 [ ] make duck coop increase DPS by percentage
 [ ] add cursor size enhancement

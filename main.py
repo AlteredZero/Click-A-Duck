@@ -261,7 +261,7 @@ def wrap_text(text, font, max_width):
     return lines
 
 
-def draw_upgrade_rows(screen, game_data, icons):
+def draw_upgrade_rows(screen, game_data, manager):
     start_x = sx(20)
     start_y = screen_height - sy(250)
     spacing_x = sx(50)
@@ -271,17 +271,22 @@ def draw_upgrade_rows(screen, game_data, icons):
 
     row = 0
 
-    for upgrade_key, icon in icons.items():
-        level = game_data.get(upgrade_key, 0)
+    for key in ["duckNests","goldenDuckStatue","quakingSpeaker","duckCoop","duckBeacon"]:
+
+        level = game_data.get(key, 0)
+        icon = manager.get_upgrade_icon(key)
+
+        if not icon:
+            continue
 
         for i in range(level):
             x = start_x + i * spacing_x
             y = start_y + row * spacing_y
 
             rect = icon.get_rect(topleft=(x, y))
-            screen.blit(icon, (x, y))
+            screen.blit(icon, rect)
 
-            hover_rects.append((rect, upgrade_key))
+            hover_rects.append((rect, key))
 
         row += 1
 
@@ -363,7 +368,8 @@ while running:
     pool.set_image(pool_images[game_data["poolColor"]])
     pool.draw(screen)
 
-    upgrade_hover_rects = draw_upgrade_rows(screen, game_data, upgrade_icons)
+    upgrade_hover_rects = draw_upgrade_rows(screen, game_data, upgade_manager)
+
 
     mouse_pos = pygame.mouse.get_pos()
 

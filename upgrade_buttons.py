@@ -10,6 +10,22 @@ click_sound = pygame.mixer.Sound("assets/audio/MouseClick.mp3")
 error_sound = pygame.mixer.Sound("assets/audio/ErrorSound.mp3")
 
 
+enhancement_effects = {
+    "GoldenStrongCursorB": {
+        "target_upgrade_title": "Stronger Cursor",
+        "bonus_dpc": 5,
+        "description": "Forged from pure gold, makes the Strong Cursor upgrade improved to +5 Ducks per click rather than +1.",
+        "icon": "assets/Images/StrongGoldCursor.png"
+    },
+    "LuxuryNestGroundB": {
+        "target_upgrade_title": "Duck Nest",
+        "bonus_dps": 5,
+        "description": "Makes the duck nests more luxurious, making the Duck Nest upgrade improve to +5 Ducks per second, rather than +1.",
+        "icon": "assets/Images/PremiumDuckNest.png"
+    }   
+}
+
+
 def load_icon(path, size):
     icon = pygame.image.load(path).convert_alpha()
     return pygame.transform.scale(icon, (size, size))
@@ -165,6 +181,7 @@ class UpgradeButton:
         cost = text_cost.render(f"{self.cost:,} Ducks", False, white_color)
         screen.blit(cost, (self.rect.left + self.s(70), self.rect.top + self.s(40)))
 
+
     def update_cost(self, game_data):
         growth = 1.15
         key = self.save_key2 if self.save_key2 is not None else self.save_key
@@ -175,6 +192,21 @@ class UpgradeButton:
             return
 
         self.cost = int(self.base_cost * (growth ** times_bought))
+
+    
+    def apply_enhancements(self, game_data):
+        for key, effect in enhancement_effects.items():
+            if game_data["purchases"].get(key, False):
+                if effect["target_upgrade_title"] == self.title:
+                    if "bonus_dpc" in effect:
+                        self.bonus = effect["bonus_dpc"]
+                    if "bonus_dps" in effect:
+                        self.bonus = effect["bonus_dps"]
+
+                    self.description = effect["description"]
+
+                    if effect.get("icon"):
+                        self.icon = load_icon(effect["icon"], int(52 * self.scale))
 
 
 class UpgradeManager:
@@ -212,6 +244,10 @@ class UpgradeManager:
             self.buttons_upgrades.append(button)
 
 
+        for button in self.buttons_upgrades:
+            button.apply_enhancements(game_data)
+
+
         for i, config in enumerate(enhancements):
             purchase_key = config.get("purchase_key")
 
@@ -229,7 +265,6 @@ class UpgradeManager:
 
         for button in self.buttons_upgrades:
             if button.click(mouse_pos):
-                #click_sound.play()
 
                 if button.can_afford(game_data):
                     button.purchase(game_data)
@@ -238,22 +273,27 @@ class UpgradeManager:
                 else:
                     error_sound.play()
                     return False, button.cost
-    
-                
+
+
         for buttonE in self.buttons_enhancements:
             if buttonE.click(mouse_pos):
-                #click_sound.play()
 
                 if buttonE.can_afford(game_data):
                     buttonE.purchase(game_data)
-                    if buttonE.one_time == True:
+
+                    for upg in self.buttons_upgrades:
+                        upg.apply_enhancements(game_data)
+
+                    if buttonE.one_time:
                         self.buttons_enhancements.remove(buttonE)
+
                     return True, buttonE.cost
                 else:
                     error_sound.play()
                     return False, buttonE.cost
-                
+
         return False, 0
+    
     
     def draw(self, screen, text_title, text_cost, desc, game_data):
         index = self.s(0)
@@ -275,3 +315,16 @@ class UpgradeManager:
         for buttonE in self.buttons_enhancements[:4]:
             buttonE.draw_tooltip(screen, desc)
     
+
+    def get_upgrade_icon(self, save_key):
+        for b in self.buttons_upgrades:
+            if b.save_key2 == save_key or b.save_key == save_key:
+                return b.icon
+        return None
+
+
+    def get_upgrade_description(self, save_key):
+        for b in self.buttons_upgrades:
+            if b.save_key2 == save_key or b.save_key == save_key:
+                return b.description
+        return ""
