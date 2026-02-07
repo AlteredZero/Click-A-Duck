@@ -8,13 +8,14 @@ import math
 import time
 from save_manager import load_game, save_game
 from fonts import load_fonts
-from options import draw_options
+from options import draw_options    
 from stats import draw_stats
 from floating_text import FloatingText
 from duck import Duck
 from pool import Pool
 from upgrade_buttons import UpgradeManager
 from magical_auto_clicker import MagicalAutoClicker
+from duck_pop_effect import DuckPopEffect
 
 
 #---------------------#
@@ -329,6 +330,7 @@ game_data = load_game(default_data)
 
 upgade_manager = UpgradeManager(screen_width, screen_height, game_data, scale)
 
+display_ducks = float(game_data["ducks"])
 
 #---------------------#
 #--------LISTS--------#
@@ -337,6 +339,7 @@ upgade_manager = UpgradeManager(screen_width, screen_height, game_data, scale)
 ducks = []
 floating_texts = []
 magical_auto_clickers = []
+duck_pop_effects = []
 
 
 #---------------------#
@@ -381,12 +384,25 @@ while running:
     draw_stats(screen, mouse_pos, fonts)
 
 
+    target = game_data["ducks"]
+
+    speed = 12
+
+    display_ducks += (target - display_ducks) * 0.15
+
+    if abs(display_ducks - target) < 0.5:
+        display_ducks = target
+
+
+
     #---------------------#
     #---------TEXT--------#
     #---------------------#
 
-    duck_text = fonts["header"].render(f"{game_data['ducks']:,} Ducks", False, (255, 255, 255))
-    screen.blit(duck_text, duck_text.get_rect(centerx=screen_width // 2, y=sy(40)))
+    duck_header = fonts["header"].render(f"{int(display_ducks):,} Ducks", False, (255, 255, 255))
+    pulse = 1 + min(0.25, abs(target - display_ducks) / 5000)
+    duck_header = pygame.transform.scale_by(duck_header, pulse)
+    screen.blit(duck_header, duck_header.get_rect(centerx=screen_width // 2, y=sy(40)))
 
     ducks_per_sec_text = fonts["large"].render(f"{game_data['ducksPerSecond']:,} Ducks Per Second", False, (255, 255, 255))
     screen.blit(ducks_per_sec_text, ducks_per_sec_text.get_rect(centerx=screen_width // 2, y=sy(100)))
@@ -418,6 +434,7 @@ while running:
                     if duck.rect.collidepoint(mouse_pos):
                         game_data["ducks"] += game_data["ducksPerClick"]
                         ducks.remove(duck)
+                        duck_pop_effects.append(DuckPopEffect(duck.image, duck.rect.center))
                         current_time_now = pygame.time.get_ticks()
                         duck_click_sound.play()
                             
@@ -515,7 +532,17 @@ while running:
             speed = 0.1 + game_data["magicalAutoClickerSpeed"],
             game_data=game_data,
             floating_texts=floating_texts,
+            duck_pop_effects=duck_pop_effects,
         )
+
+    
+    #----duck pop effect----#
+    for effect in duck_pop_effects[:]:
+        effect.update()
+        effect.draw(screen)
+
+        if effect.dead():
+            duck_pop_effects.remove(effect)
 
 
     #----cannot afford message----#
@@ -531,9 +558,8 @@ while running:
     #----upgrade icon tooltips----#
     for rect, key in upgrade_hover_rects:
         if rect.collidepoint(mouse_pos):
-            description = upgade_manager.get_upgrade_description(key)
-
-
+            description = upgade_manager.get_upgrade_description(key)\
+            
             if description:
                 padding = sx(8)
                 max_width = sx(600)

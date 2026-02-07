@@ -12,8 +12,8 @@ TO DO:
 [/] add more DPS enhancements
 [ ] add two duck spawn chance for duck beacon
 [/] add shiny effect for when shiny duck clicked
-[ ] add animations and effects for clicking duck
-[ ] add animations and effects for gui
+[X] add animations and effects for clicking duck
+[X] add animations and effects for gui
 
 
 

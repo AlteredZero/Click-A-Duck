@@ -2,6 +2,7 @@ import pygame
 import math
 import random
 from floating_text import FloatingText
+from duck_pop_effect import DuckPopEffect
 
 class MagicalAutoClicker:
     def __init__(self, pos, image):
@@ -20,7 +21,7 @@ class MagicalAutoClicker:
         else:
             self.target = None
 
-    def update(self, ducks, duck_click_sound, speed, game_data, floating_texts):
+    def update(self, ducks, duck_click_sound, speed, game_data, floating_texts, duck_pop_effects):
 
         if self.target not in ducks:
             self.choose_target(ducks)
@@ -39,15 +40,25 @@ class MagicalAutoClicker:
             self.pos += direction * speed
 
             if distance < 10:
+                center = self.target.rect.center
+
                 game_data["ducks"] += game_data["ducksPerClick"]
+
                 ducks.remove(self.target)
+
+                duck_pop_effects.append(
+                    DuckPopEffect(self.target.image, center)
+                )
+
                 current_time_now = pygame.time.get_ticks()
                 if current_time_now - self.last_duck_sound_time > 1000:
                     duck_click_sound.play()
                     self.last_duck_sound_time = current_time_now
+
                 floating_texts.append(
-                    FloatingText(f"+{game_data['ducksPerClick']}", self.target.rect.center)
+                    FloatingText(f"+{game_data['ducksPerClick']}", center)
                 )
+
                 self.target = None
 
         else:
