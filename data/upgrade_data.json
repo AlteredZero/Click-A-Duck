@@ -294,6 +294,19 @@
       "one_time": true,
       "pool_color": null,
       "purchase_key": "TurquoiseDuckB"
+    },
+    {
+      "title": "Duck Heater",
+      "cost": 200000,
+      "icon": "assets/Images/DuckArmy.png",
+      "save_key": "ducksPerSecond",
+      "duck_color": null,
+      "bonus": 900,
+      "description": "Makes the ducks feel nice and warm, perfect for the winter season. Gives +900 DPS.",
+      "save_key2": null,
+      "one_time": true,
+      "pool_color": null,
+      "purchase_key": "DuckHeaterB"
     }
   ]
 }

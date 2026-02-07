@@ -15,6 +15,9 @@ topzgameplayer@gmail.com
 
 
 Socials:
+
 youtube  -  https://www.youtube.com/@AlteredDeveloper
+
 discord  -  https://discord.gg/CaNjDqpP4F
-x  -  https://x.com/Altered_Games_
+
+x  -  https://x.com/Altered_Games
