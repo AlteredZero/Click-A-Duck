@@ -3,7 +3,7 @@
     "ducksPerClick": 1,
     "ducksPerSecond": 0,
     "maxDucksInPool": 1,
-    "spawnTime": 3,
+    "spawnTime": 3, 
     "DPCUpgradeBought": 0,
     "reainforcedCursorB": 0,
     "poolSize": 1,
@@ -37,8 +37,16 @@
         "hotPinkPoolB": false,
         "rubberDuckArmyB": false,
         "radiantPlungeIIB": false,
-        "turquoiseDuckB": false,
         "TurquoiseDuckB": false,
-        "DuckHeaterB": false
+        "DuckHeaterB": false,
+        "BreadStormMachineB": false,
+        "coralPoolB": false,
+        "duckDlc": false,
+        "magicalAutoClickerB2": false,
+        "duckCeoB": false,
+        "hydroQuackPumpB": false,
+        "flockRouterB": false,
+        "pondOverclockerB": false,
+        "autoClickerSpeedB2": false
     }
 }

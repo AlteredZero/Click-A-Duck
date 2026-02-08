@@ -104,6 +104,14 @@ class UpgradeButton:
             elif self.title == "Rubber Duck Army":
                 game_data["ducksPerClick"] += self.bonus
                 game_data["ducksPerSecond"] += self.bonus
+            
+            elif self.title == "Bread Storm Machine":
+                game_data["ducksPerClick"] += self.bonus
+                game_data["ducksPerSecond"] += self.bonus
+
+            elif self.title == "Duck CEO":
+                game_data["ducksPerClick"] += self.bonus
+                game_data["ducksPerSecond"] += self.bonus
 
             else:
                 game_data[self.save_key] += self.bonus

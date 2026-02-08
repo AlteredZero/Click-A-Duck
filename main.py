@@ -179,6 +179,27 @@ enhancements_info = {
     "rubberDuckArmyB": {
         "description": "Here to serve and protect the duck empire, granting +300 DPS and +300 DPC permanently."
     },
+    "DuckHeaterB": {
+        "description": "Makes the ducks feel nice and warm, especially perfect for the winter season. Gives +900 DPS."
+    },
+    "BreadStormMachineB": {
+        "description": "A magical machine that makes it literally rain bread, though the ducks aren't complaining. Gives +500 DPS and +500 DPC"
+    },
+    "duckDlc": {
+        "description": "Adds more ducks. That's it. Gives +1150 DPS."
+    },
+    "duckCeoB": {
+        "description": "The ducks elected a leader. things got organized fast. Grants +750 DPS and +750 DPC"
+    },
+    "hydroQuackPumpB": {
+        "description": ""
+    },
+    "flockRouterB": {
+        "description": ""
+    },
+    "pondOverclockerB": {
+        "description": ""
+    },
 }
 
 duck_images = {
@@ -193,6 +214,7 @@ pool_images = {
     "green": pygame.image.load("assets/Images/Pool1.png").convert_alpha(),
     "yellow": pygame.image.load("assets/Images/YellowPool.png").convert_alpha(),
     "hotPink": pygame.image.load("assets/Images/HotPinkPool.png").convert_alpha(),
+    "coral": pygame.image.load("assets/Images/CoralPool.png").convert_alpha(),
 }
 
 upgrade_icons = {
@@ -209,6 +231,13 @@ enhancement_icons = {
     "quackAmplifierB": load_scaled("assets/Images/QuackAmplifier.png", 50, 50),
     "duckMagnetB": load_scaled("assets/Images/DuckMagnet.png", 50, 50),
     "rubberDuckArmyB": load_scaled("assets/Images/DuckArmy.png", 50, 50),
+    "DuckHeaterB": load_scaled("assets/Images/DuckHeater.png", 50, 50),
+    "BreadStormMachineB": load_scaled("assets/Images/BreadStormMachine.png", 50, 50),
+    "duckDlc": load_scaled("assets/Images/DuckDLC.png", 50, 50),
+    "duckCeoB": load_scaled("assets/Images/DuckCEO.png", 50, 50),
+    "hydroQuackPumpB": load_scaled("assets/Images/Hydro-Quack Pump.png", 50, 50),
+    "flockRouterB": load_scaled("assets/Images/FlockRouter.png", 50, 50),
+    "pondOverclockerB": load_scaled("assets/Images/PondOverclock.png", 50, 50),
 }
 
 enhancement_positions = {
@@ -217,6 +246,13 @@ enhancement_positions = {
     "quackAmplifierB": (sx(1000), sy(300)),
     "duckMagnetB": (sx(1570), sy(1070)),
     "rubberDuckArmyB": (sx(1500), sy(300)),
+    "DuckHeaterB": (sx(800), sy(650)),
+    "BreadStormMachineB": (sx(1020), sy(1100)),
+    "duckDlc": (sx(1230), sy(250)),
+    "duckCeoB": (sx(860), sy(400)),
+    "hydroQuackPumpB": (sx(1700), sy(430)),
+    "flockRouterB": (sx(1730), sy(900)),
+    "pondOverclockerB": (sx(1300), sy(1150)),
 }
 
 
@@ -400,7 +436,7 @@ while running:
     #---------------------#
 
     duck_header = fonts["header"].render(f"{int(display_ducks):,} Ducks", False, (255, 255, 255))
-    pulse = 1 + min(0.25, abs(target - display_ducks) / 5000)
+    pulse = 1 + min(0.25, abs(target - display_ducks) / 20000)
     duck_header = pygame.transform.scale_by(duck_header, pulse)
     screen.blit(duck_header, duck_header.get_rect(centerx=screen_width // 2, y=sy(40)))
 
