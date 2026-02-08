@@ -90,6 +90,15 @@ last_save_time = 0
 
 last_duck_second = pygame.time.get_ticks()
 
+shiny_active = False
+shiny_timer = 0
+shiny_duration = 30000
+
+shiny_dpc_multiplier = 3
+shiny_dps_multiplier = 2
+
+shiny_duck_icon = load_scaled("assets/Images/ShinyDuck.png", 40, 40)
+
 
 #---------------------#
 #--------AUDIO--------#
@@ -300,7 +309,7 @@ def wrap_text(text, font, max_width):
 
 def draw_upgrade_rows(screen, game_data, manager):
     start_x = sx(20)
-    start_y = screen_height - sy(250)
+    start_y = screen_height - sy(255)
     spacing_x = sx(50)
     spacing_y = sy(50)
 
@@ -440,7 +449,7 @@ while running:
     duck_header = pygame.transform.scale_by(duck_header, pulse)
     screen.blit(duck_header, duck_header.get_rect(centerx=screen_width // 2, y=sy(40)))
 
-    ducks_per_sec_text = fonts["large"].render(f"{game_data['ducksPerSecond']:,} Ducks Per Second", False, (255, 255, 255))
+    ducks_per_sec_text = fonts["large"].render(f"+{DPS} Ducks Per Second", False, (255, 255, 255))
     screen.blit(ducks_per_sec_text, ducks_per_sec_text.get_rect(centerx=screen_width // 2, y=sy(100)))
 
     store_text_title = fonts["large"].render("Store", False, (255, 255, 255)) 
@@ -468,18 +477,38 @@ while running:
                 mouse_pos = event.pos
                 for duck in ducks[:]:
                     if duck.rect.collidepoint(mouse_pos):
-                        game_data["ducks"] += game_data["ducksPerClick"]
+
+                        if duck.shiny:
+                            shiny_active = True
+                            shiny_timer = shiny_duration
+                        
+                        DPC = game_data["ducksPerClick"]
+                        if shiny_active:
+                            DPC *= shiny_dpc_multiplier
+
+                        game_data["ducks"] += DPC
+                        
                         ducks.remove(duck)
                         duck_pop_effects.append(DuckPopEffect(duck.image, duck.rect.center))
                         current_time_now = pygame.time.get_ticks()
                         duck_click_sound.play()
-                            
-                        floating_texts.append(
-                            FloatingText    (
-                                f"+{game_data['ducksPerClick']}",
-                                duck.rect.center
+                        
+                        if shiny_active:
+                            floating_texts.append(
+                                FloatingText(
+                                    f"+{DPC}",
+                                    duck.rect.center,
+                                    color=(255, 220, 80)
+                                )
                             )
-                        )
+
+                        else:
+                            floating_texts.append(
+                                FloatingText(
+                                    f"+{DPC}",
+                                    duck.rect.center
+                                )
+                            )
                         break
 
                 bought, cost = upgade_manager.clicked(mouse_pos, game_data)
@@ -499,6 +528,43 @@ while running:
                 elif cost > 0:
                     cannot_afford_message = f"Cannot afford, need {cost - game_data['ducks']:,} more ducks!"
                     cannot_afford_timer = current_time + 3000
+
+
+    duck_time = clock.get_time()
+
+    if shiny_active:
+        shiny_timer -= duck_time
+        
+        if shiny_timer <= 0:
+            shiny_active = False
+
+
+    if shiny_active:
+        size = sx(45)
+        padding = sx(8)
+
+        x = screen_width // 2 - size // 2
+        y = sy(150)
+
+        pulse = 1 + 0.08 * math.sin(pygame.time.get_ticks() * 0.01)
+
+        icon = pygame.transform.scale_by(shiny_duck_icon, pulse)
+
+        rect = pygame.Rect(x, y, size, size)
+
+        overlay = pygame.Surface((screen_width, screen_height), pygame.SRCALPHA)
+        overlay.fill((255, 255, 120, 25))
+        screen.blit(overlay, (0,0))
+
+        pygame.draw.rect(screen, (255, 215, 0), rect)
+        pygame.draw.rect(screen, (255, 255, 255), rect, sx(2))
+
+        icon_rect = icon.get_rect(center=rect.center)
+        screen.blit(icon, icon_rect)
+
+        seconds = int(shiny_timer / 1000)
+        timer_text = fonts["small"].render(f"{seconds}s", False, (255, 255, 255))
+        screen.blit(timer_text, timer_text.get_rect(midtop=(rect.centerx, rect.bottom + sy(4))))
 
 
     #----Auto Save----#
@@ -536,7 +602,12 @@ while running:
 
     #----Ducks per second----#
     if current_time - last_duck_second >= 1000:
-        game_data["ducks"] += game_data["ducksPerSecond"]
+        DPS = game_data["ducksPerSecond"]
+
+        if shiny_active:
+            DPS *= shiny_dps_multiplier
+
+        game_data["ducks"] += DPS
         last_duck_second += 1000
         
 
