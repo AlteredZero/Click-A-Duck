@@ -449,7 +449,7 @@ while running:
     duck_header = pygame.transform.scale_by(duck_header, pulse)
     screen.blit(duck_header, duck_header.get_rect(centerx=screen_width // 2, y=sy(40)))
 
-    ducks_per_sec_text = fonts["large"].render(f"+{DPS} Ducks Per Second", False, (255, 255, 255))
+    ducks_per_sec_text = fonts["large"].render(f"{int(game_data["ducksPerSecond"]):,} Ducks Per Second", False, (255, 255, 255))
     screen.blit(ducks_per_sec_text, ducks_per_sec_text.get_rect(centerx=screen_width // 2, y=sy(100)))
 
     store_text_title = fonts["large"].render("Store", False, (255, 255, 255)) 
@@ -492,23 +492,13 @@ while running:
                         duck_pop_effects.append(DuckPopEffect(duck.image, duck.rect.center))
                         current_time_now = pygame.time.get_ticks()
                         duck_click_sound.play()
-                        
-                        if shiny_active:
-                            floating_texts.append(
-                                FloatingText(
-                                    f"+{DPC}",
-                                    duck.rect.center,
-                                    color=(255, 220, 80)
-                                )
-                            )
 
-                        else:
-                            floating_texts.append(
-                                FloatingText(
-                                    f"+{DPC}",
-                                    duck.rect.center
-                                )
+                        floating_texts.append(
+                            FloatingText(
+                                f"+{DPC}",
+                                duck.rect.center
                             )
+                        )
                         break
 
                 bought, cost = upgade_manager.clicked(mouse_pos, game_data)
@@ -590,14 +580,15 @@ while running:
                 shiny = False
                 duck_image = duck_images[game_data["duckColor"]]
             
-            ducks.append(
-                Duck(
-                    spawn_duck(pool, duck_image),
-                    duck_image,
-                    shiny
+                ducks.append(
+                    Duck(
+                        spawn_duck(pool, duck_image),
+                        duck_image,
+                        shiny
+                    )   
                 )
-            )
-            respawn_time = None
+                
+                respawn_time = None
 
 
     #----Ducks per second----#
