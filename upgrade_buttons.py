@@ -88,7 +88,7 @@ class UpgradeButton:
             game_data[self.save_key] = max(0.1, round(game_data[self.save_key], 2))
 
         elif self.save_key == "shinyDuckChance":
-            game_data[self.save_key] += 0.01
+            game_data[self.save_key] += 0.001
 
         elif self.bonus is not None:
             if self.duck_color is not None:
@@ -120,7 +120,7 @@ class UpgradeButton:
             game_data["ducksPerSecond"] += 10
 
         elif self.title == "Reinforced Cursor":
-            game_data["ducksPerClick"] += 10
+            game_data["ducksPerClick"] += 15
 
         elif self.title == "Auto Clicker Speed +1":
             game_data["magicalAutoClickerSpeed"] += 0.5
@@ -191,7 +191,7 @@ class UpgradeButton:
 
 
     def update_cost(self, game_data):
-        growth = 1.15
+        growth = 1.10
         key = self.save_key2 if self.save_key2 is not None else self.save_key
         times_bought = game_data.get(key, 0)
 

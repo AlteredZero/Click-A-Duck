@@ -132,7 +132,7 @@ default_data = {
     "poolColor": "green",
     "magicalAutoClickers": 0,
     "magicalAutoClickerSpeed": 1,
-    "multiplier": 1.0,
+    "multiplierDPC": 1.0,
     "twoDuckSpawnChance": 0,
     "shinyDuckChance": 0.0,
     "duckNests": 0,
@@ -182,7 +182,7 @@ enhancements_info = {
         "description": "A fountain of magical feathers keeps the Ducks entertained, increasing Ducks per second by +65."
     },
     "quackAmplifierB": {
-        "description": "Every quack resonates across the pond with extra force, granting x2 Ducks per click permanently."
+        "description": "Every quack resonates across the pond with extra force, granting x1.2 Ducks per click permanently."
     },
     "duckMagnetB": {
         "description": "Ducks from nearby ponds mysteriously find their way here, permanently increases Ducks per second by +200."
@@ -386,6 +386,10 @@ def get_current_dps():
 
 def get_current_dpc():
     dpc = game_data["ducksPerClick"]
+    multiplierDPC = game_data["multiplierDPC"]
+
+    dpc *= multiplierDPC
+
     if shiny_active:
         dpc *= shiny_dpc_multiplier
     return int(dpc)

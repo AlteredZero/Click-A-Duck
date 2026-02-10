@@ -9,13 +9,15 @@ TO DO:
 [X] make reinforced clicker increase DPC by percentage
 [X] make duck coop increase DPS by percentage
 [ ] add cursor size enhancement
-[/] add more DPS enhancements
-[ ] add two duck spawn chance for duck beacon
+[X] add more DPS enhancements
+[X] add two duck spawn chance for duck beacon
 [/] add shiny effect for when shiny duck clicked
 [X] add animations and effects for clicking duck
 [X] add animations and effects for gui
 [ ] make bread rain effect for Bread Storm Machine Enhancement
-
+[ ] make DPS much lower
+[X] make shiny duck appearance much less
+[ ] make quack amplifier actually work
 
 
 KEY:
@@ -27,6 +29,25 @@ KEY:
 
 
 ANALYSIS:
+
+2/10/26 - I tested the game for 35 minutes, and a lot has changed. Compared
+to the last test, this time I was able to buy all enhancements and gained 
+ducks much faster, which is a good thing, since with the previous test,
+after just 25 minutes, I was only able to buy a total of maybe 6 
+enhancements. The shiny duck is the main reason for such earnings,
+since they gave incredible boosts, but they appear WAY too often.
+It appeared really commonly, I mean I would say 3 shiny ducks in the pool
+at once, even though it has a 0.02% of spawning. Its somewhat ridiculous.
+I also noticed the imbalance of value, somtimes some upgrades and 
+enhancements were unfair, and other times they were far too over powered.
+Duck per second overall needs a nerd, I mean at least 30% of the game,
+duck per second earned nearly as much as duck per click, which made
+actively playing the game obsolete, which I want to avoid. Overall though,
+apart from those issues, the progression felt nice, and 10% price scaling
+is a good amount, compared to 15%. I am fairly satisfied with the current
+progress, though the shiny ducks really made it hard to truly know the
+progression.
+
 
 2/3/26 - Tested the game for 25 minutes, noticed magical auto clickers 
 were far too fast for how cheap they were, making manual duck clicking
