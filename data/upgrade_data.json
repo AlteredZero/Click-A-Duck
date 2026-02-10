@@ -79,7 +79,7 @@
       "save_key": "twoDuckSpawnChance",
       "duck_color": null,
       "bonus": null,
-      "description": "A glowing marker visible to ducks from far away, grants +0.5% chance for 2 ducks to spawn per spawn time instead of just 1.",
+      "description": "A glowing marker visible to ducks from far away. Grants +0.5% chance for +1 extra duck to spawn. Chance stacks past 100%, guaranteeing additional ducks with leftover chance for even more.",
       "save_key2": "duckBeacon",
       "one_time": false,
       "pool_color": null

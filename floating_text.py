@@ -1,12 +1,13 @@
 import pygame
 
 class FloatingText:
-    def __init__(self, text, pos):
+    def __init__(self, text, pos, color=(255, 255, 255)):
         self.text = text
         self.x, self.y = pos
         self.timer = 0
         self.scale = 0.0
         self.alpha = 255
+        self.color = color
 
     def update(self):
         self.timer += 1
@@ -22,7 +23,7 @@ class FloatingText:
                 self.alpha = 0
 
     def draw(self, screen, font):
-        surf = font.render(self.text, True, (255, 255, 255))
+        surf = font.render(self.text, True, self.color)
         surf = pygame.transform.scale(
             surf,
             (

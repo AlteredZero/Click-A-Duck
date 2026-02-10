@@ -21,7 +21,8 @@ class MagicalAutoClicker:
         else:
             self.target = None
 
-    def update(self, ducks, duck_click_sound, speed, game_data, floating_texts, duck_pop_effects):
+    def update(self, ducks, duck_click_sound, speed, game_data, floating_texts, duck_pop_effects, get_current_dpc, set_shiny_active):
+
 
         if self.target not in ducks:
             self.choose_target(ducks)
@@ -42,8 +43,6 @@ class MagicalAutoClicker:
             if distance < 10:
                 center = self.target.rect.center
 
-                game_data["ducks"] += game_data["ducksPerClick"]
-
                 ducks.remove(self.target)
 
                 duck_pop_effects.append(
@@ -55,8 +54,17 @@ class MagicalAutoClicker:
                     duck_click_sound.play()
                     self.last_duck_sound_time = current_time_now
 
+                if self.target.shiny:
+                    set_shiny_active()
+
+                DPC = get_current_dpc()
+
+                game_data["ducks"] += DPC
+
+                color = (255, 220, 80) if self.target.shiny else (255,255,255)
+
                 floating_texts.append(
-                    FloatingText(f"+{game_data['ducksPerClick']}", center)
+                    FloatingText(f"+{DPC}", center, color)
                 )
 
                 self.target = None

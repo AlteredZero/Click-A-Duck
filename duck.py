@@ -3,7 +3,7 @@ import pygame
 import math
 
 class Duck:
-    def __init__(self, rect, image, shiny = False):
+    def __init__(self, rect, image, shiny=False):
         self.rect = rect
         self.image = image
         self.shiny = shiny

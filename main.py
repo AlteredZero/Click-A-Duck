@@ -99,6 +99,8 @@ shiny_dps_multiplier = 2
 
 shiny_duck_icon = load_scaled("assets/Images/ShinyDuck.png", 40, 40)
 
+shiny_hover_rect = None
+
 
 #---------------------#
 #--------AUDIO--------#
@@ -168,7 +170,7 @@ upgrade_info = {
         "description": "Keeps the duck population growing more steadily, giving +3 Ducks per second (DPS)."
     },
     "duckBeacon": {
-        "description": "A glowing marker visible to ducks from far away, grants +0.5% chance for 2 ducks to spawn per spawn time instead of just 1."
+        "description": "A glowing marker visible to ducks from far away. Grants +0.5% chance for +1 extra duck to spawn. Chance stacks past 100%, guaranteeing additional ducks with leftover chance for even more."
     },
 }
 
@@ -262,6 +264,10 @@ enhancement_positions = {
     "hydroQuackPumpB": (sx(1700), sy(430)),
     "flockRouterB": (sx(1730), sy(900)),
     "pondOverclockerB": (sx(1300), sy(1150)),
+}
+
+special_tooltips = {
+    "shiny": "The entire pool is filled with riches now. Ducks give 3x Ducks per click and 2x Ducks per second for 30 seconds."
 }
 
 
@@ -371,6 +377,40 @@ def get_clicker_position(index, total, pool):
     return x, y
 
 
+def get_current_dps():
+    dps = game_data["ducksPerSecond"]
+    if shiny_active:
+        dps *= shiny_dps_multiplier
+    return int(dps)
+
+
+def get_current_dpc():
+    dpc = game_data["ducksPerClick"]
+    if shiny_active:
+        dpc *= shiny_dpc_multiplier
+    return int(dpc)
+
+
+def get_duck_spawn_count(game_data):
+    base = 1
+
+    beacon_level = game_data.get("duckBeacon", 0)
+
+    # +0.5% per level
+    chance_percent = beacon_level * 0.5
+
+    extra = chance_percent / 100
+    guaranteed = int(extra)
+    remainder = extra - guaranteed
+
+    count = base + guaranteed
+
+    if random.random() < remainder:
+        count += 1
+
+    return count
+
+
 game_data = load_game(default_data)
 
 upgade_manager = UpgradeManager(screen_width, screen_height, game_data, scale)
@@ -449,7 +489,7 @@ while running:
     duck_header = pygame.transform.scale_by(duck_header, pulse)
     screen.blit(duck_header, duck_header.get_rect(centerx=screen_width // 2, y=sy(40)))
 
-    ducks_per_sec_text = fonts["large"].render(f"{int(game_data["ducksPerSecond"]):,} Ducks Per Second", False, (255, 255, 255))
+    ducks_per_sec_text = fonts["large"].render(f"{get_current_dps():,} Ducks Per Second", False, (255, 255, 255))
     screen.blit(ducks_per_sec_text, ducks_per_sec_text.get_rect(centerx=screen_width // 2, y=sy(100)))
 
     store_text_title = fonts["large"].render("Store", False, (255, 255, 255)) 
@@ -482,9 +522,7 @@ while running:
                             shiny_active = True
                             shiny_timer = shiny_duration
                         
-                        DPC = game_data["ducksPerClick"]
-                        if shiny_active:
-                            DPC *= shiny_dpc_multiplier
+                        DPC = get_current_dpc()
 
                         game_data["ducks"] += DPC
                         
@@ -493,10 +531,13 @@ while running:
                         current_time_now = pygame.time.get_ticks()
                         duck_click_sound.play()
 
+                        color = (255, 220, 80) if shiny_active else (255,255,255)
+
                         floating_texts.append(
                             FloatingText(
                                 f"+{DPC}",
-                                duck.rect.center
+                                duck.rect.center,
+                                color
                             )
                         )
                         break
@@ -541,6 +582,7 @@ while running:
         icon = pygame.transform.scale_by(shiny_duck_icon, pulse)
 
         rect = pygame.Rect(x, y, size, size)
+        shiny_hover_rect = rect
 
         overlay = pygame.Surface((screen_width, screen_height), pygame.SRCALPHA)
         overlay.fill((255, 255, 120, 25))
@@ -555,6 +597,14 @@ while running:
         seconds = int(shiny_timer / 1000)
         timer_text = fonts["small"].render(f"{seconds}s", False, (255, 255, 255))
         screen.blit(timer_text, timer_text.get_rect(midtop=(rect.centerx, rect.bottom + sy(4))))
+
+        color = (255, 220, 80) if shiny_active else (255,255,255)
+
+        ducks_per_sec_text = fonts["large"].render(
+            f"{get_current_dps():,} Ducks Per Second",
+            False,
+            color
+        )
 
 
     #----Auto Save----#
@@ -579,26 +629,38 @@ while running:
             else:
                 shiny = False
                 duck_image = duck_images[game_data["duckColor"]]
-            
+
+            spawn_count = get_duck_spawn_count(game_data)
+
+            for _ in range(spawn_count):
+
+                if len(ducks) >= game_data["maxDucksInPool"]:
+                    break
+
+                shiny_chance = game_data["shinyDuckChance"]
+                roll = random.random()
+
+                if roll < shiny_chance:
+                    shiny = True
+                    duck_image = duck_images["shiny"]
+                else:
+                    shiny = False
+                    duck_image = duck_images[game_data["duckColor"]]
+
                 ducks.append(
                     Duck(
                         spawn_duck(pool, duck_image),
                         duck_image,
                         shiny
-                    )   
+                    )
                 )
-                
-                respawn_time = None
+
+            respawn_time = None
 
 
     #----Ducks per second----#
     if current_time - last_duck_second >= 1000:
-        DPS = game_data["ducksPerSecond"]
-
-        if shiny_active:
-            DPS *= shiny_dps_multiplier
-
-        game_data["ducks"] += DPS
+        game_data["ducks"] += get_current_dps()
         last_duck_second += 1000
         
 
@@ -631,6 +693,11 @@ while running:
             game_data=game_data,
             floating_texts=floating_texts,
             duck_pop_effects=duck_pop_effects,
+            get_current_dpc = get_current_dpc,
+            set_shiny_active = lambda: globals().update({
+                "shiny_active": True,
+                "shiny_timer": shiny_duration
+            })
         )
 
     
@@ -705,6 +772,31 @@ while running:
 
                 for i, surf in enumerate(surfaces):
                     screen.blit(surf, (x + padding, y + padding + i * line_height))
+
+
+    if shiny_hover_rect and shiny_hover_rect.collidepoint(mouse_pos):
+        description = special_tooltips["shiny"]
+
+        padding = sx(8)
+        max_width = sx(500)
+
+        lines = wrap_text(description, fonts["verysmall"], max_width)
+
+        line_height = fonts["verysmall"].get_height()
+        surfaces = [fonts["verysmall"].render(line, True, (255,255,255)) for line in lines]
+
+        box_width = max(s.get_width() for s in surfaces) + padding * 2
+        box_height = line_height * len(surfaces) + padding * 2
+
+        x = shiny_hover_rect.right + sx(10)
+        y = shiny_hover_rect.top
+
+        pygame.draw.rect(screen, (30,30,30), (x,y,box_width,box_height))
+        pygame.draw.rect(screen, (255,255,255), (x,y,box_width,box_height), sx(2))
+
+        for i, surf in enumerate(surfaces):
+            screen.blit(surf, (x + padding, y + padding + i * line_height))
+
 
 
     #----upgrde list draw----#
