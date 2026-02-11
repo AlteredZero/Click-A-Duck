@@ -17,7 +17,7 @@ TO DO:
 [ ] make bread rain effect for Bread Storm Machine Enhancement
 [ ] make DPS much lower
 [X] make shiny duck appearance much less
-[ ] make quack amplifier actually work
+[X] make quack amplifier actually work
 
 
 KEY:

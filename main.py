@@ -156,24 +156,6 @@ default_data = {
     }
 }
 
-upgrade_info = {
-    "duckNests": {
-        "description": "A cozy duck nest raising little ducklings, who happily multiply. Grants +1 Duck per second (DPS)."
-    },
-    "goldenDuckStatue": {
-        "description": "A golden duck statue ducks can admire, inspiring them to appear faster, increasing Duck spawn speed by +5%."
-    },
-    "quakingSpeaker": {
-        "description": "A quaking speaker that ducks cannot resist, attracting more friends. Increases the maximum number of Ducks in the pool by 1."
-    },
-    "duckCoop": {
-        "description": "Keeps the duck population growing more steadily, giving +3 Ducks per second (DPS)."
-    },
-    "duckBeacon": {
-        "description": "A glowing marker visible to ducks from far away. Grants +0.5% chance for +1 extra duck to spawn. Chance stacks past 100%, guaranteeing additional ducks with leftover chance for even more."
-    },
-}
-
 enhancements_info = {
     "megaDuckFeederB": {
         "description": "A massive feeder that no Duck can resist, permanently increases Ducks per second by +25."
@@ -203,13 +185,13 @@ enhancements_info = {
         "description": "The ducks elected a leader. things got organized fast. Grants +750 DPS and +750 DPC"
     },
     "hydroQuackPumpB": {
-        "description": ""
+        "description": "Pressurizes the pond to optimal duck density. Grants +1400 Ducks per click."
     },
     "flockRouterB": {
-        "description": ""
+        "description": "Redirects incoming duck traffic. Gives +1550 Ducks per second."
     },
     "pondOverclockerB": {
-        "description": ""
+        "description": "Overclocks the pond. Warning: may exceed recommended duck limits. Gives +1700 Ducks per click."
     },
 }
 
@@ -226,14 +208,6 @@ pool_images = {
     "yellow": pygame.image.load("assets/Images/YellowPool.png").convert_alpha(),
     "hotPink": pygame.image.load("assets/Images/HotPinkPool.png").convert_alpha(),
     "coral": pygame.image.load("assets/Images/CoralPool.png").convert_alpha(),
-}
-
-upgrade_icons = {
-    "duckNests": load_scaled("assets/Images/DuckNest.png", 45, 45),
-    "goldenDuckStatue": load_scaled("assets/Images/DuckStatue.png", 45, 45),
-    "quakingSpeaker": load_scaled("assets/Images/DuckSpeaker.png", 45, 45),
-    "duckCoop": load_scaled("assets/Images/DuckCoop.png", 45, 45),
-    "duckBeacon": load_scaled("assets/Images/DuckBeacon.png", 45, 45),
 }
 
 enhancement_icons = {
@@ -315,7 +289,7 @@ def wrap_text(text, font, max_width):
 
 def draw_upgrade_rows(screen, game_data, manager):
     start_x = sx(20)
-    start_y = screen_height - sy(255)
+    start_y = screen_height - sy(280) #255
     spacing_x = sx(50)
     spacing_y = sy(50)
 
@@ -565,15 +539,16 @@ while running:
                     cannot_afford_timer = current_time + 3000
 
 
-    duck_time = clock.get_time()
-
+    #----shiny active check----#
     if shiny_active:
+        duck_time = clock.get_time()
         shiny_timer -= duck_time
         
         if shiny_timer <= 0:
             shiny_active = False
 
 
+    #----shiny active----#
     if shiny_active:
         size = sx(45)
         padding = sx(8)
@@ -727,7 +702,7 @@ while running:
     #----upgrade icon tooltips----#
     for rect, key in upgrade_hover_rects:
         if rect.collidepoint(mouse_pos):
-            description = upgade_manager.get_upgrade_description(key)\
+            description = upgade_manager.get_upgrade_description(key) + f" Owned: {int(game_data[key]):,}"
             
             if description:
                 padding = sx(8)
@@ -742,7 +717,7 @@ while running:
                 box_height = line_height * len(surfaces) + padding * 2
 
                 x = rect.right + sx(10)
-                y = rect.top - 30
+                y = rect.top - sy(35)
 
                 pygame.draw.rect(screen, (30, 30, 30), (x, y, box_width, box_height))
                 pygame.draw.rect(screen, (255, 255, 255), (x, y, box_width, box_height), sx(2))
@@ -778,6 +753,7 @@ while running:
                     screen.blit(surf, (x + padding, y + padding + i * line_height))
 
 
+    #----Shiny icon tooltip----#
     if shiny_hover_rect and shiny_hover_rect.collidepoint(mouse_pos):
         description = special_tooltips["shiny"]
 

@@ -135,7 +135,7 @@ class UpgradeButton:
             game_data["purchases"][self.purchase_key] = True
 
 
-    def draw_tooltip(self, screen, font):
+    def draw_tooltip(self, screen, font, game_data):
         mouse_pos = pygame.mouse.get_pos()
 
         if not self.rect.collidepoint(mouse_pos):
@@ -145,7 +145,10 @@ class UpgradeButton:
 
         max_width = self.s(500)
 
-        lines = wrap_text(self.description, font, max_width)
+        if not self.one_time:
+            lines = wrap_text(self.description + f" Owned: {int(game_data[self.save_key2]):,}", font, max_width)
+        else:
+            lines = wrap_text(self.description, font, max_width)
 
         line_surfaces = [font.render(line, True, (255,255,255)) for line in lines]
 
@@ -312,7 +315,7 @@ class UpgradeManager:
             button.draw(screen, text_title, text_cost, game_data)
 
         for button in self.buttons_upgrades:
-            button.draw_tooltip(screen, desc)
+            button.draw_tooltip(screen, desc, game_data)
 
 
         for buttonE in self.buttons_enhancements[:4]:
@@ -321,7 +324,7 @@ class UpgradeManager:
             buttonE.draw(screen, text_title, text_cost, game_data)
 
         for buttonE in self.buttons_enhancements[:4]:
-            buttonE.draw_tooltip(screen, desc)
+            buttonE.draw_tooltip(screen, desc, game_data)
     
 
     def get_upgrade_icon(self, save_key):
