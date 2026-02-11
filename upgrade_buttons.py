@@ -14,7 +14,7 @@ enhancement_effects = {
     "GoldenStrongCursorB": {
         "target_upgrade_title": "Stronger Cursor",
         "bonus_dpc": 5,
-        "description": "Forged from pure gold, making your cursor even stronger. Grants +5 Ducks per click.",
+        "description": "Forged from pure gold, making your cursor even stronger. Grants +7 Ducks per click.",
         "icon": "assets/Images/StrongGoldCursor.png"
     },
     "LuxuryNestGroundB": {
@@ -116,11 +116,13 @@ class UpgradeButton:
             else:
                 game_data[self.save_key] += self.bonus
 
-        elif self.title == "Duck Coop":
-            game_data["ducksPerSecond"] += 10
-
         elif self.title == "Reinforced Cursor":
-            game_data["ducksPerClick"] += 15
+            game_data["multiplierDPC"] += 0.01
+            game_data["multiplierDPC"] = round(game_data["multiplierDPC"], 3)
+        
+        elif self.title == "Duck Coop":
+            game_data["multiplierDPS"] += 0.01
+            game_data["multiplierDPS"] = round(game_data["multiplierDPS"], 3)
 
         elif self.title == "Auto Clicker Speed +1":
             game_data["magicalAutoClickerSpeed"] += 0.5

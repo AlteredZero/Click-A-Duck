@@ -133,6 +133,7 @@ default_data = {
     "magicalAutoClickers": 0,
     "magicalAutoClickerSpeed": 1,
     "multiplierDPC": 1.0,
+    "multiplierDPS": 1.0,
     "twoDuckSpawnChance": 0,
     "shinyDuckChance": 0.0,
     "duckNests": 0,
@@ -353,6 +354,10 @@ def get_clicker_position(index, total, pool):
 
 def get_current_dps():
     dps = game_data["ducksPerSecond"]
+    multiplerDPS = game_data["multiplierDPS"]
+
+    dps *= multiplerDPS
+
     if shiny_active:
         dps *= shiny_dps_multiplier
     return int(dps)
