@@ -85,7 +85,7 @@ class UpgradeButton:
 
         if self.save_key == "spawnTime":
             game_data[self.save_key] *= 0.95
-            game_data[self.save_key] = max(0.1, round(game_data[self.save_key], 2))
+            game_data[self.save_key] = max(0, round(game_data[self.save_key], 2))
 
         elif self.save_key == "shinyDuckChance":
             game_data[self.save_key] += 0.001
@@ -288,7 +288,7 @@ class UpgradeManager:
                     return False, button.cost
 
 
-        for buttonE in self.buttons_enhancements:
+        for buttonE in self.buttons_enhancements[:4]:
             if buttonE.click(mouse_pos):
 
                 if buttonE.can_afford(game_data):

@@ -72,7 +72,8 @@ pool = Pool(
 background = pygame.image.load("assets/Images/BackgroundBlue.png").convert_alpha()
 background = pygame.transform.scale(background, (screen_width, screen_height))
 
-cursor_image = load_scaled("assets/Images/CursorImage.png", 40, 40)
+cursor_image = load_scaled("assets/Images/CursorImageDefault.png", 40, 40)
+cursor_hover_image = load_scaled("assets/Images/CursorImage.png", 40, 40)
 
 magical_auto_clicker_image = load_scaled("assets/Images/MagicalAutoClicker.png", 40, 40)
 
@@ -462,7 +463,6 @@ while running:
         display_ducks = target
 
 
-
     #---------------------#
     #---------TEXT--------#
     #---------------------#
@@ -477,7 +477,7 @@ while running:
 
     store_text_title = fonts["large"].render("Store", False, (255, 255, 255)) 
     screen.blit(store_text_title, store_text_title.get_rect(topright = (screen_width - sx(195), sy(30))))
-    
+
     store_text_u = fonts["small"].render("Upgrades", False, (255, 255, 255))
     screen.blit(store_text_u, store_text_u.get_rect(topright = (screen_width - sx(183), sy(60))))
 
@@ -788,11 +788,55 @@ while running:
     upgade_manager.draw(screen, fonts["large"], fonts["small"], fonts["verysmall"], game_data)
 
 
+    # ---------------------#
+    # --- CURSOR / HOVER---#
+    # ---------------------#
+
+    hovering = False
+
+    for rect, _ in upgrade_hover_rects:
+        if rect.collidepoint(mouse_pos):
+            hovering = True
+            break
+
+    if not hovering:
+        for rect, _ in enhancements_hover_rects:
+            if rect.collidepoint(mouse_pos):
+                hovering = True
+                break
+
+    if not hovering:
+        for b in upgade_manager.buttons_upgrades:
+            if b.rect.collidepoint(mouse_pos):
+                hovering = True
+                break
+
+    if not hovering:
+        for b in upgade_manager.buttons_enhancements[:4]:
+            if b.rect.collidepoint(mouse_pos):
+                hovering = True
+                break
+
+    if not hovering and shiny_hover_rect and shiny_hover_rect.collidepoint(mouse_pos):
+        hovering = True
+
+    if not hovering:
+        for duck in ducks:
+            if duck.rect.collidepoint(mouse_pos):
+                hovering = True
+                break
+
+    target_scale = 1.25 if hovering else 1.0
+
+    cursor_to_draw = cursor_hover_image if hovering else cursor_image
+
+    rect = cursor_to_draw.get_rect(center=mouse_pos)
+    screen.blit(cursor_to_draw, rect)
+
+
     #---------------------#
     #-----FINAZLIATION----#
     #---------------------#
-
-    screen.blit(cursor_image, mouse_pos) 
     
     pygame.display.flip()
 
