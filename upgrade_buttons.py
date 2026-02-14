@@ -70,6 +70,8 @@ class UpgradeButton:
         self.one_time = config["one_time"]
         self.pool_color = config["pool_color"]
         self.purchase_key = config.get("purchase_key")
+        self.hover_start_time = None
+
 
     def can_afford(self, game_data):
         return game_data["ducks"] >= self.cost
@@ -140,7 +142,11 @@ class UpgradeButton:
     def draw_tooltip(self, screen, font, game_data):
         mouse_pos = pygame.mouse.get_pos()
 
-        if not self.rect.collidepoint(mouse_pos):
+        if self.rect.collidepoint(mouse_pos):
+            if self.hover_start_time is None:
+                self.hover_start_time = pygame.time.get_ticks()
+        else:
+            self.hover_start_time = None
             return
 
         padding = self.s(10)
@@ -165,8 +171,32 @@ class UpgradeButton:
         pygame.draw.rect(screen, (30, 30, 30), (x, y, box_width, box_height))
         pygame.draw.rect(screen, (255, 255, 255), (x, y, box_width, box_height), self.s(2))
 
-        for i, surface in enumerate(line_surfaces):
-            screen.blit(surface, (x + padding, y + padding + i * line_height))
+        current_time = pygame.time.get_ticks()
+        elapsed = current_time - self.hover_start_time
+        letter_delay = 5
+
+        for i, line in enumerate(lines):
+            x_offset = 0
+            
+            for index, letter in enumerate(line):
+                
+                appear_time = index * letter_delay
+                
+                if elapsed > appear_time:
+                    progress = min(1, (elapsed - appear_time) / 150)
+
+                    scale = 1 + (1 - progress) * 0.6
+                    
+                    letter_surface = font.render(letter, True, (255,255,255))
+                    scaled_surface = pygame.transform.scale_by(letter_surface, scale)
+
+                    y_pos = y + padding + i * line_height
+                    screen.blit(scaled_surface, 
+                        (x + padding + x_offset,
+                        y_pos - (scaled_surface.get_height() - line_height)/2)
+                    )
+
+                    x_offset += letter_surface.get_width()
 
 
     def draw(self, screen, text_title, text_cost, game_data):

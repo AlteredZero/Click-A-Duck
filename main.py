@@ -137,6 +137,7 @@ default_data = {
     "multiplierDPS": 1.0,
     "twoDuckSpawnChance": 0,
     "shinyDuckChance": 0.0,
+    "criticalChance": 0.0,
     "duckNests": 0,
     "goldenDuckStatue": 0,
     "quakingSpeaker": 0,
@@ -245,6 +246,8 @@ enhancement_positions = {
 special_tooltips = {
     "shiny": "The entire pool is filled with riches now. Ducks give 3x Ducks per click and 2x Ducks per second for 30 seconds."
 }
+
+tooltip_hover_start = {}
 
 
 #---------------------#
@@ -393,6 +396,71 @@ def get_duck_spawn_count(game_data):
         count += 1
 
     return count
+
+
+def draw_animated_tooltip(screen, text, font, rect, mouse_pos, key, offset_x, offset_y):
+    global tooltip_hover_start
+
+    if not rect.collidepoint(mouse_pos):
+        tooltip_hover_start.pop(key, None)
+        return
+
+    if key not in tooltip_hover_start:
+        tooltip_hover_start[key] = pygame.time.get_ticks()
+
+    hover_start_time = tooltip_hover_start[key]
+
+    padding = sx(8)
+    max_width = sx(600)
+
+    lines = wrap_text(text, font, max_width)
+
+    line_height = font.get_height()
+
+    # Pre-calc box size
+    surfaces = [font.render(line, True, (255,255,255)) for line in lines]
+    box_width = max(s.get_width() for s in surfaces) + padding * 2
+    box_height = line_height * len(lines) + padding * 2
+
+    x = rect.right + offset_x
+    y = rect.top + offset_y
+
+    pygame.draw.rect(screen, (30, 30, 30), (x, y, box_width, box_height))
+    pygame.draw.rect(screen, (255, 255, 255), (x, y, box_width, box_height), sx(2))
+
+    # Animation
+    current_time = pygame.time.get_ticks()
+    elapsed = current_time - hover_start_time
+    letter_delay = 5
+
+    for i, line in enumerate(lines):
+        x_offset = 0
+
+        for index, letter in enumerate(line):
+
+            appear_time = index * letter_delay
+
+            if elapsed > appear_time:
+
+                progress = min(1, (elapsed - appear_time) / 150)
+
+                scale = 1 + (1 - progress) * 0.6
+
+                letter_surface = font.render(letter, True, (255,255,255))
+                scaled_surface = pygame.transform.scale_by(letter_surface, scale)
+
+                y_pos = y + padding + i * line_height
+
+                screen.blit(
+                    scaled_surface,
+                    (
+                        x + padding + x_offset,
+                        y_pos - (scaled_surface.get_height() - line_height) / 2
+                    )
+                )
+
+                x_offset += letter_surface.get_width()
+
 
 
 game_data = load_game(default_data)
@@ -706,82 +774,48 @@ while running:
 
     #----upgrade icon tooltips----#
     for rect, key in upgrade_hover_rects:
-        if rect.collidepoint(mouse_pos):
-            description = upgade_manager.get_upgrade_description(key) + f" Owned: {int(game_data[key]):,}"
-            
-            if description:
-                padding = sx(8)
-                max_width = sx(600)
-
-                lines = wrap_text(description, fonts["verysmall"], max_width)
-
-                line_height = fonts["verysmall"].get_height()
-                surfaces = [fonts["verysmall"].render(line, True, (255,255,255)) for line in lines]
-
-                box_width = max(s.get_width() for s in surfaces) + padding * 2
-                box_height = line_height * len(surfaces) + padding * 2
-
-                x = rect.right + sx(10)
-                y = rect.top - sy(35)
-
-                pygame.draw.rect(screen, (30, 30, 30), (x, y, box_width, box_height))
-                pygame.draw.rect(screen, (255, 255, 255), (x, y, box_width, box_height), sx(2))
-
-                for i, surf in enumerate(surfaces):
-                    screen.blit(surf, (x + padding, y + padding + i * line_height))
+        description = upgade_manager.get_upgrade_description(key) + f" Owned: {int(game_data[key]):,}"
+        draw_animated_tooltip(
+            screen,
+            description,
+            fonts["verysmall"],
+            rect,
+            mouse_pos,
+            f"upgrade_{key}",
+            sx(10),
+            -sy(35)
+        )
 
 
     #----enhancement icon tooltips----#
     for rect, key in enhancements_hover_rects:
-        if rect.collidepoint(mouse_pos):
-            info = enhancements_info.get(key)
+        info = enhancements_info.get(key)
 
-            if info:
-                padding = sx(8)
-                max_width = sx(500)
-
-                lines = wrap_text(info["description"], fonts["verysmall"], max_width)
-
-                line_height = fonts["verysmall"].get_height()
-                surfaces = [fonts["verysmall"].render(line, True, (255,255,255)) for line in lines]
-
-                box_width = max(s.get_width() for s in surfaces) + padding * 2
-                box_height = line_height * len(surfaces) + padding * 2
-
-                x = rect.right + sx(10)
-                y = rect.top
-
-                pygame.draw.rect(screen, (30, 30, 30), (x, y, box_width, box_height))
-                pygame.draw.rect(screen, (255, 255, 255), (x, y, box_width, box_height), sx(2))
-
-                for i, surf in enumerate(surfaces):
-                    screen.blit(surf, (x + padding, y + padding + i * line_height))
+        if info:
+            draw_animated_tooltip(
+                screen,
+                info["description"],
+                fonts["verysmall"],
+                rect,
+                mouse_pos,
+                f"enhancement_{key}",
+                sx(10),
+                0
+            )
 
 
     #----Shiny icon tooltip----#
-    if shiny_hover_rect and shiny_hover_rect.collidepoint(mouse_pos):
-        description = special_tooltips["shiny"]
-
-        padding = sx(8)
-        max_width = sx(500)
-
-        lines = wrap_text(description, fonts["verysmall"], max_width)
-
-        line_height = fonts["verysmall"].get_height()
-        surfaces = [fonts["verysmall"].render(line, True, (255,255,255)) for line in lines]
-
-        box_width = max(s.get_width() for s in surfaces) + padding * 2
-        box_height = line_height * len(surfaces) + padding * 2
-
-        x = shiny_hover_rect.right + sx(10)
-        y = shiny_hover_rect.top
-
-        pygame.draw.rect(screen, (30,30,30), (x,y,box_width,box_height))
-        pygame.draw.rect(screen, (255,255,255), (x,y,box_width,box_height), sx(2))
-
-        for i, surf in enumerate(surfaces):
-            screen.blit(surf, (x + padding, y + padding + i * line_height))
-
+    if shiny_hover_rect:
+        draw_animated_tooltip(
+            screen,
+            special_tooltips["shiny"],
+            fonts["verysmall"],
+            shiny_hover_rect,
+            mouse_pos,
+            "shiny_tooltip",
+            sx(10),
+            0
+        )
 
 
     #----upgrde list draw----#
