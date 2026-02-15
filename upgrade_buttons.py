@@ -90,7 +90,7 @@ class UpgradeButton:
             game_data[self.save_key] = max(0, round(game_data[self.save_key], 2))
 
         elif self.save_key == "shinyDuckChance":
-            game_data[self.save_key] += 0.001
+            game_data[self.save_key] += 0.0001
 
         elif self.bonus is not None:
             if self.duck_color is not None:

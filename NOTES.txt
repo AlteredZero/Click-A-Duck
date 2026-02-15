@@ -15,7 +15,7 @@ TO DO:
 [X] add animations and effects for clicking duck
 [X] add animations and effects for gui
 [ ] make bread rain effect for Bread Storm Machine Enhancement
-[ ] make DPS much lower
+[/] make DPS much lower
 [X] make shiny duck appearance much less
 [X] make quack amplifier actually work
 
