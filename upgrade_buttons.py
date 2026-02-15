@@ -92,6 +92,9 @@ class UpgradeButton:
         elif self.save_key == "shinyDuckChance":
             game_data[self.save_key] += 0.0001
 
+        elif self.save_key == "criticalChance":
+            game_data[self.save_key] += self.bonus
+
         elif self.bonus is not None:
             if self.duck_color is not None:
                 game_data[self.save_key] = self.duck_color

@@ -424,6 +424,19 @@
       "one_time": true,
       "pool_color": null,
       "purchase_key": "autoClickerSpeedB2"
+    },
+    {
+      "title": "Critical Chance",
+      "cost": 600000,
+      "icon": "assets/Images/DuckCrit.png",
+      "save_key": "criticalChance",
+      "duck_color": null,
+      "bonus": 0.003,
+      "description": "Increases the critical chance by +0.3%.",
+      "save_key2": null,
+      "one_time": true,
+      "pool_color": null,
+      "purchase_key": "criticalChanceB"
     }
   ]
 }

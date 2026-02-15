@@ -18,6 +18,7 @@
     "twoDuckSpawnChance": 0,
     "shinyDuckChance": 0.0,
     "criticalChance": 0.0,
+    "criticalPower": 0.0,
     "duckNests": 0,
     "goldenDuckStatue": 0,
     "quakingSpeaker": 0,
@@ -49,6 +50,7 @@
         "hydroQuackPumpB": false,
         "flockRouterB": false,
         "pondOverclockerB": false,
-        "autoClickerSpeedB2": false
+        "autoClickerSpeedB2": false,
+        "criticalChanceB": false
     }
 }

@@ -138,6 +138,7 @@ default_data = {
     "twoDuckSpawnChance": 0,
     "shinyDuckChance": 0.0,
     "criticalChance": 0.0,
+    "criticalChance": 0.0,
     "duckNests": 0,
     "goldenDuckStatue": 0,
     "quakingSpeaker": 0,
@@ -370,11 +371,18 @@ def get_current_dps():
 def get_current_dpc():
     dpc = game_data["ducksPerClick"]
     multiplierDPC = game_data["multiplierDPC"]
+    critical_chance = game_data["criticalChance"]
+    critical_power = game_data["criticalPower"]
+    roll = random.uniform(0.0, 1.0)
 
     dpc *= multiplierDPC
 
     if shiny_active:
         dpc *= shiny_dpc_multiplier
+
+    if roll < critical_chance:
+        dpc *= critical_power
+
     return int(dpc)
 
 
