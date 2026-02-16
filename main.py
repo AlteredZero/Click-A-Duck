@@ -89,7 +89,7 @@ cannot_afford_timer = 0
 last_duck_sound_time = 0
 last_save_time = 0
 
-last_duck_second = pygame.time.get_ticks()
+tick_time = pygame.time.get_ticks()
 
 shiny_active = False
 shiny_timer = 0
@@ -735,10 +735,11 @@ while running:
             respawn_time = None
 
 
-    #----Ducks per second----#
-    if current_time - last_duck_second >= 1000:
+    #----Ducks per second / playtime----#
+    if current_time - tick_time >= 1000:
         game_data["ducks"] += get_current_dps()
-        last_duck_second += 1000
+        game_data["playtime"] += 1
+        tick_time += 1000
         
 
     #----Duck draw / animating----#

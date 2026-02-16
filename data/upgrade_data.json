@@ -114,7 +114,7 @@
       "purchase_key": "yellowPoolB"
     },
     {
-      "title": "Magical Auto Clicker",
+      "title": "Magical Auto Clicker +1",
       "cost": 10000,
       "icon": "assets/Images/MagicalAutoClicker.png",
       "save_key": "magicalAutoClickers",
@@ -374,7 +374,7 @@
       "purchase_key": "duckDlc"
     },
     {
-      "title": "Magical Auto Clicker",
+      "title": "Magical Auto Clicker +1",
       "cost": 335000,
       "icon": "assets/Images/MagicalAutoClicker.png",
       "save_key": "magicalAutoClickers",

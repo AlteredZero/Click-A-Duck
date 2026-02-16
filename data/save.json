@@ -3,7 +3,7 @@
     "ducksPerClick": 1,
     "ducksPerSecond": 0,
     "maxDucksInPool": 1,
-    "spawnTime": 3,
+    "spawnTime": 3, 
     "DPCUpgradeBought": 0,
     "reainforcedCursorB": 0,
     "poolSize": 1,
