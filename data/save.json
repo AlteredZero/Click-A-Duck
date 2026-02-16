@@ -1,5 +1,5 @@
 {
-    "ducks": 1,
+    "ducks": 0,
     "ducksPerClick": 1,
     "ducksPerSecond": 0,
     "maxDucksInPool": 1,
@@ -18,7 +18,7 @@
     "twoDuckSpawnChance": 0,
     "shinyDuckChance": 0.0,
     "criticalChance": 0.0,
-    "criticalPower": 0.0,
+    "criticalPower": 1.1,
     "duckNests": 0,
     "goldenDuckStatue": 0,
     "quakingSpeaker": 0,
@@ -32,6 +32,7 @@
         "radiantPlungeB": false,
         "GoldenStrongCursorB": false,
         "LuxuryNestGroundB": false,
+        "fortuneFeathersB": false,
         "autoClickerSpeedB": false,
         "purpleDuckB": false,
         "featherFountainB": false,
@@ -41,6 +42,7 @@
         "rubberDuckArmyB": false,
         "radiantPlungeIIB": false,
         "TurquoiseDuckB": false,
+        "fortuneFeathersIIB": false,
         "DuckHeaterB": false,
         "BreadStormMachineB": false,
         "coralPoolB": false,
@@ -51,6 +53,6 @@
         "flockRouterB": false,
         "pondOverclockerB": false,
         "autoClickerSpeedB2": false,
-        "criticalChanceB": false
+        "fortuneFeathersIIIB": false
     }
 }

@@ -57,14 +57,16 @@ class MagicalAutoClicker:
                 if self.target.shiny:
                     set_shiny_active()
 
-                DPC = get_current_dpc()
+                DPC, crit = get_current_dpc()
 
                 game_data["ducks"] += DPC
 
-                color = (255, 220, 80) if self.target.shiny else (255,255,255)
-
                 floating_texts.append(
-                    FloatingText(f"+{DPC}", center, color)
+                    FloatingText(
+                        f"+{DPC}",
+                        center,
+                        critical=crit
+                    )
                 )
 
                 self.target = None

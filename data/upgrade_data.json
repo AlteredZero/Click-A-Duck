@@ -179,6 +179,19 @@
       "purchase_key": "LuxuryNestGroundB"
     },
     {
+      "title": "Fortune Feathers",
+      "cost": 600000,
+      "icon": "assets/Images/CritChance1.png",
+      "save_key": "criticalChance",
+      "duck_color": null,
+      "bonus": 0.005,
+      "description": "Luck seems to drift gently across the pond. Increases the critical chance by +0.5%.",
+      "save_key2": null,
+      "one_time": true,
+      "pool_color": null,
+      "purchase_key": "fortuneFeathersB"
+    },
+    {
       "title": "Auto Clicker Speed +1",
       "cost": 17000,
       "icon": "assets/Images/MagicalAutoClickerSpeedIncrease.png",
@@ -296,6 +309,19 @@
       "purchase_key": "TurquoiseDuckB"
     },
     {
+      "title": "Fortune Feathers II",
+      "cost": 195000,
+      "icon": "assets/Images/CritChance1.png",
+      "save_key": "criticalChance",
+      "duck_color": null,
+      "bonus": 0.005,
+      "description": "Luck seems to drift gently across the pond. Increases the critical chance by +0.5%.",
+      "save_key2": null,
+      "one_time": true,
+      "pool_color": null,
+      "purchase_key": "fortuneFeathersIIB"
+    },
+    {
       "title": "Duck Heater",
       "cost": 200000,
       "icon": "assets/Images/DuckHeater.png",
@@ -354,7 +380,7 @@
       "save_key": "magicalAutoClickers",
       "duck_color": null,
       "bonus": null,
-      "description": "Spawns a magical auto clicker, which clicks Ducks for you, though starts off pretty slow.",
+      "description": "Spawns another magical auto clicker, which clicks Ducks for you, though starts off pretty slow.",
       "save_key2": null,
       "one_time": true,
       "pool_color": null,
@@ -426,17 +452,17 @@
       "purchase_key": "autoClickerSpeedB2"
     },
     {
-      "title": "Critical Chance",
+      "title": "Fortune Feathers III",
       "cost": 600000,
-      "icon": "assets/Images/DuckCrit.png",
+      "icon": "assets/Images/CritChance1.png",
       "save_key": "criticalChance",
       "duck_color": null,
-      "bonus": 0.003,
-      "description": "Increases the critical chance by +0.3%.",
+      "bonus": 0.005,
+      "description": "Luck seems to drift gently across the pond. Increases the critical chance by +0.5%.",
       "save_key2": null,
       "one_time": true,
       "pool_color": null,
-      "purchase_key": "criticalChanceB"
+      "purchase_key": "fortuneFeathersIIIB"
     }
   ]
 }

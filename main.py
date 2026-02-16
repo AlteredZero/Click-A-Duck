@@ -138,7 +138,7 @@ default_data = {
     "twoDuckSpawnChance": 0,
     "shinyDuckChance": 0.0,
     "criticalChance": 0.0,
-    "criticalChance": 0.0,
+    "criticalPower": 1.1,
     "duckNests": 0,
     "goldenDuckStatue": 0,
     "quakingSpeaker": 0,
@@ -156,7 +156,20 @@ default_data = {
         "quackAmplifierB": False,
         "duckMagnetB": False,
         "rubberDuckArmyB": False,
-        "radiantPlungeIIB": False
+        "radiantPlungeIIB": False,
+        "TurquoiseDuckB": False,
+        "fortuneFeathersIIB": False,
+        "DuckHeaterB": False,
+        "BreadStormMachineB": False,
+        "coralPoolB": False,
+        "duckDlc": False,
+        "magicalAutoClickerB2": False,
+        "duckCeoB": False,
+        "hydroQuackPumpB": False,
+        "flockRouterB": False,
+        "pondOverclockerB": False,
+        "autoClickerSpeedB2": False,
+        "fortuneFeathersIIIB": False
     }
 }
 
@@ -373,6 +386,7 @@ def get_current_dpc():
     multiplierDPC = game_data["multiplierDPC"]
     critical_chance = game_data["criticalChance"]
     critical_power = game_data["criticalPower"]
+
     roll = random.uniform(0.0, 1.0)
 
     dpc *= multiplierDPC
@@ -380,10 +394,13 @@ def get_current_dpc():
     if shiny_active:
         dpc *= shiny_dpc_multiplier
 
+    crit = False
+
     if roll < critical_chance:
         dpc *= critical_power
+        crit = True
 
-    return int(dpc)
+    return int(dpc), crit
 
 
 def get_duck_spawn_count(game_data):
@@ -581,7 +598,7 @@ while running:
                             shiny_active = True
                             shiny_timer = shiny_duration
                         
-                        DPC = get_current_dpc()
+                        DPC, crit = get_current_dpc()
 
                         game_data["ducks"] += DPC
                         
@@ -596,7 +613,7 @@ while running:
                             FloatingText(
                                 f"+{DPC}",
                                 duck.rect.center,
-                                color
+                                critical=crit
                             )
                         )
                         break
