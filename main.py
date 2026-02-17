@@ -16,6 +16,7 @@ from pool import Pool
 from upgrade_buttons import UpgradeManager
 from magical_auto_clicker import MagicalAutoClicker
 from duck_pop_effect import DuckPopEffect
+from console import Console
 
 
 #---------------------#
@@ -144,6 +145,7 @@ default_data = {
     "quakingSpeaker": 0,
     "duckCoop": 0,
     "duckBeacon": 0,
+    "globalGameSpeed": 1,
     "purchases":{
         "orangeDuckB": False,
         "yellowPoolB": False,
@@ -490,6 +492,8 @@ def draw_animated_tooltip(screen, text, font, rect, mouse_pos, key, offset_x, of
 
 game_data = load_game(default_data)
 
+console = Console(screen_width, screen_height, scale)
+
 upgade_manager = UpgradeManager(screen_width, screen_height, game_data, scale)
 
 display_ducks = float(game_data["ducks"])
@@ -588,8 +592,17 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_F9:
+                console.toggle()
+                
+        if console.active:
+            console.handle_event(event, game_data, get_current_dps)
+            continue
+
+
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 1:
+            if event.button == 1: 
                 mouse_pos = event.pos
                 for duck in ducks[:]:
                     if duck.rect.collidepoint(mouse_pos):
@@ -898,8 +911,10 @@ while running:
     #-----FINAZLIATION----#
     #---------------------#
     
+    console.draw(screen, fonts["small"])
+    
     pygame.display.flip()
 
-    clock.tick(60)
+    clock.tick(int(60 * game_data.get("globalGameSpeed", 1)))
 
 pygame.quit()

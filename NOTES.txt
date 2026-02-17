@@ -92,3 +92,18 @@ PERCENT TABLE:
 | 0.50            | 50%     | 1 in 2        |
 | 0.75            | 75%     | 3 in 4        |
 | 1.00            | 100%    | 1 in 1        |
+
+
+
+COMMANDS:
+
+/addducks 1             # adds or subtract ducks
+/setducks 1             # set amount of ducks value
+/setdpc 1               # set duck per click
+/adddpc 1               # add or subtract duck per click
+/setdpcmulitiplier 1    # set duck per click multiplier
+/setdpsmultiplier 1     # set duck per second mulitplier
+/setdps 1               # set duck per second
+/adddps 1               # add or subtract duck per second
+/simulate 1             # simulate x amount of time, so simulate 60 simulates 60 seconds of gameplay instantly. By seconds.
+/globalgamespeed 1      # makes global game speed to whatever number, 1 is default speed, which is 60 ticks.
