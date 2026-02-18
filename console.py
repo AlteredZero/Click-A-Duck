@@ -130,12 +130,13 @@ class Console:
                 self.add_line(line, self.font)
 
         elif cmd["type"] == "help":
+            self.add_line("basic commands: ", self.font)
             self.add_line("close - close console", self.font)
             self.add_line("quit - quit game", self.font)
             self.add_line("save - save game", self.font)
             self.add_line("reset - reset all game values", self.font)
             self.add_line("stats - display current stats", self.font)
-            self.add_line("More commands in commands.txt", self.font)
+            self.add_line("*More commands in commands.txt*", self.font)
 
         elif cmd["type"] == "close":
             self.toggle()
