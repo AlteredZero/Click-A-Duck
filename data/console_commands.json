@@ -12,5 +12,12 @@
   "setdpsmultiplier": { "type": "set", "target": "multiplierDPS" },
 
   "simulate": { "type": "simulate" },
-  "globalgamespeed": { "type": "speed" }
+  "globalgamespeed": { "type": "speed" },
+
+  "quit": { "type": "quit"},
+  "save": { "type": "save"},
+  "reset": { "type": "reset"},
+  "stats": { "type": "stats"},
+  "help": { "type": "help"},
+  "close": { "type": "close"}
 }

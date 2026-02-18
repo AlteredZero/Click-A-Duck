@@ -489,10 +489,23 @@ def draw_animated_tooltip(screen, text, font, rect, mouse_pos, key, offset_x, of
                 x_offset += letter_surface.get_width()
 
 
+def quit_game():
+    global running
+    running = False
+
+
+def reset_game(game_data, default_data):
+    game_data.clear()
+    game_data.update(default_data)
+
+
+def reset_game_callback():
+    reset_game(game_data, default_data)
+
 
 game_data = load_game(default_data)
 
-console = Console(screen_width, screen_height, scale)
+console = Console(screen_width, screen_height, scale, quit_game, save_game, reset_game_callback)
 
 upgade_manager = UpgradeManager(screen_width, screen_height, game_data, scale)
 
@@ -749,10 +762,12 @@ while running:
 
 
     #----Ducks per second / playtime----#
-    if current_time - tick_time >= 1000:
+    game_speed = game_data.get("globalGameSpeed", 1)
+
+    if current_time - tick_time >= 1000 / game_speed:
         game_data["ducks"] += get_current_dps()
         game_data["playtime"] += 1
-        tick_time += 1000
+        tick_time += 1000 / game_speed
         
 
     #----Duck draw / animating----#
