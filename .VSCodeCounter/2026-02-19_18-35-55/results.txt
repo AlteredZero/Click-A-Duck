@@ -1,0 +1,44 @@
+Date : 2026-02-19 18:35:55
+Directory : c:\Users\topzg\OneDrive\Documents\Click-A-Duck
+Total : 16 files,  1894 codes, 65 comments, 572 blanks, all 2531 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Python   |         12 |      1,343 |         65 |        553 |      1,961 |
+| JSON     |          3 |        541 |          0 |          6 |        547 |
+| Markdown |          1 |         10 |          0 |         13 |         23 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                      | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                         |         16 |      1,894 |         65 |        572 |      2,531 |
+| . (Files)                                                                 |         13 |      1,353 |         65 |        566 |      1,984 |
+| data                                                                      |          3 |        541 |          0 |          6 |        547 |
++---------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                  | language | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\topzg\OneDrive\Documents\Click-A-Duck\README.md                  | Markdown |         10 |          0 |         13 |         23 |
+| c:\Users\topzg\OneDrive\Documents\Click-A-Duck\console.py                 | Python   |        203 |          0 |         77 |        280 |
+| c:\Users\topzg\OneDrive\Documents\Click-A-Duck\data\console_commands.json | JSON     |         19 |          0 |          5 |         24 |
+| c:\Users\topzg\OneDrive\Documents\Click-A-Duck\data\save.json             | JSON     |         55 |          0 |          0 |         55 |
+| c:\Users\topzg\OneDrive\Documents\Click-A-Duck\data\upgrade_data.json     | JSON     |        467 |          0 |          1 |        468 |
+| c:\Users\topzg\OneDrive\Documents\Click-A-Duck\duck.py                    | Python   |         16 |          0 |          5 |         21 |
+| c:\Users\topzg\OneDrive\Documents\Click-A-Duck\duck_pop_effect.py         | Python   |         31 |          0 |         13 |         44 |
+| c:\Users\topzg\OneDrive\Documents\Click-A-Duck\floating_text.py           | Python   |         47 |          0 |         17 |         64 |
+| c:\Users\topzg\OneDrive\Documents\Click-A-Duck\fonts.py                   | Python   |         14 |          0 |          4 |         18 |
+| c:\Users\topzg\OneDrive\Documents\Click-A-Duck\magical_auto_clicker.py    | Python   |         69 |          0 |         24 |         93 |
+| c:\Users\topzg\OneDrive\Documents\Click-A-Duck\main.py                    | Python   |        613 |         65 |        257 |        935 |
+| c:\Users\topzg\OneDrive\Documents\Click-A-Duck\options.py                 | Python   |         18 |          0 |         12 |         30 |
+| c:\Users\topzg\OneDrive\Documents\Click-A-Duck\pool.py                    | Python   |         31 |          0 |         12 |         43 |
+| c:\Users\topzg\OneDrive\Documents\Click-A-Duck\save_manager.py            | Python   |         18 |          0 |          3 |         21 |
+| c:\Users\topzg\OneDrive\Documents\Click-A-Duck\stats.py                   | Python   |         18 |          0 |         12 |         30 |
+| c:\Users\topzg\OneDrive\Documents\Click-A-Duck\upgrade_buttons.py         | Python   |        265 |          0 |        117 |        382 |
+| Total                                                                     |          |      1,894 |         65 |        572 |      2,531 |
++---------------------------------------------------------------------------+----------+------------+------------+------------+------------+

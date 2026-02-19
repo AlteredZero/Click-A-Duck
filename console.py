@@ -106,11 +106,55 @@ class Console:
                 self.add_line(f"Set {target} to {value}.", self.font)
 
         elif cmd["type"] == "simulate":
-            if value is not None:
-                seconds = int(value)
-                game_data["ducks"] += get_current_dps() * seconds
-                game_data["playtime"] += seconds
-                self.add_line(f"Simulated {seconds}s.", self.font)
+
+            if value is None:
+                self.add_line("Missing value.", self.font)
+                self.add_line("Usage: simulate <seconds>; Assumes dpc every 5 seconds.", self.font)
+                return
+
+            seconds = int(value)
+
+            if seconds <= 0:
+                self.add_line("Seconds must be positive.", self.font)
+                return
+
+            dps = get_current_dps()
+            global_speed = game_data.get("globalGameSpeed", 1)
+
+            base_dpc = game_data["ducksPerClick"] * game_data["multiplierDPC"]
+
+            crit_chance = game_data.get("criticalChance", 0)
+            crit_power = game_data.get("criticalPower", 1)
+
+            total_added = 0
+
+            for sec in range(1, seconds + 1):
+
+                dps_gain = dps * global_speed
+                game_data["ducks"] += dps_gain
+                total_added += dps_gain
+
+                if sec % 5 == 0:
+
+                    dpc = base_dpc
+
+                    if crit_chance > 0:
+                        import random
+                        if random.random() < crit_chance:
+                            dpc *= crit_power
+
+                    dpc *= global_speed
+
+                    game_data["ducks"] += dpc
+                    total_added += dpc
+
+            game_data["playtime"] += seconds
+
+            self.add_line(
+                f"Simulated {seconds}s and gained {int(total_added):,} ducks.",
+                self.font
+            )
+
 
         elif cmd["type"] == "speed":
             if value is not None:
