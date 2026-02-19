@@ -13,6 +13,7 @@
 
   "simulate": { "type": "simulate" },
   "globalgamespeed": { "type": "speed" },
+  "timeto": { "type": "timeto" },
 
   "quit": { "type": "quit"},
   "save": { "type": "save"},

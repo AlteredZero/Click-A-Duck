@@ -11,6 +11,7 @@ class Console:
         self.save_callback = save_callback
         self.reset_callback = reset_callback
         self.font = pygame.font.Font(None, 20)
+        self.first_time = True
 
         self.rect = pygame.Rect(
             0,
@@ -27,6 +28,10 @@ class Console:
     def toggle(self):
         self.active = not self.active
         self.input_text = ""
+
+        if self.active == True and self.first_time == True:
+            self.add_line("F9 to close, help for basic commands.", self.font)
+            self.first_time = False
 
     def wrap_text(self, text, font, max_width):
         lines = []
@@ -130,7 +135,6 @@ class Console:
                 self.add_line(line, self.font)
 
         elif cmd["type"] == "help":
-            self.add_line("basic commands: ", self.font)
             self.add_line("close - close console", self.font)
             self.add_line("quit - quit game", self.font)
             self.add_line("save - save game", self.font)
@@ -140,6 +144,63 @@ class Console:
 
         elif cmd["type"] == "close":
             self.toggle()
+
+        elif cmd["type"] == "timeto":
+
+            if value is None:
+                self.add_line("Missing value.", self.font)
+                self.add_line("Usage: timeto <duck amount>; Assumes dpc every 5 seconds.", self.font)
+                return
+
+            target = int(value)
+            current = game_data["ducks"]
+
+            if target <= current:
+                self.add_line("You already have that many ducks.", self.font)
+                return
+
+            dps = get_current_dps()
+
+            base_dpc = game_data["ducksPerClick"] * game_data["multiplierDPC"]
+            if game_data.get("criticalChance", 0) > 0:
+                crit_chance = game_data["criticalChance"]
+                crit_power = game_data["criticalPower"]
+                avg_multiplier = (1 - crit_chance) + (crit_chance * crit_power)
+                base_dpc *= avg_multiplier
+
+            base_dpc = int(base_dpc)
+
+            simulated_ducks = current
+            seconds = 0
+
+            if dps <= 0 and base_dpc <= 0:
+                self.add_line("No duck production detected.", self.font)
+                return
+
+            while simulated_ducks < target:
+                seconds += 1
+                simulated_ducks += dps
+
+                if seconds % 5 == 0:
+                    simulated_ducks += base_dpc
+
+                if seconds > 10_000_000:
+                    break
+
+            minutes = seconds // 60
+            remaining_seconds = seconds % 60
+
+            if minutes > 0:
+                self.add_line(
+                    f"Time to {target:,} ducks: {minutes}m {remaining_seconds}s",
+                    self.font
+                )
+            else:
+                self.add_line(
+                    f"Time to {target:,} ducks: {seconds}s",
+                    self.font
+                )
+
 
     def add_line(self, text, font):
         max_width = self.rect.width - 20

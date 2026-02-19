@@ -16,3 +16,4 @@ save                  # save game
 reset                 # reset all game values
 stats                 # display current stats 
 help                  # display basic commands
+timeto                # give time to x ducks, assumes dpc is every 5 seconds.
