@@ -8,6 +8,7 @@ venv/
 
 # VS Code settings
 .vscode/
+.VSCodeCounter
 
 # OS junk
 .DS_Store
