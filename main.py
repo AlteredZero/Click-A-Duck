@@ -842,7 +842,7 @@ while running:
             fonts["verysmall"],
             rect,
             mouse_pos,
-            f"upgrade_{unique_key}",   # <-- now unique
+            f"upgrade_{unique_key}",
             sx(10),
             -sy(35)
         )
