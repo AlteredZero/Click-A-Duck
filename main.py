@@ -337,7 +337,7 @@ def draw_upgrade_rows(screen, game_data, manager):
             rect = icon.get_rect(topleft=(x, y))
             screen.blit(icon, rect)
 
-            hover_rects.append((rect, key))
+            hover_rects.append((rect, f"{key}_{i}"))
 
         row += 1
 
@@ -827,15 +827,22 @@ while running:
 
 
     #----upgrade icon tooltips----#
-    for rect, key in upgrade_hover_rects:
-        description = upgade_manager.get_upgrade_description(key) + f" Owned: {int(game_data[key]):,}"
+    for rect, unique_key in upgrade_hover_rects:
+
+        base_key = unique_key.split("_")[0]
+
+        description = (
+            upgade_manager.get_upgrade_description(base_key)
+            + f" Owned: {int(game_data[base_key]):,}"
+        )
+
         draw_animated_tooltip(
             screen,
             description,
             fonts["verysmall"],
             rect,
             mouse_pos,
-            f"upgrade_{key}",
+            f"upgrade_{unique_key}",   # <-- now unique
             sx(10),
             -sy(35)
         )

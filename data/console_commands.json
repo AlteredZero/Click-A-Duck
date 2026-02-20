@@ -20,5 +20,9 @@
   "reset": { "type": "reset"},
   "stats": { "type": "stats"},
   "help": { "type": "help"},
-  "close": { "type": "close"}
+  "close": { "type": "close"},
+
+  "preset1": { "type": "preset1"},
+  "preset2": { "type": "preset2"},
+  "preset3": { "type": "preset3"}
 }

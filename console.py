@@ -111,6 +111,8 @@ class Console:
                 self.add_line("Missing value.", self.font)
                 self.add_line("Usage: simulate <seconds>; Assumes dpc every 5 seconds.", self.font)
                 return
+            
+            self.add_line("Simulating...", self.font)
 
             seconds = int(value)
 
@@ -121,39 +123,32 @@ class Console:
             dps = get_current_dps()
             global_speed = game_data.get("globalGameSpeed", 1)
 
+            dps *= global_speed
+
             base_dpc = game_data["ducksPerClick"] * game_data["multiplierDPC"]
 
             crit_chance = game_data.get("criticalChance", 0)
             crit_power = game_data.get("criticalPower", 1)
 
-            total_added = 0
+            total_dps_gain = dps * seconds
 
-            for sec in range(1, seconds + 1):
+            dpc_triggers = seconds // 5
 
-                dps_gain = dps * global_speed
-                game_data["ducks"] += dps_gain
-                total_added += dps_gain
+            if crit_chance > 0:
+                avg_multiplier = (1 - crit_chance) + (crit_chance * crit_power)
+            else:
+                avg_multiplier = 1
 
-                if sec % 5 == 0:
+            avg_dpc = base_dpc * avg_multiplier * global_speed
 
-                    dpc = base_dpc
+            total_dpc_gain = dpc_triggers * avg_dpc
 
-                    if crit_chance > 0:
-                        import random
-                        if random.random() < crit_chance:
-                            dpc *= crit_power
+            total_added = total_dps_gain + total_dpc_gain
 
-                    dpc *= global_speed
-
-                    game_data["ducks"] += dpc
-                    total_added += dpc
-
+            game_data["ducks"] += total_added
             game_data["playtime"] += seconds
 
-            self.add_line(
-                f"Simulated {seconds}s and gained {int(total_added):,} ducks.",
-                self.font
-            )
+            self.add_line(f"Simulated {seconds}s and gained {int(total_added):,} ducks.", self.font)
 
 
         elif cmd["type"] == "speed":
@@ -244,6 +239,17 @@ class Console:
                     f"Time to {target:,} ducks: {seconds}s",
                     self.font
                 )
+        
+        elif cmd["type"] == "preset1":
+            self.add_line("Preset 1 applied to game.", self.font)
+            game_data["ducks"] = 1500
+            game_data["ducksPerSecond"] = 18
+            game_data["ducksPerClick"] = 62
+            game_data["spawnTime"] = 2.57
+            game_data["DPCUpgradeBought"] = 61
+            game_data["duckNests"] = 18
+            game_data["goldenDuckStatue"] = 3
+            game_data["quakingSpeaker"] = 1
 
 
     def add_line(self, text, font):

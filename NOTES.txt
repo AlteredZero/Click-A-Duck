@@ -20,9 +20,9 @@ TO DO:
 [X] make shiny duck appearance much less
 [X] make quack amplifier actually work
 [X] add critical chance feature
-[/] fix bug where GoldenStrongCursorB and LuxuryNestGroundB dont make old 
+[X] fix bug where GoldenStrongCursorB and LuxuryNestGroundB dont make old 
 nests and click power improved
-[ ] fix bug where tooltip doesnt show after buying GoldenStrongCursorB and 
+[X] fix bug where tooltip doesnt show after buying GoldenStrongCursorB and 
 LuxuryNestGroundB
 [X] make GoldenStrongCursorB +5 and LuxuryNestGroundB +3
 
