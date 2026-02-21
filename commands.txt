@@ -20,6 +20,6 @@ reset                 # reset all game values
 stats                 # display current stats 
 help                  # display basic commands
 
-preset1               # set game to preset 1
+preset1               # set game to preset 1, equivalent to the first 5 minutes of gameplay.
 preset2               # set game to preset 2
 preset3               # set game to preset 3

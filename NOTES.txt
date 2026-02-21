@@ -25,6 +25,10 @@ nests and click power improved
 [X] fix bug where tooltip doesnt show after buying GoldenStrongCursorB and 
 LuxuryNestGroundB
 [X] make GoldenStrongCursorB +5 and LuxuryNestGroundB +3
+[ ] add Duck Industries enhancement
+[ ] add Executive Waddle Suite enahcnement
+[ ] add duck multiverse enhancement
+[ ] add Duck.exe 2.0 enhancement
 
 
 
@@ -72,7 +76,7 @@ though its likely I didnt test long enough.
 PERCENT TABLE:
 
 | Chance Decimal  | Percent | 1 in X Chance |
-| ----------------| ------- | ------------- |
+|   ----------------| ------- | ------------- |
 | 0.009           | 0.9%    | 1 in 111      |
 | 0.0075          | 0.75%   | 1 in 133      |
 | 0.005           | 0.5%    | 1 in 200      |

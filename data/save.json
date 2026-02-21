@@ -1,5 +1,5 @@
 {
-    "ducks": 0,
+    "ducks": 10.0,
     "ducksPerClick": 1,
     "ducksPerSecond": 0,
     "maxDucksInPool": 1,
@@ -7,7 +7,7 @@
     "DPCUpgradeBought": 0,
     "reainforcedCursorB": 0,
     "poolSize": 1,
-    "playtime": 1,
+    "playtime": 29,
     "cursorSize": 1,
     "duckColor": "yellow",
     "poolColor": "green",
