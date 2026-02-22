@@ -129,6 +129,10 @@ class UpgradeButton:
             game_data["multiplierDPS"] += 0.01
             game_data["multiplierDPS"] = round(game_data["multiplierDPS"], 3)
 
+        elif self.title == "Duck Beacon":
+            game_data["twoDuckSpawnChance"] += 0.005
+            game_data["twoDuckSpawnChance"] = round(game_data["twoDuckSpawnChance"], 3)
+
         elif self.title == "Golden Strong Cursor":
             game_data["ducksPerClick"] += (game_data["DPCUpgradeBought"] * 5)
 

@@ -106,6 +106,8 @@ shiny_hover_rect = None
 
 show_options = False
 
+show_stats = False
+
 
 #---------------------#
 #--------AUDIO--------#
@@ -139,7 +141,7 @@ default_data = {
     "magicalAutoClickerSpeed": 1,
     "multiplierDPC": 1.0,
     "multiplierDPS": 1.0,
-    "twoDuckSpawnChance": 0,
+    "twoDuckSpawnChance": 0.0,
     "shinyDuckChance": 0.0,
     "criticalChance": 0.0,
     "criticalPower": 1.1,
@@ -149,6 +151,7 @@ default_data = {
     "duckCoop": 0,
     "duckBeacon": 0,
     "globalGameSpeed": 1,
+    "allTimeDucks": 0,
     "purchases":{
         "orangeDuckB": False,
         "yellowPoolB": False,
@@ -267,6 +270,16 @@ special_tooltips = {
 }
 
 tooltip_hover_start = {}
+
+
+#---------------------#
+#--------LISTS--------#
+#---------------------#
+
+ducks = []
+floating_texts = []
+magical_auto_clickers = []
+duck_pop_effects = []
 
 
 #---------------------#
@@ -500,6 +513,7 @@ def quit_game():
 def reset_game(game_data, default_data):
     game_data.clear()
     game_data.update(default_data)
+    magical_auto_clickers.clear()
 
 
 def reset_game_callback():
@@ -513,15 +527,6 @@ console = Console(screen_width, screen_height, scale, quit_game, save_game, rese
 upgade_manager = UpgradeManager(screen_width, screen_height, game_data, scale)
 
 display_ducks = float(game_data["ducks"])
-
-#---------------------#
-#--------LISTS--------#
-#---------------------#
-
-ducks = []
-floating_texts = []
-magical_auto_clickers = []
-duck_pop_effects = []
 
 
 #---------------------#
@@ -630,6 +635,7 @@ while running:
                         DPC, crit = get_current_dpc()
 
                         game_data["ducks"] += DPC
+                        game_data["allTimeDucks"] += DPC
                         
                         ducks.remove(duck)
                         duck_pop_effects.append(DuckPopEffect(duck.image, duck.rect.center))
@@ -651,6 +657,11 @@ while running:
 
                 if options_rect.collidepoint(event.pos):
                     show_options = not show_options
+                    show_stats = False
+
+                if stats_rect.collidepoint(event.pos):
+                    show_stats = not show_stats
+                    show_options = False
 
                 if bought:
                     if game_data["magicalAutoClickers"] > len(magical_auto_clickers):
@@ -677,7 +688,7 @@ while running:
         if shiny_timer <= 0:
             shiny_active = False
 
-
+    #----options frame----#
     if show_options:
         menu_rect = pygame.Rect(sx(250), sy(20), sx(300), sy(500))
 
@@ -695,6 +706,83 @@ while running:
 
         duck_text = fonts["small"].render("Duck Text: ON", False, (255, 255, 255))
         screen.blit(duck_text, duck_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(170)))
+
+
+    #----stats frame----#
+    if show_stats:
+        menu_rect = pygame.Rect(sx(250), sy(20), sx(400), sy(955))
+
+        pygame.draw.rect(screen, (60, 60, 60), menu_rect)
+        pygame.draw.rect(screen, (255, 255, 255), menu_rect, 3)
+
+        title = fonts["large"].render("Stats", False, (255, 255, 255))
+        screen.blit(title, title.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(40)))
+
+        ducks_text = fonts["small"].render(f"Ducks: {int(game_data["ducks"]):,}", False, (255, 255, 255))
+        screen.blit(ducks_text, ducks_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(90)))
+
+        dpc_text = fonts["small"].render(f"Ducks per click: {int(game_data["ducksPerClick"]):,}", False, (255, 255, 255))
+        screen.blit(dpc_text, dpc_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(130)))
+
+        dps_text = fonts["small"].render(f"Ducks per second: {int(game_data["ducksPerSecond"]):,}", False, (255, 255, 255))
+        screen.blit(dps_text, dps_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(170)))
+
+        max_duck_text = fonts["small"].render(f"Max ducks in pool: {int(game_data["maxDucksInPool"]):,}", False, (255, 255, 255))
+        screen.blit(max_duck_text, max_duck_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(210)))
+
+        spawn_time_text = fonts["small"].render(f"Duck spawn time: {game_data["spawnTime"]:,}s", False, (255, 255, 255))
+        screen.blit(spawn_time_text, spawn_time_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(250)))
+
+        strong_cursor_text = fonts["small"].render(f"Strong cursors: {game_data["DPCUpgradeBought"]:,}", False, (255, 255, 255))
+        screen.blit(strong_cursor_text, strong_cursor_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(290)))
+
+        nests_text = fonts["small"].render(f"Duck nests: {game_data["duckNests"]:,}", False, (255, 255, 255))
+        screen.blit(nests_text, nests_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(330)))
+
+        gold_statue_text = fonts["small"].render(f"Golden duck statues: {game_data["goldenDuckStatue"]:,}", False, (255, 255, 255))
+        screen.blit(gold_statue_text, gold_statue_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(370)))
+
+        quacking_speaker_text = fonts["small"].render(f"Quaking speakers: {game_data["quakingSpeaker"]:,}", False, (255, 255, 255))
+        screen.blit(quacking_speaker_text, quacking_speaker_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(410)))
+
+        reinforced_cursor_text = fonts["small"].render(f"Reinforced cursors: {game_data["reainforcedCursorB"]:,}", False, (255, 255, 255))
+        screen.blit(reinforced_cursor_text, reinforced_cursor_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(450)))
+
+        duck_coop_text = fonts["small"].render(f"Duck coops: {game_data["duckCoop"]:,}", False, (255, 255, 255))
+        screen.blit(duck_coop_text, duck_coop_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(490)))
+
+        duck_beacon_text = fonts["small"].render(f"Duck beacons: {game_data["duckBeacon"]:,}", False, (255, 255, 255))
+        screen.blit(duck_beacon_text, duck_beacon_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(530)))
+
+        crit_chance_text = fonts["small"].render(f"Critical chance: {game_data["criticalChance"]*100}%", False, (255, 255, 255))
+        screen.blit(crit_chance_text, crit_chance_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(570)))
+
+        crit_power_text = fonts["small"].render(f"Critical power: x{game_data["criticalPower"]}", False, (255, 255, 255))
+        screen.blit(crit_power_text, crit_power_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(610)))
+
+        multiplier_dpc_text = fonts["small"].render(f"DPC multiplier: x{game_data["multiplierDPC"]}", False, (255, 255, 255))
+        screen.blit(multiplier_dpc_text, multiplier_dpc_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(650)))
+
+        multiplier_dps_text = fonts["small"].render(f"DPS multiplier: x{game_data["multiplierDPS"]}", False, (255, 255, 255))
+        screen.blit(multiplier_dps_text, multiplier_dps_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(690)))
+
+        shiny_duck_text = fonts["small"].render(f"Shiny duck chance: {game_data["shinyDuckChance"]*100}%", False, (255, 255, 255))
+        screen.blit(shiny_duck_text, shiny_duck_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(730)))
+
+        two_duck_spawn_text = fonts["small"].render(f"Two duck spawn chance: {game_data["twoDuckSpawnChance"]*100}%", False, (255, 255, 255))
+        screen.blit(two_duck_spawn_text, two_duck_spawn_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(770)))
+
+        magic_auto_clicker_text = fonts["small"].render(f"Magical auto clickers: {game_data["magicalAutoClickers"]:,}", False, (255, 255, 255))
+        screen.blit(magic_auto_clicker_text, magic_auto_clicker_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(810)))
+
+        auto_clicker_speed_text = fonts["small"].render(f"Auto clicker speed: {game_data["magicalAutoClickerSpeed"]:,}", False, (255, 255, 255))
+        screen.blit(auto_clicker_speed_text, auto_clicker_speed_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(850)))
+
+        all_time_duck_text = fonts["small"].render(f"All time ducks: {int(game_data["allTimeDucks"]):,}", False, (255, 255, 255))
+        screen.blit(all_time_duck_text, all_time_duck_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(890)))
+
+        playtime_text = fonts["small"].render(f"Playtime: {game_data["playtime"]}s", False, (255, 255, 255))
+        screen.blit(playtime_text, playtime_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(930)))
 
 
     #----shiny active----#
@@ -791,6 +879,7 @@ while running:
 
     if current_time - tick_time >= 1000 / game_speed:
         game_data["ducks"] += get_current_dps()
+        game_data["allTimeDucks"] += get_current_dps()
         game_data["playtime"] += 1
         tick_time += 1000 / game_speed
         
@@ -938,11 +1027,11 @@ while running:
                 break
 
     if not hovering:
-        if options_rect.collidepoint(event.pos):
+        if options_rect.collidepoint(mouse_pos):
             hovering = True
 
     if not hovering:
-        if stats_rect.collidepoint(event.pos):
+        if stats_rect.collidepoint(mouse_pos):
             hovering = True
 
     if not hovering and shiny_hover_rect and shiny_hover_rect.collidepoint(mouse_pos):

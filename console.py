@@ -97,13 +97,21 @@ class Console:
             if value is None:
                 self.add_line("Missing value.", self.font)
                 return
+            
 
             if cmd["type"] == "add":
                 game_data[target] += value
                 self.add_line(f"Added {value} to {target}.", self.font)
+
+                if target == "ducks":
+                    game_data["allTimeDucks"] += value
+
             else:
                 game_data[target] = value
                 self.add_line(f"Set {target} to {value}.", self.font)
+
+                if target == "ducks":
+                    game_data["allTimeDucks"] = value
 
         elif cmd["type"] == "simulate":
 
@@ -146,6 +154,7 @@ class Console:
             total_added = total_dps_gain + total_dpc_gain
 
             game_data["ducks"] += total_added
+            game_data["allTimeDucks"] += total_added
             game_data["playtime"] += seconds
 
             self.add_line(f"Simulated {seconds}s and gained {int(total_added):,} ducks.", self.font)
@@ -243,6 +252,7 @@ class Console:
         elif cmd["type"] == "preset1":
             self.add_line("Preset 1 applied to game.", self.font)
             game_data["ducks"] = 1500
+            game_data["allTimeDucks"] = 1500
             game_data["ducksPerSecond"] = 18
             game_data["ducksPerClick"] = 62
             game_data["spawnTime"] = 2.57

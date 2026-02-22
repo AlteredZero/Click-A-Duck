@@ -1,5 +1,5 @@
 {
-    "ducks": 10.0,
+    "ducks": 0,
     "ducksPerClick": 1,
     "ducksPerSecond": 0,
     "maxDucksInPool": 1,
@@ -7,7 +7,7 @@
     "DPCUpgradeBought": 0,
     "reainforcedCursorB": 0,
     "poolSize": 1,
-    "playtime": 220,
+    "playtime": 12,
     "cursorSize": 1,
     "duckColor": "yellow",
     "poolColor": "green",
@@ -15,7 +15,7 @@
     "magicalAutoClickerSpeed": 1,
     "multiplierDPC": 1.0,
     "multiplierDPS": 1.0,
-    "twoDuckSpawnChance": 0,
+    "twoDuckSpawnChance": 0.0,
     "shinyDuckChance": 0.0,
     "criticalChance": 0.0,
     "criticalPower": 1.1,
@@ -25,6 +25,7 @@
     "duckCoop": 0,
     "duckBeacon": 0,
     "globalGameSpeed": 1,
+    "allTimeDucks": 0,
     "purchases": {
         "orangeDuckB": false,
         "yellowPoolB": false,
