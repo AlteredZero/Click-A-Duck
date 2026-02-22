@@ -6,6 +6,7 @@ import pygame
 import random
 import math
 import time
+import options
 from save_manager import load_game, save_game
 from fonts import load_fonts
 from options import draw_options    
@@ -102,6 +103,8 @@ shiny_dps_multiplier = 2
 shiny_duck_icon = load_scaled("assets/Images/ShinyDuck.png", 40, 40)
 
 shiny_hover_rect = None
+
+show_options = False
 
 
 #---------------------#
@@ -559,8 +562,8 @@ while running:
 
     mouse_pos = pygame.mouse.get_pos()
 
-    draw_options(screen, mouse_pos, fonts)
-    draw_stats(screen, mouse_pos, fonts)
+    options_rect = draw_options(screen, mouse_pos, fonts)
+    stats_rect = draw_stats(screen, mouse_pos, fonts)
 
 
     target = game_data["ducks"]
@@ -646,6 +649,9 @@ while running:
 
                 bought, cost = upgade_manager.clicked(mouse_pos, game_data)
 
+                if options_rect.collidepoint(event.pos):
+                    show_options = not show_options
+
                 if bought:
                     if game_data["magicalAutoClickers"] > len(magical_auto_clickers):
                         magical_auto_clickers.clear()
@@ -670,6 +676,25 @@ while running:
         
         if shiny_timer <= 0:
             shiny_active = False
+
+
+    if show_options:
+        menu_rect = pygame.Rect(sx(250), sy(20), sx(300), sy(500))
+
+        pygame.draw.rect(screen, (60, 60, 60), menu_rect)
+        pygame.draw.rect(screen, (255, 255, 255), menu_rect, 3)
+
+        title = fonts["large"].render("Options", False, (255, 255, 255))
+        screen.blit(title, title.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(40)))
+
+        music_text = fonts["small"].render("Music: ON", False, (255, 255, 255))
+        screen.blit(music_text, music_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(90)))
+
+        sfx_text = fonts["small"].render("SFX: ON", False, (255, 255, 255))
+        screen.blit(sfx_text, sfx_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(130)))
+
+        duck_text = fonts["small"].render("Duck Text: ON", False, (255, 255, 255))
+        screen.blit(duck_text, duck_text.get_rect(centerx=menu_rect.x + menu_rect.width // 2, y=sy(170)))
 
 
     #----shiny active----#
@@ -912,6 +937,14 @@ while running:
                 hovering = True
                 break
 
+    if not hovering:
+        if options_rect.collidepoint(event.pos):
+            hovering = True
+
+    if not hovering:
+        if stats_rect.collidepoint(event.pos):
+            hovering = True
+
     if not hovering and shiny_hover_rect and shiny_hover_rect.collidepoint(mouse_pos):
         hovering = True
 
@@ -920,8 +953,6 @@ while running:
             if duck.rect.collidepoint(mouse_pos):
                 hovering = True
                 break
-
-    target_scale = 1.25 if hovering else 1.0
 
     cursor_to_draw = cursor_hover_image if hovering else cursor_image
 
