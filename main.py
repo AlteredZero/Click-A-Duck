@@ -107,6 +107,11 @@ show_options = False
 
 show_stats = False
 
+show_warning_clear_data = False
+
+clear_button_rect = None
+cancel_button_rect = None
+
 
 #---------------------#
 #--------AUDIO--------#
@@ -177,6 +182,13 @@ default_data = {
         "pondOverclockerB": False,
         "autoClickerSpeedB2": False,
         "fortuneFeathersIIIB": False
+    },
+    "settings": {
+        "volume": 0.5,
+        "music": True,
+        "sfx": True,
+        "duckText": True,
+        "magicalAutoClickers": True
     }
 }
 
@@ -279,6 +291,7 @@ ducks = []
 floating_texts = []
 magical_auto_clickers = []
 duck_pop_effects = []
+option_hover_rects = []
 
 
 #---------------------#
@@ -459,7 +472,6 @@ def draw_animated_tooltip(screen, text, font, rect, mouse_pos, key, offset_x, of
 
     line_height = font.get_height()
 
-    # Pre-calc box size
     surfaces = [font.render(line, True, (255,255,255)) for line in lines]
     box_width = max(s.get_width() for s in surfaces) + padding * 2
     box_height = line_height * len(lines) + padding * 2
@@ -470,7 +482,6 @@ def draw_animated_tooltip(screen, text, font, rect, mouse_pos, key, offset_x, of
     pygame.draw.rect(screen, (30, 30, 30), (x, y, box_width, box_height))
     pygame.draw.rect(screen, (255, 255, 255), (x, y, box_width, box_height), sx(2))
 
-    # Animation
     current_time = pygame.time.get_ticks()
     elapsed = current_time - hover_start_time
     letter_delay = 5
@@ -519,7 +530,158 @@ def reset_game_callback():
     reset_game(game_data, default_data)
 
 
+def draw_animated_text(screen, text, font, color, center_pos, key):
+    global tooltip_hover_start
+
+    if key not in tooltip_hover_start:
+        tooltip_hover_start[key] = pygame.time.get_ticks()
+
+    start_time = tooltip_hover_start[key]
+    current_time = pygame.time.get_ticks()
+    elapsed = current_time - start_time
+
+    letter_delay = 5
+    line_height = font.get_height()
+
+    x_offset_total = 0
+    letters = []
+
+    for letter in text:
+        surf = font.render(letter, True, color)
+        letters.append(surf)
+        x_offset_total += surf.get_width()
+
+    start_x = center_pos[0] - x_offset_total // 2
+    y = center_pos[1]
+
+    x_offset = 0
+
+    for index, letter_surface in enumerate(letters):
+        appear_time = index * letter_delay
+
+        if elapsed > appear_time:
+            progress = min(1, (elapsed - appear_time) / 150)
+            scale = 1 + (1 - progress) * 0.6
+
+            scaled_surface = pygame.transform.scale_by(letter_surface, scale)
+
+            screen.blit(
+                scaled_surface,
+                (
+                    start_x + x_offset,
+                    y - scaled_surface.get_height() // 2
+                )
+            )
+
+        x_offset += letter_surface.get_width()
+
+
+def clear_data_warning():
+
+    overlay = pygame.Surface((screen_width, screen_height), pygame.SRCALPHA)
+    overlay.fill((0, 0, 0, 180))
+    screen.blit(overlay, (0, 0))
+
+    popup_width = sx(600)
+    popup_height = sy(300)
+
+    main_rect = pygame.Rect(0, 0, popup_width, popup_height)
+    main_rect.center = (screen_width // 2, screen_height // 2)
+
+    pygame.draw.rect(screen, (60, 60, 60), main_rect)
+    pygame.draw.rect(screen, (255, 255, 255), main_rect, 3)
+
+    clear_data_warning = fonts["large"].render("WARNING!", True, (255, 255, 255))
+    clear_data_warning_rect = clear_data_warning.get_rect(
+        center=(main_rect.centerx, main_rect.top + sy(40))
+    )
+
+    clear_data_description = fonts["small"].render(
+        "You are about to clear ALL DATA!",
+        True,
+        (255, 255, 255)
+    )
+    clear_data_description_rect = clear_data_description.get_rect(
+        center=(main_rect.centerx, main_rect.top + sy(100))
+    )
+
+    clear_data_description2 = fonts["small"].render(
+        "This cannot be undone.",
+        True,
+        (255, 255, 255)
+    )
+    clear_data_description_rect2 = clear_data_description2.get_rect(
+        center=(main_rect.centerx, main_rect.top + sy(150))
+    )
+
+    button_width = sx(180)
+    button_height = sy(50)
+
+    clear_button_rect = pygame.Rect(0, 0, button_width, button_height)
+    cancel_button_rect = pygame.Rect(0, 0, button_width, button_height)
+
+    clear_button_rect.center = (main_rect.centerx - sx(120), main_rect.bottom - sy(60))
+    cancel_button_rect.center = (main_rect.centerx + sx(120), main_rect.bottom - sy(60))
+
+    pygame.draw.rect(screen, (80, 0, 0), clear_button_rect)
+    pygame.draw.rect(screen, (4, 207, 116), cancel_button_rect)
+
+    clear_text = fonts["small"].render("CLEAR DATA", True, (255, 0, 0))
+    cancel_text = fonts["small"].render("CANCEL", True, (255, 255, 255))
+
+    clear_text_rect = clear_text.get_rect(center=clear_button_rect.center)
+    cancel_text_rect = cancel_text.get_rect(center=cancel_button_rect.center)
+
+    draw_animated_text(
+        screen,
+        "WARNING!",
+        fonts["large"],
+        (255, 255, 255),
+        clear_data_warning_rect.center,
+        "clear_warning_title"
+    )
+    draw_animated_text(
+        screen,
+        "You are about to clear ALL DATA!",
+        fonts["small"],
+        (255, 255, 255),
+        clear_data_description_rect.center,
+        "clear_warning_desc1"
+    )
+    draw_animated_text(
+        screen,
+        "This cannot be undone.",
+        fonts["small"],
+        (255, 255, 255),
+        clear_data_description_rect2.center,
+        "clear_warning_desc2"
+    )
+    draw_animated_text(
+        screen,
+        "CLEAR DATA",
+        fonts["small"],
+        (255, 0, 0),
+        clear_text_rect.center,
+        "clear_warning_button"
+    )
+
+    draw_animated_text(
+        screen,
+        "CANCEL",
+        fonts["small"],
+        (255, 255, 255),
+        cancel_text_rect.center,
+        "cancel_warning_button"
+    )
+
+
+    return clear_button_rect, cancel_button_rect
+
+
 game_data = load_game(default_data)
+
+pygame.mixer.music.set_volume(game_data["settings"]["volume"])
+click_sound.set_volume(game_data["settings"]["volume"])
 
 console = Console(screen_width, screen_height, scale, quit_game, save_game, reset_game_callback)
 
@@ -605,7 +767,7 @@ while running:
     #---------------------#
     #----FOR LOOPS/IF's---#
     #---------------------#
-
+ 
 
     #----Pygame Event----#
     for event in pygame.event.get():
@@ -624,6 +786,20 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1: 
                 mouse_pos = event.pos
+
+                if show_warning_clear_data and clear_button_rect and cancel_button_rect:
+                    if clear_button_rect.collidepoint(event.pos):
+                        reset_game_callback()
+                        save_game(game_data)
+                        show_warning_clear_data = False
+                        click_sound.play()
+
+                    elif cancel_button_rect.collidepoint(event.pos):
+                        show_warning_clear_data = False
+                        click_sound.play()
+
+                    continue
+
                 for duck in ducks[:]:
                     if duck.rect.collidepoint(mouse_pos):
 
@@ -657,10 +833,68 @@ while running:
                 if options_rect.collidepoint(event.pos):
                     show_options = not show_options
                     show_stats = False
+                    click_sound.play()
+
+                    if show_options:
+                        keys_to_reset = ["options_title", "volume_text", "vol_minus", "vol_plus",
+                                        "save_game_text", "quit_game_text", "wipe_save_text"]
+                        keys_to_reset += [f"options_line_{i}" for i in range(10)]
+                        
+                        for key in keys_to_reset:
+                            tooltip_hover_start.pop(key, None)
 
                 if stats_rect.collidepoint(event.pos):
                     show_stats = not show_stats
                     show_options = False
+                    click_sound.play()
+
+                    if show_stats:
+                        keys_to_reset = ["stats_title"] + [f"stats_line_{i}" for i in range(23)]
+                        for key in keys_to_reset:
+                            tooltip_hover_start.pop(key, None)
+
+                if show_options:
+                    for rect, key in option_hover_rects:
+                        if rect.collidepoint(event.pos):
+
+                            if key == "volume_up":
+                                game_data["settings"]["volume"] = min(
+                                    1.0,
+                                    game_data["settings"]["volume"] + 0.1
+                                )
+
+                            elif key == "volume_down":
+                                game_data["settings"]["volume"] = max(
+                                    0.0,
+                                    game_data["settings"]["volume"] - 0.1
+                                )
+
+                            elif key == "wipe_save":
+                                show_warning_clear_data = True
+                                for key in [
+                                    "clear_warning_title",
+                                    "clear_warning_desc1",
+                                    "clear_warning_desc2",
+                                    "clear_warning_button",
+                                    "cancel_warning_button"
+                                ]:
+                                    tooltip_hover_start.pop(key, None)
+
+                            elif key == "quit_game":
+                                quit_game()
+
+                            elif key == "save_game":
+                                save_game(game_data)
+
+                            else:
+                                game_data["settings"][key] = not game_data["settings"][key]
+                            
+                            click_sound.play()
+
+                            pygame.mixer.music.set_volume(game_data["settings"]["volume"])
+                            click_sound.set_volume(game_data["settings"]["volume"])
+
+                            save_game(game_data)
 
                 if bought:
                     if game_data["magicalAutoClickers"] > len(magical_auto_clickers):
@@ -689,12 +923,12 @@ while running:
 
     #----options frame----#
     if show_options:
-        open_options(screen, fonts, game_data)
+        option_hover_rects = open_options(screen, fonts, game_data, mouse_pos, draw_animated_text)
 
 
     #----stats frame----#
     if show_stats:
-        open_stats(screen, fonts, game_data)
+        open_stats(screen, fonts, game_data, draw_animated_text)
 
 
     #----shiny active----#
@@ -908,6 +1142,10 @@ while running:
     #----upgrde list draw----#
     upgade_manager.draw(screen, fonts["large"], fonts["small"], fonts["verysmall"], game_data)
 
+    #----show clear data warning frame----#
+    if show_warning_clear_data:
+        clear_button_rect, cancel_button_rect = clear_data_warning()
+
 
     # ---------------------#
     # --- CURSOR / HOVER---#
@@ -946,12 +1184,25 @@ while running:
         if stats_rect.collidepoint(mouse_pos):
             hovering = True
 
+    if show_warning_clear_data and clear_button_rect and cancel_button_rect:
+        if clear_button_rect.collidepoint(mouse_pos):
+            hovering = True
+
+        elif cancel_button_rect.collidepoint(mouse_pos):
+            hovering = True
+
     if not hovering and shiny_hover_rect and shiny_hover_rect.collidepoint(mouse_pos):
         hovering = True
 
     if not hovering:
         for duck in ducks:
             if duck.rect.collidepoint(mouse_pos):
+                hovering = True
+                break
+
+    if not hovering and show_options:
+        for rect, _ in option_hover_rects:
+            if rect.collidepoint(mouse_pos):
                 hovering = True
                 break
 

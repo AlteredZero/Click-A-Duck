@@ -29,6 +29,10 @@ LuxuryNestGroundB
 [ ] add Executive Waddle Suite enahcnement
 [ ] add duck multiverse enhancement
 [ ] add Duck.exe 2.0 enhancement
+[X] add options menu
+[X] add stats menu
+[X] give warning prompt for wipe save
+[X] make save game and quit game button work in options
 
 
 

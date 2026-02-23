@@ -72,7 +72,7 @@
       "one_time": false,
       "pool_color": null
     },
-        {
+    {
       "title": "Duck Beacon",
       "cost": 10000,
       "icon": "assets/Images/DuckBeacon.png",

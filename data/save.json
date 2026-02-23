@@ -7,7 +7,7 @@
     "DPCUpgradeBought": 0,
     "reainforcedCursorB": 0,
     "poolSize": 1,
-    "playtime": 20,
+    "playtime": 188,
     "cursorSize": 1,
     "duckColor": "yellow",
     "poolColor": "green",
@@ -52,5 +52,12 @@
         "pondOverclockerB": false,
         "autoClickerSpeedB2": false,
         "fortuneFeathersIIIB": false
+    },
+    "settings": {
+        "volume": 0.5,
+        "music": true,
+        "sfx": true,
+        "duckText": true,
+        "magicalAutoClickers": true
     }
 }
