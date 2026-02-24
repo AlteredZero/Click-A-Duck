@@ -180,7 +180,7 @@
     },
     {
       "title": "Fortune Feathers",
-      "cost": 600000,
+      "cost": 17000,
       "icon": "assets/Images/CritChance1.png",
       "save_key": "criticalChance",
       "duck_color": null,

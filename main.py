@@ -87,6 +87,9 @@ respawn_time = None
 cannot_afford_message = ""
 cannot_afford_timer = 0
 
+save_message = "Game has been saved."
+save_message_timer = 0
+
 last_duck_sound_time = 0
 last_save_time = 0
 
@@ -111,6 +114,8 @@ show_warning_clear_data = False
 
 clear_button_rect = None
 cancel_button_rect = None
+
+save_cooldown_until = 0
 
 
 #---------------------#
@@ -338,7 +343,7 @@ def wrap_text(text, font, max_width):
 
 def draw_upgrade_rows(screen, game_data, manager):
     start_x = sx(20)
-    start_y = screen_height - sy(280) #255
+    start_y = screen_height - sy(270)
     spacing_x = sx(50)
     spacing_y = sy(50)
 
@@ -635,7 +640,7 @@ def clear_data_warning():
     draw_animated_text(
         screen,
         "WARNING!",
-        fonts["large"],
+        fonts["verylarge"],
         (255, 255, 255),
         clear_data_warning_rect.center,
         "clear_warning_title"
@@ -682,6 +687,10 @@ game_data = load_game(default_data)
 
 pygame.mixer.music.set_volume(game_data["settings"]["volume"])
 click_sound.set_volume(game_data["settings"]["volume"])
+duck_click_sound.set_volume(game_data["settings"]["volume"])
+purchase_sound.set_volume(game_data["settings"]["volume"])
+hover_sound.set_volume(game_data["settings"]["volume"])
+error_sound.set_volume(game_data["settings"]["volume"])
 
 console = Console(screen_width, screen_height, scale, quit_game, save_game, reset_game_callback)
 
@@ -860,13 +869,13 @@ while running:
                             if key == "volume_up":
                                 game_data["settings"]["volume"] = min(
                                     1.0,
-                                    game_data["settings"]["volume"] + 0.1
+                                    round(game_data["settings"]["volume"] + 0.1, 1)
                                 )
 
                             elif key == "volume_down":
                                 game_data["settings"]["volume"] = max(
                                     0.0,
-                                    game_data["settings"]["volume"] - 0.1
+                                    round(game_data["settings"]["volume"] - 0.1, 1)
                                 )
 
                             elif key == "wipe_save":
@@ -884,7 +893,12 @@ while running:
                                 quit_game()
 
                             elif key == "save_game":
-                                save_game(game_data)
+                                if current_time > save_cooldown_until:
+                                    save_game(game_data)
+                                    save_message_timer = current_time + 3000
+                                    save_cooldown_until = current_time + 1500
+                                    click_sound.play()
+
 
                             else:
                                 game_data["settings"][key] = not game_data["settings"][key]
@@ -893,6 +907,10 @@ while running:
 
                             pygame.mixer.music.set_volume(game_data["settings"]["volume"])
                             click_sound.set_volume(game_data["settings"]["volume"])
+                            duck_click_sound.set_volume(game_data["settings"]["volume"])
+                            purchase_sound.set_volume(game_data["settings"]["volume"])
+                            hover_sound.set_volume(game_data["settings"]["volume"])
+                            error_sound.set_volume(game_data["settings"]["volume"])
 
                             save_game(game_data)
 
@@ -1076,12 +1094,6 @@ while running:
             duck_pop_effects.remove(effect)
 
 
-    #----cannot afford message----#
-    if cannot_afford_message and current_time < cannot_afford_timer:
-        cannot_afford_text = fonts["large"].render(cannot_afford_message, False, (255, 255, 255))
-        screen.blit(cannot_afford_text, cannot_afford_text.get_rect(centerx=screen_width // 2, y=300))
-
-
     #----draw enhancements----#
     enhancements_hover_rects = draw_enhancements(screen, game_data, enhancement_icons, enhancement_positions)
 
@@ -1137,6 +1149,17 @@ while running:
             sx(10),
             0
         )
+
+    #----cannot afford message----#
+    if cannot_afford_message and current_time < cannot_afford_timer:
+        cannot_afford_text = fonts["large"].render(cannot_afford_message, False, (255, 255, 255))
+        screen.blit(cannot_afford_text, cannot_afford_text.get_rect(centerx=screen_width // 2, y=300))
+
+    
+    #----game saved message----#
+    if save_message and current_time < save_message_timer:
+        save_message_text = fonts["large"].render(save_message, False, (255, 255, 255))
+        screen.blit(save_message_text, save_message_text.get_rect(centerx=screen_width // 2, y=300))
 
 
     #----upgrde list draw----#

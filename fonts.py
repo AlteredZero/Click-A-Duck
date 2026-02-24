@@ -4,6 +4,7 @@ font_path = "assets/fonts/pixelFont.ttf"
 
 base_sizes = {
     "header": 48,
+    "verylarge": 34,
     "large": 28,
     "small": 23,
     "verysmall": 21,
