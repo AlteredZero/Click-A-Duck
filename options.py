@@ -40,7 +40,7 @@ def open_options(screen, fonts, game_data, mouse_pos, draw_animated_text):
     def sx(x): return int(x * scale)
     def sy(y): return int(y * scale)
 
-    menu_rect = pygame.Rect(sx(250), sy(20), sx(400), sy(635))
+    menu_rect = pygame.Rect(sx(250), sy(20), sx(400), sy(650))
 
     pygame.draw.rect(screen, (60, 60, 60), menu_rect)
     pygame.draw.rect(screen, (255, 255, 255), menu_rect, 3)
@@ -68,18 +68,23 @@ def open_options(screen, fonts, game_data, mouse_pos, draw_animated_text):
     vol = game_data["settings"]["volume"]
     vol_percent = int(vol * 100)
 
-    vol_text = fonts["small"].render(
+    center_y = start_y + len(options) * sy(60) + fonts["small"].get_height() // 2
+
+    draw_animated_text(
+        screen,
         f"Volume: {vol_percent}%",
-        False,
-        (255,255,255)
+        fonts["small"],
+        (255,255,255),
+        (menu_rect.centerx, center_y),
+        "volume_text"
     )
 
-    vol_rect = vol_text.get_rect(
-        centerx=menu_rect.centerx,
-        y=start_y + len(options) * sy(60)
+    vol_rect = pygame.Rect(
+        menu_rect.centerx - sx(120),
+        center_y - sy(20),
+        sx(240),
+        sy(40)
     )
-
-    screen.blit(vol_text, vol_rect)
 
     minus_rect = pygame.Rect(
         vol_rect.left - sx(60),
@@ -114,94 +119,112 @@ def open_options(screen, fonts, game_data, mouse_pos, draw_animated_text):
     for i, (label, key) in enumerate(options):
 
         is_on = game_data["settings"][key]
-
         color = (0, 220, 0) if is_on else (220, 0, 0)
 
         center_y = start_y + i * sy(60) + fonts["small"].get_height() // 2
 
+        text_string = f"{label}: {'ON' if is_on else 'OFF'}"
+
+        text_surface = fonts["small"].render(text_string, False, color)
+        text_rect = text_surface.get_rect(center=(menu_rect.centerx, center_y))
+
+        if text_rect.collidepoint(mouse_pos):
+            padding_x = sx(10)
+            padding_y = sy(5)
+
+            bg_rect = text_rect.inflate(padding_x * 2, padding_y * 2)
+
+            pygame.draw.rect(
+                screen,
+                (100, 100, 100),
+                bg_rect,
+            )
+
         draw_animated_text(
             screen,
-            f"{label}: {'ON' if is_on else 'OFF'}",
+            text_string,
             fonts["small"],
             color,
             (menu_rect.centerx, center_y),
             f"options_line_{i}"
         )
 
-        rect = pygame.Rect(
-            menu_rect.centerx - 200,
-            center_y - 20,
-            400,
-            40
-        )
-
-        if rect.collidepoint(mouse_pos):
-            pygame.draw.rect(
-                screen,
-                (100, 100, 100),
-                rect.inflate(s(20), s(10))
-        )
-
-        clickable_rects.append((rect, key))
+        clickable_rects.append((text_rect, key))
 
 
-    save_text = fonts["small"].render(
-        "SAVE GAME",
-        False,
-        (255, 255, 255)
-    )
+    save_center_y = vol_rect.bottom + sy(60) + fonts["small"].get_height() // 2
 
-    save_rect = save_text.get_rect(
-        centerx=menu_rect.centerx,
-        y=vol_rect.bottom + sy(60)
+    save_rect = pygame.Rect(
+        menu_rect.centerx - sx(120),
+        save_center_y - sy(20),
+        sx(240),
+        sy(40)
     )
 
     pygame.draw.rect(
         screen,
         (4, 207, 116),
-        save_rect.inflate(sx(20), sy(10))
+        save_rect
+    )
+
+    draw_animated_text(
+        screen,
+        "SAVE GAME",
+        fonts["small"],
+        (255, 255, 255),
+        (menu_rect.centerx, save_center_y),
+        "save_game_text"
     )
 
 
-    quit_text = fonts["small"].render(
-        "QUIT GAME",
-        False,
-        (255, 255, 255)
-    )
+    quit_center_y = vol_rect.bottom + sy(120) + fonts["small"].get_height() // 2
 
-    quit_rect = quit_text.get_rect(
-        centerx=menu_rect.centerx,
-        y=vol_rect.bottom + sy(120)
+    quit_rect = pygame.Rect(
+        menu_rect.centerx - sx(120),
+        quit_center_y - sy(20),
+        sx(240),
+        sy(40)
     )
 
     pygame.draw.rect(
         screen,
         (255,0,0),
-        quit_rect.inflate(sx(20), sy(10))
+        quit_rect
+    )
+
+    draw_animated_text(
+        screen,
+        "QUIT GAME",
+        fonts["small"],
+        (255, 255, 255),
+        (menu_rect.centerx, quit_center_y),
+        "quit_game_text"
     )
 
 
-    wipe_text = fonts["small"].render(
-        "CLEAR DATA",
-        False,
-        (255, 0, 0)
-    )
+    wipe_center_y = vol_rect.bottom + sy(245) + fonts["small"].get_height() // 2
 
-    wipe_rect = wipe_text.get_rect(
-        centerx=menu_rect.centerx,
-        y=vol_rect.bottom + sy(245)
+    wipe_rect = pygame.Rect(
+        menu_rect.centerx - sx(120),
+        wipe_center_y - sy(20),
+        sx(240),
+        sy(40)
     )
 
     pygame.draw.rect(
         screen,
         (80, 0, 0),
-        wipe_rect.inflate(sx(20), sy(10))
+        wipe_rect
     )
 
-
-    screen.blit(save_text, save_rect)
-    screen.blit(quit_text, quit_rect)
-    screen.blit(wipe_text, wipe_rect)
+    draw_animated_text(
+        screen,
+        "CLEAR DATA",
+        fonts["small"],
+        (255, 0, 0),
+        (menu_rect.centerx, wipe_center_y),
+        "wipe_save_text"
+    )
 
 
     clickable_rects.append((save_rect, "save_game"))
