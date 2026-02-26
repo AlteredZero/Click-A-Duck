@@ -33,6 +33,7 @@ LuxuryNestGroundB
 [X] add stats menu
 [X] give warning prompt for wipe save
 [X] make save game and quit game button work in options
+[ ] add locked cover frame for hidden upgrades and enhancements
 
 
 
