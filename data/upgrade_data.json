@@ -467,7 +467,7 @@
     {
       "title": "Lime Duck",
       "cost": 1300000,
-      "icon": "assets/Images/[COLOR].png",
+      "icon": "assets/Images/Duck1.png",
       "save_key": "duckColor",
       "duck_color": "lime",
       "bonus": 2300,
@@ -519,7 +519,7 @@
     {
       "title": "Cyan Pool",
       "cost": 2000000,
-      "icon": "assets/Images/[COLOR]",
+      "icon": "assets/Images/Pool1.png",
       "save_key": "poolColor",
       "duck_color": null,
       "bonus": 1,

@@ -529,6 +529,7 @@ def reset_game(game_data, default_data):
     game_data.clear()
     game_data.update(default_data)
     magical_auto_clickers.clear()
+    ducks.clear()
 
 
 def reset_game_callback():
