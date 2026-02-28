@@ -7,7 +7,7 @@
     "DPCUpgradeBought": 0,
     "reainforcedCursorB": 0,
     "poolSize": 1,
-    "playtime": 2,
+    "playtime": 0,
     "cursorSize": 1,
     "duckColor": "yellow",
     "poolColor": "green",
@@ -51,7 +51,17 @@
         "flockRouterB": false,
         "pondOverclockerB": false,
         "autoClickerSpeedB2": false,
-        "fortuneFeathersIIIB": false
+        "fortuneFeathersIIIB": false,
+        "limeDuckB": false,
+        "duckIndustriesB": false,
+        "duckHotelB": false,
+        "crumbTrailsB": false,
+        "cyanPoolB": false,
+        "pondLanternB": false,
+        "decorativePondArchB": false,
+        "enchantedWaterWheelB": false,
+        "platinumStrongCursorB": false,
+        "opulentNestingGroundsB": false
     },
     "settings": {
         "volume": 0.5,

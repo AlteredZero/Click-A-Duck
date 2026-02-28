@@ -123,12 +123,12 @@ class UpgradeButton:
                 game_data[self.save_key] += self.bonus
 
         elif self.title == "Reinforced Cursor":
-            game_data["multiplierDPC"] += 0.01
-            game_data["multiplierDPC"] = round(game_data["multiplierDPC"], 3)
+            game_data["multiplierDPC"] += 0.001
+            game_data["multiplierDPC"] = round(game_data["multiplierDPC"], 4)
         
         elif self.title == "Duck Coop":
-            game_data["multiplierDPS"] += 0.01
-            game_data["multiplierDPS"] = round(game_data["multiplierDPS"], 3)
+            game_data["multiplierDPS"] += 0.001
+            game_data["multiplierDPS"] = round(game_data["multiplierDPS"], 4)
 
         elif self.title == "Duck Beacon":
             game_data["twoDuckSpawnChance"] += 0.005
