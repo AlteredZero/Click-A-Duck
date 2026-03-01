@@ -34,7 +34,7 @@ LuxuryNestGroundB
 [X] give warning prompt for wipe save
 [X] make save game and quit game button work in options
 [ ] add locked cover frame for hidden upgrades and enhancements
-[ ] add niltimeto command
+[X] add niltimeto command
 [ ] set positions for enhancement icons
 [ ] make opulentNestingGrounds actually set values and change image
 [ ] make platinumStrongCursor actually set values and change image

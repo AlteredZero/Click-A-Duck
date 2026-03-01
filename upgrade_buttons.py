@@ -22,6 +22,18 @@ enhancement_effects = {
         "bonus_dps": 3,
         "description": "Makes the duck nests more luxurious, making the Duck Nest upgrade improve to +3 Ducks per second.",
         "icon": "assets/Images/PremiumDuckNest.png"
+    },
+    "platinumStrongCursorB": {
+        "target_upgrade_title": "Stronger Cursor",
+        "bonus_dpc": 10,
+        "description": "Crafted from pure platinum, makes the Strong Cursor upgrade improved to +10 Ducks per click.",
+        "icon": "assets/Images/PlatinumStrongCursor.png"
+    },
+    "opulentNestingGroundsB": {
+        "target_upgrade_title": "Duck Nest",
+        "bonus_dps": 6,
+        "description": "Makes the duck nests Opulent, making the Duck Nest upgrade improve to +6 Ducks per second.",
+        "icon": "assets/Images/OpulentDuckNest.png"
     }
 }
 
@@ -94,7 +106,7 @@ class UpgradeButton:
             game_data[self.save_key] += 0.0001
 
         elif self.save_key == "criticalChance":
-            game_data[self.save_key] += self.bonus
+            game_data[self.save_key] += round(self.bonus, 3)
 
         elif self.bonus is not None:
             if self.duck_color is not None:
