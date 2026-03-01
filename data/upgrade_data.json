@@ -88,6 +88,19 @@
 
   "enhancements": [
     {
+      "title": "[PLACEHOLDER]",
+      "cost": 0,
+      "icon": "assets/Images/PLACEHOLDER.png",
+      "save_key": "",
+      "duck_color": null,
+      "bonus": 0,
+      "description": "[PLACEHOLDER]",
+      "save_key2": null,
+      "one_time": true,
+      "pool_color": null,
+      "purchase_key": ""
+    },
+    {
       "title": "Orange Duck",
       "cost": 1500,
       "icon": "assets/Images/OrangeDuck.png",

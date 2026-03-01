@@ -443,7 +443,6 @@ def get_duck_spawn_count(game_data):
 
     beacon_level = game_data.get("duckBeacon", 0)
 
-    # +0.5% per level
     chance_percent = beacon_level * 0.5
 
     extra = chance_percent / 100
@@ -607,6 +606,7 @@ def clear_data_warning():
         True,
         (255, 255, 255)
     )
+
     clear_data_description_rect = clear_data_description.get_rect(
         center=(main_rect.centerx, main_rect.top + sy(100))
     )
@@ -616,6 +616,7 @@ def clear_data_warning():
         True,
         (255, 255, 255)
     )
+
     clear_data_description_rect2 = clear_data_description2.get_rect(
         center=(main_rect.centerx, main_rect.top + sy(150))
     )
@@ -646,6 +647,7 @@ def clear_data_warning():
         clear_data_warning_rect.center,
         "clear_warning_title"
     )
+
     draw_animated_text(
         screen,
         "You are about to clear ALL DATA!",
@@ -654,6 +656,7 @@ def clear_data_warning():
         clear_data_description_rect.center,
         "clear_warning_desc1"
     )
+
     draw_animated_text(
         screen,
         "This cannot be undone.",
@@ -662,6 +665,7 @@ def clear_data_warning():
         clear_data_description_rect2.center,
         "clear_warning_desc2"
     )
+
     draw_animated_text(
         screen,
         "CLEAR DATA",

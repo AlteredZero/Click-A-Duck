@@ -120,7 +120,10 @@ class UpgradeButton:
                 game_data["ducksPerSecond"] += self.bonus
 
             else:
-                game_data[self.save_key] += self.bonus
+                if self.save_key == "":
+                    pass
+                else:
+                    game_data[self.save_key] += self.bonus
 
         elif self.title == "Reinforced Cursor":
             game_data["multiplierDPC"] += 0.001
