@@ -22,7 +22,7 @@ enhancement_effects = {
         "bonus_dps": 3,
         "description": "Makes the duck nests more luxurious, making the Duck Nest upgrade improve to +3 Ducks per second.",
         "icon": "assets/Images/PremiumDuckNest.png"
-    }   
+    }
 }
 
 
@@ -116,6 +116,10 @@ class UpgradeButton:
                 game_data["ducksPerSecond"] += self.bonus
 
             elif self.title == "Duck CEO":
+                game_data["ducksPerClick"] += self.bonus
+                game_data["ducksPerSecond"] += self.bonus
+
+            elif self.title == "Duck Hotel":
                 game_data["ducksPerClick"] += self.bonus
                 game_data["ducksPerSecond"] += self.bonus
 

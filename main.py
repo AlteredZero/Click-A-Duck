@@ -6,6 +6,7 @@ import pygame
 import random
 import math
 import time
+import json
 from save_manager import load_game, save_game
 from fonts import load_fonts
 from options import draw_options, open_options    
@@ -31,6 +32,9 @@ screen_width, screen_height = screen.get_size()
 
 pygame.display.set_caption("Click-A-Duck")
 pygame.display.set_icon(pygame.image.load("assets/Images/Duck1.png").convert_alpha())
+
+with open("data/upgrade_data.json", "r") as f:
+    upgrade_data = json.load(f)
 
 
 #---------------------#
@@ -186,7 +190,16 @@ default_data = {
         "flockRouterB": False,
         "pondOverclockerB": False,
         "autoClickerSpeedB2": False,
-        "fortuneFeathersIIIB": False
+        "fortuneFeathersIIIB": False,
+        "duckIndustriesB": False,
+        "duckHotelB": False,
+        "crumbTrailsB": False,
+        "cyanPoolB": False,
+        "pondLanternB": False,
+        "decorativePondArchB": False,
+        "enchantedWaterWheelB": False,
+        "platinumStrongCursorB": False,
+        "opulentNestingGroundsB": False
     },
     "settings": {
         "volume": 0.5,
@@ -197,51 +210,13 @@ default_data = {
     }
 }
 
-enhancements_info = {
-    "megaDuckFeederB": {
-        "description": "A massive feeder that no Duck can resist, permanently increases Ducks per second by +25."
-    },
-    "featherFountainB": {
-        "description": "A fountain of magical feathers keeps the Ducks entertained, increasing Ducks per second by +65."
-    },
-    "quackAmplifierB": {
-        "description": "Every quack resonates across the pond with extra force, granting x1.2 Ducks per click permanently."
-    },
-    "duckMagnetB": {
-        "description": "Ducks from nearby ponds mysteriously find their way here, permanently increases Ducks per second by +200."
-    },
-    "rubberDuckArmyB": {
-        "description": "Here to serve and protect the duck empire, granting +300 DPS and +300 DPC permanently."
-    },
-    "DuckHeaterB": {
-        "description": "Makes the ducks feel nice and warm, especially perfect for the winter season. Gives +900 DPS."
-    },
-    "BreadStormMachineB": {
-        "description": "A magical machine that makes it literally rain bread, though the ducks aren't complaining. Gives +500 DPS and +500 DPC"
-    },
-    "duckDlc": {
-        "description": "Adds more ducks. That's it. Gives +1150 DPS."
-    },
-    "duckCeoB": {
-        "description": "The ducks elected a leader. things got organized fast. Grants +750 DPS and +750 DPC"
-    },
-    "hydroQuackPumpB": {
-        "description": "Pressurizes the pond to optimal duck density. Grants +1400 Ducks per click."
-    },
-    "flockRouterB": {
-        "description": "Redirects incoming duck traffic. Gives +1550 Ducks per second."
-    },
-    "pondOverclockerB": {
-        "description": "Overclocks the pond. Warning: may exceed recommended duck limits. Gives +1700 Ducks per click."
-    },
-}
-
 duck_images = {
     "yellow": load_scaled("assets/Images/Duck1.png", 60, 60),
     "shiny": load_scaled("assets/Images/ShinyDuck.png", 60, 60),
     "orange": load_scaled("assets/Images/OrangeDuck.png", 60, 60),
     "purple": load_scaled("assets/Images/PurpleDuck.png", 60, 60),
     "turquoise": load_scaled("assets/Images/TurquoiseDuck1.png", 60, 60),
+    "lime": load_scaled("assets/Images/LimeDuck.png", 60, 60),
 }
 
 pool_images = {
@@ -249,6 +224,7 @@ pool_images = {
     "yellow": pygame.image.load("assets/Images/YellowPool.png").convert_alpha(),
     "hotPink": pygame.image.load("assets/Images/HotPinkPool.png").convert_alpha(),
     "coral": pygame.image.load("assets/Images/CoralPool.png").convert_alpha(),
+    "cyan": pygame.image.load("assets/Images/CyanPool.png").convert_alpha(),
 }
 
 enhancement_icons = {
@@ -264,6 +240,12 @@ enhancement_icons = {
     "hydroQuackPumpB": load_scaled("assets/Images/Hydro-Quack Pump.png", 50, 50),
     "flockRouterB": load_scaled("assets/Images/FlockRouter.png", 50, 50),
     "pondOverclockerB": load_scaled("assets/Images/PondOverclock.png", 50, 50),
+    "duckIndustriesB": load_scaled("assets/Images/DuckIndustries.png", 50, 50),
+    "duckHotelB": load_scaled("assets/Images/DuckHotel.png", 50, 50),
+    "crumbTrailsB": load_scaled("assets/Images/BreadcrumbsDuck.png", 50, 50),
+    "pondLanternB": load_scaled("assets/Images/PondLantern.png", 50, 50),
+    "decorativePondArchB": load_scaled("assets/Images/DecorativeDuckArch.png", 50, 50),
+    "enchantedWaterWheelB": load_scaled("assets/Images/EnhantedWaterWheel.png", 50, 50),
 }
 
 enhancement_positions = {
@@ -279,6 +261,12 @@ enhancement_positions = {
     "hydroQuackPumpB": (sx(1700), sy(430)),
     "flockRouterB": (sx(1730), sy(900)),
     "pondOverclockerB": (sx(1300), sy(1150)),
+    "duckIndustriesB": (sx(100), sy(100)),
+    "duckHotelB": (sx(100), sy(200)),
+    "crumbTrailsB": (sx(100), sy(300)),
+    "pondLanternB": (sx(100), sy(400)),
+    "decorativePondArchB": (sx(100), sy(500)),
+    "enchantedWaterWheelB": (sx(100), sy(600)),
 }
 
 special_tooltips = {
@@ -286,6 +274,8 @@ special_tooltips = {
 }
 
 tooltip_hover_start = {}
+
+enhancements_info = {}
 
 
 #---------------------#
@@ -714,6 +704,14 @@ for i in range(game_data["magicalAutoClickers"]):
     magical_auto_clickers.append(
         MagicalAutoClicker(pos, magical_auto_clicker_image)
     ) 
+
+for enhancement in upgrade_data["enhancements"]:
+    purchase_key = enhancement.get("purchase_key")
+
+    if purchase_key:
+        enhancements_info[purchase_key] = {
+            "description": enhancement.get("description", "")
+        }
 
 
 #---------------------#
