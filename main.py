@@ -11,6 +11,7 @@ from save_manager import load_game, save_game
 from fonts import load_fonts
 from options import draw_options, open_options    
 from stats import draw_stats, open_stats
+from donate import draw_donate, open_donate
 from floating_text import FloatingText
 from duck import Duck
 from pool import Pool
@@ -608,7 +609,17 @@ def clear_data_warning():
     )
 
     clear_data_description_rect2 = clear_data_description2.get_rect(
-        center=(main_rect.centerx, main_rect.top + sy(150))
+        center=(main_rect.centerx, main_rect.top + sy(130))
+    )
+
+    clear_data_description3 = fonts["small"].render(
+        "(Game will close and restart.)",
+        True,
+        (255, 255, 255)
+    )
+
+    clear_data_description_rect3 = clear_data_description3.get_rect(
+        center=(main_rect.centerx, main_rect.top + sy(160))
     )
 
     button_width = sx(180)
@@ -654,6 +665,15 @@ def clear_data_warning():
         (255, 255, 255),
         clear_data_description_rect2.center,
         "clear_warning_desc2"
+    )
+
+    draw_animated_text(
+        screen,
+        "(Game will close and restart.)",
+        fonts["small"],
+        (255, 255, 255),
+        clear_data_description_rect3.center,
+        "clear_warning_desc3"
     )
 
     draw_animated_text(
@@ -742,6 +762,7 @@ while running:
 
     options_rect = draw_options(screen, mouse_pos, fonts)
     stats_rect = draw_stats(screen, mouse_pos, fonts)
+    donate_rect = draw_donate(screen, mouse_pos, fonts)
 
 
     target = game_data["ducks"]
@@ -1208,6 +1229,10 @@ while running:
 
     if not hovering:
         if stats_rect.collidepoint(mouse_pos):
+            hovering = True
+
+    if not hovering:
+        if donate_rect.collidepoint(mouse_pos):
             hovering = True
 
     if show_warning_clear_data and clear_button_rect and cancel_button_rect:

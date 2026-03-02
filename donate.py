@@ -4,7 +4,7 @@ base_width = 2560
 base_height = 1440
 
 
-def draw_stats(screen, mouse_pos, fonts):
+def draw_donate(screen, mouse_pos, fonts):
 
     screen_width, screen_height = screen.get_size()
 
@@ -20,18 +20,18 @@ def draw_stats(screen, mouse_pos, fonts):
 
     background = (60, 60, 60)
 
-    rect = pygame.Rect(sx(20), sy(90), sx(200), sy(60))
+    rect = pygame.Rect(sx(20), sy(160), sx(200), sy(60))
 
     pygame.draw.rect(screen, background, rect)
     pygame.draw.rect(screen, (255, 255, 255), rect, s(3))
 
-    stats_text = fonts["large"].render("Stats", False, (255, 255, 255))
-    screen.blit(stats_text, stats_text.get_rect(center=rect.center))
+    donate_text = fonts["large"].render("Donate", False, (255, 255, 255))
+    screen.blit(donate_text, donate_text.get_rect(center=rect.center))
 
     return rect
 
 
-def open_stats(screen, fonts, game_data, draw_animated_text):
+def open_donate(screen, fonts, game_data, draw_animated_text):
 
     screen_width, screen_height = screen.get_size()
 
