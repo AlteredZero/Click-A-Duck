@@ -25,5 +25,8 @@
 
   "preset1": { "type": "preset1"},
   "preset2": { "type": "preset2"},
-  "preset3": { "type": "preset3"}
+  "preset3": { "type": "preset3"},
+
+  "y": { "type": "y"},
+  "n": { "type": "n"}
 }

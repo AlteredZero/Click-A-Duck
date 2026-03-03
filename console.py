@@ -12,6 +12,7 @@ class Console:
         self.reset_callback = reset_callback
         self.font = pygame.font.Font(None, 20)
         self.first_time = True
+        self.reset_state = False
 
         self.rect = pygame.Rect(
             0,
@@ -174,8 +175,18 @@ class Console:
             self.add_line("Game saved.", self.font)
 
         elif cmd["type"] == "reset":
+            self.add_line("WARNING: You are about to clear ALL DATA! Are you sure you would like to do this? This cannot be undone. (Game will close and restart)", self.font)
+            self.add_line("Enter [y/n]", self.font)
+            self.reset_state = True
+
+        elif cmd["type"] == "y" and self.reset_state == True:
             self.reset_callback()
             self.add_line("Game values reset to default.", self.font)
+            self.reset_state = False
+
+        elif cmd["type"] == "n" and self.reset_state == True:
+            self.add_line("Game was NOT reset.", self.font)
+            self.reset_state = False
 
         elif cmd["type"] == "stats":
             formatted = json.dumps(game_data)
