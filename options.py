@@ -36,7 +36,6 @@ def open_options(screen, fonts, game_data, mouse_pos, draw_animated_text):
     scale_y = screen_height / base_height
     scale = min(scale_x, scale_y)
 
-    s = lambda v: int(v * scale)
     def sx(x): return int(x * scale)
     def sy(y): return int(y * scale)
 
@@ -74,7 +73,7 @@ def open_options(screen, fonts, game_data, mouse_pos, draw_animated_text):
         screen,
         f"Volume: {vol_percent}%",
         fonts["small"],
-        (255,255,255),
+        (255, 255, 255),
         (menu_rect.centerx, center_y),
         "volume_text"
     )

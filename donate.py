@@ -25,13 +25,15 @@ def draw_donate(screen, mouse_pos, fonts):
     pygame.draw.rect(screen, background, rect)
     pygame.draw.rect(screen, (255, 255, 255), rect, s(3))
 
-    donate_text = fonts["large"].render("Donate", False, (255, 255, 255))
+    donate_text = fonts["large"].render("Support", False, (255, 255, 255))
     screen.blit(donate_text, donate_text.get_rect(center=rect.center))
 
     return rect
 
 
 def open_donate(screen, fonts, game_data, draw_animated_text):
+
+    clickable_rects = []
 
     screen_width, screen_height = screen.get_size()
 
@@ -40,60 +42,76 @@ def open_donate(screen, fonts, game_data, draw_animated_text):
 
     scale = min(scale_x, scale_y)
 
-    s = lambda v: int(v * scale)
-
     def sx(x): return int(x * scale)
     def sy(y): return int(y * scale)
 
-    menu_rect = pygame.Rect(sx(250), sy(20), sx(400), sy(955))
+    menu_rect = pygame.Rect(sx(250), sy(20), sx(750), sy(280))
 
     pygame.draw.rect(screen, (60, 60, 60), menu_rect)
     pygame.draw.rect(screen, (255, 255, 255), menu_rect, 3)
 
-    stats_lines = [
-        f"Ducks: {int(game_data['ducks']):,}",
-        f"Ducks per click: {int(game_data['ducksPerClick']):,}",
-        f"Ducks per second: {int(game_data['ducksPerSecond']):,}",
-        f"Max ducks in pool: {int(game_data['maxDucksInPool']):,}",
-        f"Duck spawn time: {game_data['spawnTime']}s",
-        f"Strong cursors: {game_data['DPCUpgradeBought']:,}",
-        f"Duck nests: {game_data['duckNests']:,}",
-        f"Golden duck statues: {game_data['goldenDuckStatue']:,}",
-        f"Quaking speakers: {game_data['quakingSpeaker']:,}",
-        f"Reinforced cursors: {game_data['reainforcedCursorB']:,}",
-        f"Duck coops: {game_data['duckCoop']:,}",
-        f"Duck beacons: {game_data['duckBeacon']:,}",
-        f"Critical chance: {game_data['criticalChance']*100}%",
-        f"Critical power: x{game_data['criticalPower']}",
-        f"DPC multiplier: x{game_data['multiplierDPC']}",
-        f"DPS multiplier: x{game_data['multiplierDPS']}",
-        f"Shiny duck chance: {game_data['shinyDuckChance']*100}%",
-        f"Two duck spawn chance: {game_data['twoDuckSpawnChance']*100}%",
-        f"Magical auto clickers: {game_data['magicalAutoClickers']:,}",
-        f"Auto clicker speed: {game_data['magicalAutoClickerSpeed']:,}",
-        f"All time ducks: {int(game_data['allTimeDucks']):,}",
-        f"Playtime: {game_data['playtime']}s"
-    ]
 
     draw_animated_text(
         screen,
-        "Stats",
+        "Support",
         fonts["large"],
-        (255,255,255),
+        (255, 255, 255),
         (menu_rect.centerx, sy(60)),
-        "stats_title"
+        "support_title"
     )
 
-    start_y = sy(100)
+    draw_animated_text(
+        screen,
+        "If you're enjoying the game, consider supporting me!",
+        fonts["small"],
+        (255, 255, 255),
+        (menu_rect.centerx, sy(100)),
+        "support_desc"
+    )
 
-    for i, line in enumerate(stats_lines):
-        center_y = start_y + i * sy(40)
+    draw_animated_text(
+        screen,
+        "Every little bit helps me keep making more fun stuff.",
+        fonts["small"],
+        (255, 255, 255),
+        (menu_rect.centerx, sy(140)),
+        "support_desc2"
+    )
 
-        draw_animated_text(
-            screen,
-            line,
-            fonts["small"],
-            (255,255,255),
-            (menu_rect.centerx, center_y),
-            f"stats_line_{i}"
-        )
+    draw_animated_text(
+        screen,
+        "(opens in a new tab)",
+        fonts["verysmall"],
+        (255, 255, 255),
+        (menu_rect.centerx, sy(180)),
+        "support_desc3"
+    )
+
+    support_center_y = menu_rect.bottom - sy(70) + fonts["small"].get_height() // 2
+
+    support_rect = pygame.Rect(
+        menu_rect.centerx - sx(120),
+        support_center_y - sy(20),
+        sx(240),
+        sy(40)
+    )
+
+    pygame.draw.rect(
+        screen,
+        (4, 207, 116),
+        support_rect
+    )
+
+    draw_animated_text(
+        screen,
+        "SUPPORT!",
+        fonts["small"],
+        (255, 255, 255),
+        (menu_rect.centerx, support_center_y),
+        "support_button"
+    )
+
+    clickable_rects.append((support_rect, "support_button"))
+
+
+    return clickable_rects

@@ -7,6 +7,7 @@ import random
 import math
 import time
 import json
+import webbrowser
 from save_manager import load_game, save_game
 from fonts import load_fonts
 from options import draw_options, open_options    
@@ -112,8 +113,8 @@ shiny_duck_icon = load_scaled("assets/Images/ShinyDuck.png", 40, 40)
 shiny_hover_rect = None
 
 show_options = False
-
 show_stats = False
+show_donate = False
 
 show_warning_clear_data = False
 
@@ -121,6 +122,10 @@ clear_button_rect = None
 cancel_button_rect = None
 
 save_cooldown_until = 0
+
+support_url = "https://ko-fi.com/altered_games"
+
+support_button = None
 
 
 #---------------------#
@@ -288,6 +293,7 @@ floating_texts = []
 magical_auto_clickers = []
 duck_pop_effects = []
 option_hover_rects = []
+donate_hover_rects = []
 
 
 #---------------------#
@@ -612,8 +618,8 @@ def clear_data_warning():
         center=(main_rect.centerx, main_rect.top + sy(130))
     )
 
-    clear_data_description3 = fonts["small"].render(
-        "(Game will close and restart.)",
+    clear_data_description3 = fonts["verysmall"].render(
+        "(Game will close and restart)",
         True,
         (255, 255, 255)
     )
@@ -866,6 +872,7 @@ while running:
                 if options_rect.collidepoint(event.pos):
                     show_options = not show_options
                     show_stats = False
+                    show_donate = False
                     click_sound.play()
 
                     if show_options:
@@ -879,10 +886,22 @@ while running:
                 if stats_rect.collidepoint(event.pos):
                     show_stats = not show_stats
                     show_options = False
+                    show_donate = False
                     click_sound.play()
 
                     if show_stats:
                         keys_to_reset = ["stats_title"] + [f"stats_line_{i}" for i in range(23)]
+                        for key in keys_to_reset:
+                            tooltip_hover_start.pop(key, None)
+                
+                if donate_rect.collidepoint(event.pos):
+                    show_donate = not show_donate
+                    show_options = False
+                    show_stats = False
+                    click_sound.play()
+
+                    if show_donate:
+                        keys_to_reset = ["support_title", "support_desc", "support_desc2", "support_desc3", "support_button"]
                         for key in keys_to_reset:
                             tooltip_hover_start.pop(key, None)
 
@@ -938,6 +957,11 @@ while running:
 
                             save_game(game_data)
 
+                if show_donate:
+                    for rect, key in donate_hover_rects:
+                        if rect.collidepoint(event.pos):
+                            webbrowser.open(support_url)
+
                 if bought:
                     if game_data["magicalAutoClickers"] > len(magical_auto_clickers):
                         magical_auto_clickers.clear()
@@ -971,6 +995,11 @@ while running:
     #----stats frame----#
     if show_stats:
         open_stats(screen, fonts, game_data, draw_animated_text)
+
+
+    #----donate frame----#
+    if show_donate:
+        donate_hover_rects = open_donate(screen, fonts, game_data, draw_animated_text)
 
 
     #----shiny active----#
@@ -1253,6 +1282,12 @@ while running:
 
     if not hovering and show_options:
         for rect, _ in option_hover_rects:
+            if rect.collidepoint(mouse_pos):
+                hovering = True
+                break
+    
+    if not hovering and show_donate:
+        for rect, key in donate_hover_rects:
             if rect.collidepoint(mouse_pos):
                 hovering = True
                 break

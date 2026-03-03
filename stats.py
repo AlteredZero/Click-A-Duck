@@ -40,8 +40,6 @@ def open_stats(screen, fonts, game_data, draw_animated_text):
 
     scale = min(scale_x, scale_y)
 
-    s = lambda v: int(v * scale)
-
     def sx(x): return int(x * scale)
     def sy(y): return int(y * scale)
 
@@ -79,7 +77,7 @@ def open_stats(screen, fonts, game_data, draw_animated_text):
         screen,
         "Stats",
         fonts["large"],
-        (255,255,255),
+        (255, 255, 255),
         (menu_rect.centerx, sy(60)),
         "stats_title"
     )
