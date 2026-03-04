@@ -89,6 +89,7 @@ class Console:
         cmd = self.commands[command]
 
         if cmd["type"] in ["add", "set"]:
+            self.add_line(f">{cmd['type']}", self.font)
             target = cmd["target"]
 
             if target not in game_data:
@@ -115,6 +116,7 @@ class Console:
                     game_data["allTimeDucks"] = value
 
         elif cmd["type"] == "simulate":
+            self.add_line(f">{cmd['type']}", self.font)
 
             if value is None:
                 self.add_line("Missing value.", self.font)
@@ -162,38 +164,46 @@ class Console:
 
 
         elif cmd["type"] == "speed":
+            self.add_line(f">{cmd['type']}", self.font)
             if value is not None:
                 game_data["globalGameSpeed"] = value
                 self.add_line(f"Game speed set to {value}.", self.font)
 
         elif cmd["type"] == "quit":
+            self.add_line(f">{cmd['type']}", self.font)
             self.quit_callback()
             self.add_line("Game quitting...", self.font)
 
         elif cmd["type"] == "save":
+            self.add_line(f">{cmd['type']}", self.font)
             self.save_callback(game_data)
             self.add_line("Game saved.", self.font)
 
         elif cmd["type"] == "reset":
+            self.add_line(f">{cmd['type']}", self.font)
             self.add_line("WARNING: You are about to clear ALL DATA! Are you sure you would like to do this? This cannot be undone. (Game will close and restart)", self.font)
             self.add_line("Enter [y/n]", self.font)
             self.reset_state = True
 
         elif cmd["type"] == "y" and self.reset_state == True:
+            self.add_line(f">{cmd['type']}", self.font)
             self.reset_callback()
             self.add_line("Game values reset to default.", self.font)
             self.reset_state = False
 
         elif cmd["type"] == "n" and self.reset_state == True:
+            self.add_line(f">{cmd['type']}", self.font)
             self.add_line("Game was NOT reset.", self.font)
             self.reset_state = False
 
         elif cmd["type"] == "stats":
+            self.add_line(f">{cmd['type']}", self.font)
             formatted = json.dumps(game_data)
             for line in formatted.split("\n"):
                 self.add_line(line, self.font)
 
         elif cmd["type"] == "help":
+            self.add_line(f">{cmd['type']}", self.font)
             self.add_line("close - close console", self.font)
             self.add_line("quit - quit game", self.font)
             self.add_line("save - save game", self.font)
@@ -202,9 +212,11 @@ class Console:
             self.add_line("*More commands in commands.txt*", self.font)
 
         elif cmd["type"] == "close":
+            self.add_line(f">{cmd['type']}", self.font)
             self.toggle()
 
         elif cmd["type"] == "timeto":
+            self.add_line(f">{cmd['type']}", self.font)
 
             if value is None:
                 self.add_line("Missing value.", self.font)
@@ -261,6 +273,7 @@ class Console:
                 )
 
         elif cmd["type"] == "niltimeto":
+            self.add_line(f">{cmd['type']}", self.font)
 
             if value is None:
                 self.add_line("Missing value.", self.font)
@@ -317,6 +330,7 @@ class Console:
                 )
         
         elif cmd["type"] == "preset1":
+            self.add_line(f">{cmd['type']}", self.font)
             self.add_line("Preset 1 applied to game.", self.font)
             game_data["ducks"] = 1500
             game_data["allTimeDucks"] = 1500

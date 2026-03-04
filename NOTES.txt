@@ -25,8 +25,8 @@ nests and click power improved
 [X] fix bug where tooltip doesnt show after buying GoldenStrongCursorB and 
 LuxuryNestGroundB
 [X] make GoldenStrongCursorB +5 and LuxuryNestGroundB +3
-[ ] add Duck Industries enhancement
-[ ] add Executive Waddle Suite enahcnement
+[X] add Duck Industries enhancement
+[X] add Executive Waddle Suite enahcnement
 [ ] add duck multiverse enhancement
 [ ] add Duck.exe 2.0 enhancement
 [X] add options menu
@@ -38,8 +38,8 @@ LuxuryNestGroundB
 [ ] set positions for enhancement icons
 [ ] make opulentNestingGrounds actually set values and change image
 [ ] make platinumStrongCursor actually set values and change image
-[ ] add loading screen
-[ ] add restarting loading screen
+[X] add loading screen
+[X] add restarting loading screen
 
 
 
