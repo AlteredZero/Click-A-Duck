@@ -8,6 +8,8 @@ import math
 import time
 import json
 import webbrowser
+import os
+import sys
 from save_manager import load_game, save_game
 from fonts import load_fonts
 from options import draw_options, open_options    
@@ -26,11 +28,107 @@ from console import Console
 #--------INIT---------#
 #---------------------#
 
+def loading_screen(screen, screen_width, screen_height, scale, fonts):
+    clock = pygame.time.Clock()
+
+    duck_image = pygame.image.load("assets/Images/Duck1.png").convert_alpha()
+    duck_image = pygame.transform.scale(duck_image, (int(80 * scale), int(80 * scale)))
+
+    loading_steps = [
+        lambda: pygame.mixer.Sound("assets/audio/DuckQuack.mp3"),
+        lambda: pygame.mixer.Sound("assets/audio/MouseClick.mp3"),
+        lambda: pygame.mixer.Sound("assets/audio/PurchaseSound.mp3"),
+        lambda: pygame.mixer.Sound("assets/audio/HoverSound.mp3"),
+        lambda: pygame.mixer.Sound("assets/audio/ErrorSound.mp3"),
+        lambda: pygame.image.load("assets/Images/BackgroundBlue.png").convert_alpha(),
+        lambda: pygame.image.load("assets/Images/Pool1.png").convert_alpha(),
+        lambda: pygame.image.load("assets/Images/YellowPool.png").convert_alpha(),
+        lambda: pygame.image.load("assets/Images/HotPinkPool.png").convert_alpha(),
+        lambda: pygame.image.load("assets/Images/CoralPool.png").convert_alpha(),
+        lambda: pygame.image.load("assets/Images/CyanPool.png").convert_alpha(),
+    ]
+
+    total_steps = len(loading_steps)
+    completed = 0
+
+    displayed_percent = 0
+    target_percent = 0
+
+    start_time = pygame.time.get_ticks()
+    minimum_time = 5000
+    hold_time = 2000
+
+    t = 0
+
+    running = True
+    while running:
+
+        current_time = pygame.time.get_ticks()
+        elapsed = current_time - start_time
+
+        if completed < total_steps:
+            loading_steps[completed]()
+            completed += 1
+            target_percent = int((completed / total_steps) * 100)
+
+        if displayed_percent < target_percent:
+            displayed_percent += 0.5
+        elif completed == total_steps and elapsed < minimum_time:
+
+            displayed_percent += 0.3
+
+        if displayed_percent > 100:
+            displayed_percent = 100
+
+        screen.fill((0, 0, 0))
+
+        loading_text = fonts["large"].render(
+            f"LOADING {int(displayed_percent)}%",
+            False,
+            (255, 255, 255)
+        )
+        screen.blit(loading_text, (20, screen_height - 80))
+
+        t += 0.1
+        angle = math.sin(t) * 10
+        rotated = pygame.transform.rotate(duck_image, angle)
+        rect = rotated.get_rect(bottomright=(screen_width - 40, screen_height - 40))
+        screen.blit(rotated, rect)
+
+        pygame.display.flip()
+        clock.tick(60)
+
+        if displayed_percent >= 100 and elapsed >= minimum_time:
+            pygame.time.delay(hold_time)
+            running = False
+
+    fade_surface = pygame.Surface((screen_width, screen_height))
+    fade_surface.fill((0, 0, 0))
+
+    for alpha in range(255, -1, -8):
+        fade_surface.set_alpha(alpha)
+        screen.blit(fade_surface, (0, 0))
+        pygame.display.flip()
+        pygame.time.delay(15)
+
+
 pygame.init()
 pygame.mixer.init()
 
 screen = pygame.display.set_mode((0, 0), pygame.NOFRAME)
 screen_width, screen_height = screen.get_size()
+
+base_width = 2560
+base_height = 1440
+
+scale_x = screen_width / base_width
+scale_y = screen_height / base_height
+
+scale = min(scale_x, scale_y)
+
+fonts = load_fonts(scale)
+
+loading_screen(screen, screen_width, screen_height, scale, fonts)
 
 pygame.display.set_caption("Click-A-Duck")
 pygame.display.set_icon(pygame.image.load("assets/Images/Duck1.png").convert_alpha())
@@ -42,16 +140,6 @@ with open("data/upgrade_data.json", "r") as f:
 #---------------------#
 #-------SCALING-------#
 #---------------------#
-
-base_width = 2560
-base_height = 1440
-
-scale_x = screen_width / base_width
-scale_y = screen_height / base_height
-
-scale = min(scale_x, scale_y)
-
-fonts = load_fonts(scale)
 
 def sx(x): return int(x * scale)
 def sy(y): return int(y * scale)
@@ -530,6 +618,12 @@ def reset_game(game_data, default_data):
 
 def reset_game_callback():
     reset_game(game_data, default_data)
+    save_game(game_data)
+
+    pygame.quit()
+
+    # relaunch game
+    os.execv(sys.executable, [sys.executable] + sys.argv)
 
 
 def draw_animated_text(screen, text, font, color, center_pos, key):

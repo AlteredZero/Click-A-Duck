@@ -38,6 +38,8 @@ LuxuryNestGroundB
 [ ] set positions for enhancement icons
 [ ] make opulentNestingGrounds actually set values and change image
 [ ] make platinumStrongCursor actually set values and change image
+[ ] add loading screen
+[ ] add restarting loading screen
 
 
 
