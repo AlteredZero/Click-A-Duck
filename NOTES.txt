@@ -36,13 +36,14 @@ LuxuryNestGroundB
 [ ] add locked cover frame for hidden upgrades and enhancements
 [X] add niltimeto command
 [X] set positions for enhancement icons
-[ ] make opulentNestingGrounds actually set values and change image
-[ ] make platinumStrongCursor actually set values and change image
+[X] make opulentNestingGrounds actually set values and change image
+[X] make platinumStrongCursor actually set values and change image
 [X] add loading screen
 [X] add restarting loading screen
 [ ] add arcade enhancement
 [ ] add stock market enhancement
 [ ] add flappy bird arcade game enhancement
+[ ] fix restart game not working on all pc's
 
 
 
