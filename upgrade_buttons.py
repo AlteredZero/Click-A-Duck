@@ -154,16 +154,18 @@ class UpgradeButton:
             game_data["twoDuckSpawnChance"] = round(game_data["twoDuckSpawnChance"], 3)
 
         elif self.title == "Golden Strong Cursor":
-            game_data["ducksPerClick"] = game_data["DPCUpgradeBought"] * 5
+            game_data["ducksPerClick"] += game_data["DPCUpgradeBought"] * 5
 
         elif self.title == "Luxury Nesting Grounds":
-            game_data["ducksPerSecond"] = game_data["duckNests"] * 3
+            game_data["ducksPerSecond"] += game_data["duckNests"] * 3
 
         elif self.title == "Platinum Strong Cursor":
-            game_data["ducksPerClick"] = game_data["DPCUpgradeBought"] * 10
+            game_data["ducksPerClick"] -= game_data["DPCUpgradeBought"] * 5
+            game_data["ducksPerClick"] += game_data["DPCUpgradeBought"] * 10
 
         elif self.title == "Opulent Nesting Grounds":
-            game_data["ducksPerSecond"] = game_data["duckNests"] * 6
+            game_data["ducksPerSecond"] -= game_data["duckNests"] * 3
+            game_data["ducksPerSecond"] += game_data["duckNests"] * 6
 
         elif self.title == "Auto Clicker Speed +1":
             game_data["magicalAutoClickerSpeed"] += 0.5

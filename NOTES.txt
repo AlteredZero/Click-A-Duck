@@ -43,7 +43,7 @@ LuxuryNestGroundB
 [ ] add arcade enhancement
 [ ] add stock market enhancement
 [ ] add flappy bird arcade game enhancement
-[ ] fix restart game not working on all pc's
+[X] fix restart game not working on all pc's
 
 
 

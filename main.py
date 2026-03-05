@@ -622,8 +622,12 @@ def reset_game_callback():
 
     pygame.quit()
 
-    # relaunch game
-    os.execv(sys.executable, [sys.executable] + sys.argv)
+    if getattr(sys, 'frozen', False):
+        # Running as compiled executable
+        os.execl(sys.executable, sys.executable)
+    else:
+        # Running as python script
+        os.execl(sys.executable, sys.executable, *sys.argv)
 
 
 def draw_animated_text(screen, text, font, color, center_pos, key):
