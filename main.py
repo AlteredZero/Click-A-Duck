@@ -56,7 +56,7 @@ def loading_screen(screen, screen_width, screen_height, scale, fonts):
 
     start_time = pygame.time.get_ticks()
     minimum_time = 5000
-    hold_time = 2000
+    hold_time = 500
 
     t = 0
 
@@ -355,12 +355,12 @@ enhancement_positions = {
     "hydroQuackPumpB": (sx(1700), sy(430)),
     "flockRouterB": (sx(1730), sy(900)),
     "pondOverclockerB": (sx(1300), sy(1150)),
-    "duckIndustriesB": (sx(100), sy(100)),
-    "duckHotelB": (sx(100), sy(200)),
-    "crumbTrailsB": (sx(100), sy(300)),
-    "pondLanternB": (sx(100), sy(400)),
-    "decorativePondArchB": (sx(100), sy(500)),
-    "enchantedWaterWheelB": (sx(100), sy(600)),
+    "duckHotelB": (sx(717),  sy(395)),
+    "crumbTrailsB": (sx(1843), sy(395)),
+    "pondLanternB": (sx(1930), sy(720)),
+    "decorativePondArchB": (sx(1843), sy(1045)),
+    "enchantedWaterWheelB": (sx(717),  sy(1045)),
+    "duckIndustriesB": (sx(630),  sy(720)),
 }
 
 special_tooltips = {
@@ -769,7 +769,7 @@ def clear_data_warning():
 
     draw_animated_text(
         screen,
-        "(Game will close and restart.)",
+        "(Game will close and restart)",
         fonts["small"],
         (255, 255, 255),
         clear_data_description_rect3.center,
