@@ -606,6 +606,32 @@
       "one_time": true,
       "pool_color": null,
       "purchase_key": "opulentNestingGroundsB"
+    },
+    {
+      "title": "Duck 2.0",
+      "cost": 3000000,
+      "icon": "assets/Images/EnhantedWaterWheel.png",
+      "save_key": "ducksPerClick",
+      "duck_color": null,
+      "bonus": 0.3,
+      "description": "An improved version of the original duck, giving all ducks more value. Gives 0000 ducks per click.",
+      "save_key2": null,
+      "one_time": true,
+      "pool_color": null,
+      "purchase_key": "enchantedWaterWheelB"
+    },
+    {
+      "title": "Duck Multiverse Portal",
+      "cost": 3000000,
+      "icon": "assets/Images/EnhantedWaterWheel.png",
+      "save_key": "ducksPerSecond",
+      "duck_color": null,
+      "bonus": 0.3,
+      "description": "Duck scientists managed to create a Duck Multiverse Portal, which brings in more ducks. Just, wow. Grants 0000 ducks per second",
+      "save_key2": null,
+      "one_time": true,
+      "pool_color": null,
+      "purchase_key": "enchantedWaterWheelB"
     }
   ]
 }
