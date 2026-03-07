@@ -10,6 +10,7 @@ import json
 import webbrowser
 import os
 import sys
+import subprocess
 from save_manager import load_game, save_game
 from fonts import load_fonts
 from options import draw_options, open_options    
@@ -623,11 +624,13 @@ def reset_game_callback():
     pygame.quit()
 
     if getattr(sys, 'frozen', False):
-        # Running as compiled executable
-        os.execl(sys.executable, sys.executable)
+        # Compiled executable
+        subprocess.Popen([sys.executable])
     else:
-        # Running as python script
-        os.execl(sys.executable, sys.executable, *sys.argv)
+        # Python script
+        subprocess.Popen([sys.executable] + sys.argv)
+
+    sys.exit()
 
 
 def draw_animated_text(screen, text, font, color, center_pos, key):
