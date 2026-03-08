@@ -60,7 +60,20 @@
         "decorativePondArchB": false,
         "enchantedWaterWheelB": false,
         "platinumStrongCursorB": false,
-        "opulentNestingGroundsB": false
+        "opulentNestingGroundsB": false,
+        "duck2.0B": false,
+        "duckMultiversePortalB": false,
+        "mechanicalBreakShaker": false,
+        "duckPythonTerminalB": false,
+        "nestSkyscrapperB": false,
+        "nestExpansionPermitB": false,
+        "thermalNestingStonesB": false,
+        "duckLogisticsBoardB": false,
+        "flockSupervisorPostB": false,
+        "waterLevelRegulatorB": false,
+        "heavyDutyBreadCratesB": false,
+        "advancedFlockConditioningB": false,
+        "sophisticatedWaterFilter": false
     },
     "settings": {
         "volume": 0.5,

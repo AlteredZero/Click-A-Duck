@@ -294,7 +294,20 @@ default_data = {
         "decorativePondArchB": False,
         "enchantedWaterWheelB": False,
         "platinumStrongCursorB": False,
-        "opulentNestingGroundsB": False
+        "opulentNestingGroundsB": False,
+        "duck2.0B": False,
+        "duckMultiversePortalB": False,
+        "mechanicalBreakShaker": False,
+        "duckPythonTerminalB": False,
+        "nestSkyscrapperB": False,
+        "nestExpansionPermitB": False,
+        "thermalNestingStonesB": False,
+        "duckLogisticsBoardB": False,
+        "flockSupervisorPostB": False,
+        "waterLevelRegulatorB": False,
+        "heavyDutyBreadCratesB": False,
+        "advancedFlockConditioningB": False,
+        "sophisticatedWaterFilter": False
     },
     "settings": {
         "volume": 0.5,
