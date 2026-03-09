@@ -135,6 +135,10 @@ class UpgradeButton:
                 game_data["ducksPerClick"] += self.bonus
                 game_data["ducksPerSecond"] += self.bonus
 
+            elif self.title == "Duck Python Terminal":
+                game_data["ducksPerClick"] += self.bonus
+                game_data["ducksPerSecond"] += self.bonus
+
             else:
                 if self.save_key == "":
                     pass
