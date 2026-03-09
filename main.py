@@ -266,11 +266,15 @@ default_data = {
         "magicalAutoClickerB": False,
         "megaDuckFeederB": False,
         "radiantPlungeB": False,
+        "GoldenStrongCursorB": False,
+        "LuxuryNestGroundB": False,
+        "fortuneFeathersB": False,
         "autoClickerSpeedB": False,
         "purpleDuckB": False,
         "featherFountainB": False,
         "quackAmplifierB": False,
         "duckMagnetB": False,
+        "hotPinkPoolB": False,
         "rubberDuckArmyB": False,
         "radiantPlungeIIB": False,
         "TurquoiseDuckB": False,
@@ -286,6 +290,7 @@ default_data = {
         "pondOverclockerB": False,
         "autoClickerSpeedB2": False,
         "fortuneFeathersIIIB": False,
+        "limeDuckB": False,
         "duckIndustriesB": False,
         "duckHotelB": False,
         "crumbTrailsB": False,
@@ -297,6 +302,9 @@ default_data = {
         "opulentNestingGroundsB": False,
         "duck2.0B": False,
         "duckMultiversePortalB": False,
+        "orangeBlueDuckB": False,
+        "magicalAutoClickerB3": False,
+        "grayPoolB": False,
         "mechanicalBreakShaker": False,
         "duckPythonTerminalB": False,
         "nestSkyscrapperB": False,
@@ -306,8 +314,11 @@ default_data = {
         "flockSupervisorPostB": False,
         "waterLevelRegulatorB": False,
         "heavyDutyBreadCratesB": False,
+        "redBlueDuckB": False,
         "advancedFlockConditioningB": False,
-        "sophisticatedWaterFilter": False
+        "sophisticatedWaterFilterB": False,
+        "scarlettpoolB": False,
+        "duckMatrixB": False
     },
     "settings": {
         "volume": 0.5,
@@ -325,6 +336,8 @@ duck_images = {
     "purple": load_scaled("assets/Images/PurpleDuck.png", 60, 60),
     "turquoise": load_scaled("assets/Images/TurquoiseDuck1.png", 60, 60),
     "lime": load_scaled("assets/Images/LimeDuck.png", 60, 60),
+    "orangeBlue": load_scaled("assets/Images/OrangeBlueDuck.png", 60, 60),
+    "redblue": load_scaled("assets/Images/RedBlueDuck.png", 60, 60),
 }
 
 pool_images = {
@@ -333,6 +346,8 @@ pool_images = {
     "hotPink": pygame.image.load("assets/Images/HotPinkPool.png").convert_alpha(),
     "coral": pygame.image.load("assets/Images/CoralPool.png").convert_alpha(),
     "cyan": pygame.image.load("assets/Images/CyanPool.png").convert_alpha(),
+    "gray": pygame.image.load("assets/Images/GrayPool.png").convert_alpha(),
+    "scarlett": pygame.image.load("assets/Images/ScarlettPool.png").convert_alpha(),
 }
 
 enhancement_icons = {
@@ -354,6 +369,21 @@ enhancement_icons = {
     "pondLanternB": load_scaled("assets/Images/PondLantern.png", 50, 50),
     "decorativePondArchB": load_scaled("assets/Images/DecorativeDuckArch.png", 50, 50),
     "enchantedWaterWheelB": load_scaled("assets/Images/EnhantedWaterWheel.png", 50, 50),
+    
+    "duck2.0B": load_scaled("assets/Images/Duck2.0.png", 50, 50),
+    "duckMultiversePortalB": load_scaled("assets/Images/DuckMultiversePortal.png", 50, 50),
+    "mechanicalBreakShaker": load_scaled("assets/Images/MechanicalBreadShaker.png", 50, 50),
+    "duckPythonTerminalB": load_scaled("assets/Images/DuckPythonTerminal.png", 50, 50),
+    "nestSkyscrapperB": load_scaled("assets/Images/NestSkyscrapper.png", 50, 50),
+    "nestExpansionPermitB": load_scaled("assets/Images/NestExpansionPermit.png", 50, 50),
+    "thermalNestingStonesB": load_scaled("assets/Images/ThermalStones.png", 50, 50),
+    "duckLogisticsBoardB": load_scaled("assets/Images/DuckLogisitcsBoard.png", 50, 50),
+    "flockSupervisorPostB": load_scaled("assets/Images/FlockSupervisor.png", 50, 50),
+    "waterLevelRegulatorB": load_scaled("assets/Images/WaterLevelRegulator.png", 50, 50),
+    "heavyDutyBreadCratesB": load_scaled("assets/Images/HeavyBreadCrates.png", 50, 50),
+    "advancedFlockConditioningB": load_scaled("assets/Images/DuckConditioning.png", 50, 50),
+    "sophisticatedWaterFilter": load_scaled("assets/Images/SophisticatedWaterFilter.png", 50, 50),
+    "duckMatrixB": load_scaled("assets/Images/DuckMatrix.png", 50, 50),
 }
 
 enhancement_positions = {
@@ -375,6 +405,21 @@ enhancement_positions = {
     "decorativePondArchB": (sx(1843), sy(1045)),
     "enchantedWaterWheelB": (sx(717),  sy(1045)),
     "duckIndustriesB": (sx(630),  sy(720)),
+
+    "duck2.0B": (sx(0), sy(0)),
+    "duckMultiversePortalB": (sx(0), sy(0)),
+    "mechanicalBreakShaker": (sx(0), sy(0)),
+    "duckPythonTerminalB": (sx(0), sy(0)),
+    "nestSkyscrapperB": (sx(0), sy(0)),
+    "nestExpansionPermitB": (sx(0), sy(0)),
+    "thermalNestingStonesB": (sx(0), sy(0)),
+    "duckLogisticsBoardB": (sx(0), sy(0)),
+    "flockSupervisorPostB": (sx(0),  sy(0)),
+    "waterLevelRegulatorB": (sx(0), sy(0)),
+    "heavyDutyBreadCratesB": (sx(0), sy(0)),
+    "advancedFlockConditioningB": (sx(0), sy(0)),
+    "sophisticatedWaterFilter": (sx(0),  sy(0)),
+    "duckMatrixB": (sx(0),  sy(0)),
 }
 
 special_tooltips = {
