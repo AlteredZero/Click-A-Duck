@@ -27,8 +27,8 @@ LuxuryNestGroundB
 [X] make GoldenStrongCursorB +5 and LuxuryNestGroundB +3
 [X] add Duck Industries enhancement
 [X] add Executive Waddle Suite enahcnement
-[ ] add duck multiverse enhancement
-[ ] add Duck.exe 2.0 enhancement
+[X] add duck multiverse enhancement
+[X] add Duck.exe 2.0 enhancement
 [X] add options menu
 [X] add stats menu
 [X] give warning prompt for wipe save
@@ -44,7 +44,11 @@ LuxuryNestGroundB
 [ ] add stock market enhancement
 [ ] add flappy bird arcade game enhancement
 [X] fix restart game not working on all pc's
-[X] fix error: can't open file 'G:\\My Drive\\AP Computer Science Principles\\Click-A-Duck\\Files\\Python313\\python.exe': [Errno 2] No such file or directory
+[X] fix error: can't open file 'G:\\My Drive\\AP Computer Science 
+Principles\\Click-A-Duck\\Files\\Python313\\python.exe': [Errno 2] No such file or directory
+[ ] add crit power enhancements throughout the enhancements list
+[ ] update all descriptions to match the set bonus
+[ ] fix the DPS bonuses being too large
 
 
 
