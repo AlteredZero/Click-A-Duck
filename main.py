@@ -56,7 +56,7 @@ def loading_screen(screen, screen_width, screen_height, scale, fonts):
     target_percent = 0
 
     start_time = pygame.time.get_ticks()
-    minimum_time = 5000
+    minimum_time = 4000
     hold_time = 500
 
     t = 0
@@ -409,21 +409,20 @@ enhancement_positions = {
     "decorativePondArchB": (sx(1843), sy(1045)),
     "enchantedWaterWheelB": (sx(717),  sy(1045)),
     "duckIndustriesB": (sx(630),  sy(720)),
-
-    "duck2.0B": (sx(0), sy(0)),
-    "duckMultiversePortalB": (sx(0), sy(0)),
-    "mechanicalBreakShaker": (sx(0), sy(0)),
-    "duckPythonTerminalB": (sx(0), sy(0)),
-    "nestSkyscrapperB": (sx(0), sy(0)),
-    "nestExpansionPermitB": (sx(0), sy(0)),
-    "thermalNestingStonesB": (sx(0), sy(0)),
-    "duckLogisticsBoardB": (sx(0), sy(0)),
-    "flockSupervisorPostB": (sx(0),  sy(0)),
-    "waterLevelRegulatorB": (sx(0), sy(0)),
-    "heavyDutyBreadCratesB": (sx(0), sy(0)),
-    "advancedFlockConditioningB": (sx(0), sy(0)),
-    "sophisticatedWaterFilter": (sx(0),  sy(0)),
-    "duckMatrixB": (sx(0),  sy(0)),
+    "duck2.0B": (sx(1610), sy(380)),
+    "duckMultiversePortalB": (sx(1780), sy(620)),
+    "mechanicalBreakShaker": (sx(1780), sy(820)),
+    "duckPythonTerminalB": (sx(1650), sy(1000)),
+    "nestSkyscrapperB": (sx(1400), sy(1120)),
+    "nestExpansionPermitB": (sx(1160), sy(1120)),
+    "thermalNestingStonesB": (sx(910),  sy(1000)),
+    "duckLogisticsBoardB": (sx(780),  sy(820)),
+    "flockSupervisorPostB": (sx(780),  sy(750)),
+    "waterLevelRegulatorB": (sx(830),  sy(500)),
+    "heavyDutyBreadCratesB": (sx(1130), sy(270)),
+    "advancedFlockConditioningB": (sx(1400), sy(270)),
+    "sophisticatedWaterFilter": (sx(1530), sy(430)),
+    "duckMatrixB": (sx(1750), sy(540)),
 }
 
 special_tooltips = {
