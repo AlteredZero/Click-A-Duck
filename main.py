@@ -74,6 +74,7 @@ def loading_screen(screen, screen_width, screen_height, scale, fonts):
 
         if displayed_percent < target_percent:
             displayed_percent += 0.5
+            
         elif completed == total_steps and elapsed < minimum_time:
 
             displayed_percent += 0.3
@@ -1149,20 +1150,6 @@ while running:
         if shiny_timer <= 0:
             shiny_active = False
 
-    #----options frame----#
-    if show_options:
-        option_hover_rects = open_options(screen, fonts, game_data, mouse_pos, draw_animated_text)
-
-
-    #----stats frame----#
-    if show_stats:
-        open_stats(screen, fonts, game_data, draw_animated_text)
-
-
-    #----donate frame----#
-    if show_donate:
-        donate_hover_rects = open_donate(screen, fonts, game_data, draw_animated_text)
-
 
     #----shiny active----#
     if shiny_active:
@@ -1364,6 +1351,22 @@ while running:
             sx(10),
             0
         )
+        
+
+    #----options frame----#
+    if show_options:
+        option_hover_rects = open_options(screen, fonts, game_data, mouse_pos, draw_animated_text)
+
+
+    #----stats frame----#
+    if show_stats:
+        open_stats(screen, fonts, game_data, draw_animated_text)
+
+
+    #----donate frame----#
+    if show_donate:
+        donate_hover_rects = open_donate(screen, fonts, game_data, draw_animated_text)
+
 
     #----cannot afford message----#
     if cannot_afford_message and current_time < cannot_afford_timer:

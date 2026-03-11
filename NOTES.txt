@@ -47,8 +47,16 @@ LuxuryNestGroundB
 [X] fix error: can't open file 'G:\\My Drive\\AP Computer Science 
 Principles\\Click-A-Duck\\Files\\Python313\\python.exe': [Errno 2] No such file or directory
 [ ] add crit power enhancements throughout the enhancements list
-[ ] update all descriptions to match the set bonus
-[ ] fix the DPS bonuses being too large
+[X] update all descriptions to match the set bonus
+[X] fix the DPS bonuses being too large
+[ ] add music to the game
+[ ] make music option work enable/disable
+[ ] make sfx option work enable/disable
+[ ] make magical auto clicker option work option work enable/disable
+[ ] add quack sound pitch randomizer
+[ ] fix the support/donate page
+[X] make playtime calculate as minutes and hours.
+[ ] make all descriptions consistent with the (DPS) and (DPC) and wording
 
 
 

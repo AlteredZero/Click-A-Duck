@@ -43,15 +43,21 @@ def open_stats(screen, fonts, game_data, draw_animated_text):
     def sx(x): return int(x * scale)
     def sy(y): return int(y * scale)
 
-    menu_rect = pygame.Rect(sx(250), sy(20), sx(400), sy(955))
+    def format_playtime(seconds):
+        hours = seconds // 3600
+        minutes = (seconds % 3600) // 60
+        secs = seconds % 60
+        return f"{hours:02}:{minutes:02}:{secs:02}"
+
+    menu_rect = pygame.Rect(sx(250), sy(20), sx(500), sy(1070))
 
     pygame.draw.rect(screen, (60, 60, 60), menu_rect)
     pygame.draw.rect(screen, (255, 255, 255), menu_rect, 3)
 
     stats_lines = [
         f"Ducks: {int(game_data['ducks']):,}",
-        f"Ducks per click: {int(game_data['ducksPerClick']):,}",
-        f"Ducks per second: {int(game_data['ducksPerSecond']):,}",
+        f"Ducks per click (raw*): {int(game_data['ducksPerClick']):,}",
+        f"Ducks per second (raw*): {int(game_data['ducksPerSecond']):,}",
         f"Max ducks in pool: {int(game_data['maxDucksInPool']):,}",
         f"Duck spawn time: {game_data['spawnTime']}s",
         f"Strong cursors: {game_data['DPCUpgradeBought']:,}",
@@ -70,7 +76,10 @@ def open_stats(screen, fonts, game_data, draw_animated_text):
         f"Magical auto clickers: {game_data['magicalAutoClickers']:,}",
         f"Auto clicker speed: {game_data['magicalAutoClickerSpeed']:,}",
         f"All time ducks: {int(game_data['allTimeDucks']):,}",
-        f"Playtime: {game_data['playtime']}s"
+        f"Playtime: {format_playtime(game_data['playtime'])}",
+        f" ",
+        f"*Raw means that the values are",
+        f"without multipliers and extras."
     ]
 
     draw_animated_text(

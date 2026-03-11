@@ -103,7 +103,7 @@ class UpgradeButton:
             game_data[self.save_key] = max(0, round(game_data[self.save_key], 2))
 
         elif self.save_key == "shinyDuckChance":
-            game_data[self.save_key] += 0.0001
+            game_data[self.save_key] += round(0.0001, 4)
 
         elif self.save_key == "criticalChance":
             game_data[self.save_key] += round(self.bonus, 3)
@@ -122,7 +122,7 @@ class UpgradeButton:
             elif self.title == "Rubber Duck Army":
                 game_data["ducksPerClick"] += self.bonus
                 game_data["ducksPerSecond"] += self.bonus
-            
+
             elif self.title == "Bread Storm Machine":
                 game_data["ducksPerClick"] += self.bonus
                 game_data["ducksPerSecond"] += self.bonus
