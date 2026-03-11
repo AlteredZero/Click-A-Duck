@@ -52,7 +52,8 @@ Principles\\Click-A-Duck\\Files\\Python313\\python.exe': [Errno 2] No such file 
 [ ] add music to the game
 [ ] make music option work enable/disable
 [ ] make sfx option work enable/disable
-[ ] make magical auto clicker option work option work enable/disable
+[X] make magical auto clicker option work enable/disable
+[X] make duck text option work enable/disable
 [ ] add quack sound pitch randomizer
 [ ] fix the support/donate page
 [X] make playtime calculate as minutes and hours.

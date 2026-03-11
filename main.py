@@ -882,6 +882,8 @@ upgade_manager = UpgradeManager(screen_width, screen_height, game_data, scale)
 
 display_ducks = float(game_data["ducks"])
 
+floating_texts_enabled = game_data["settings"]["duckText"]
+
 
 #---------------------#
 #------FOR LOOPS------#
@@ -1105,6 +1107,56 @@ while running:
                                     save_cooldown_until = current_time + 1500
                                     click_sound.play()
 
+                            ##################################################
+                            # SET MUSIC OPTION ONCE MUSIC IS ADDED!!!!!
+                            ##################################################
+                            elif key == "music":
+                                game_data["settings"][key] = not game_data["settings"][key]
+                                
+                                if game_data["settings"]["music"] == True:
+                                    pass
+                                else:
+                                    pass
+ 
+                            elif key == "sfx":
+                                game_data["settings"][key] = not game_data["settings"][key]
+
+                                if game_data["settings"]["sfx"] == True:
+                                    click_sound.play()
+                                    duck_click_sound.play()
+                                    purchase_sound.play()
+                                    hover_sound.play()
+                                    error_sound.play()
+                                else:
+                                    click_sound.stop()
+                                    duck_click_sound.stop()
+                                    purchase_sound.stop()
+                                    hover_sound.stop()
+                                    error_sound.stop()
+
+                            elif key == "duckText":
+                                game_data["settings"][key] = not game_data["settings"][key]
+
+                                if game_data["settings"]["duckText"] == True:
+                                    floating_texts_enabled = game_data["settings"]["duckText"]
+
+                                else:
+                                    floating_texts_enabled = game_data["settings"]["duckText"]
+
+                            elif key == "magicalAutoClickers":
+                                game_data["settings"][key] = not game_data["settings"][key]
+
+                                if game_data["settings"]["magicalAutoClickers"] == True:
+                                    for i in range(game_data["magicalAutoClickers"]):
+                                        pos = get_clicker_position(i, game_data["magicalAutoClickers"], pool)
+
+                                        magical_auto_clickers.append(
+                                            MagicalAutoClicker(pos, magical_auto_clicker_image)
+                                        )
+
+                                else:
+                                    magical_auto_clickers.clear()
+
 
                             else:
                                 game_data["settings"][key] = not game_data["settings"][key]
@@ -1263,11 +1315,12 @@ while running:
 
     #----floating text----#
     for text in floating_texts[:]:
-        text.update()
-        text.draw(screen, fonts["large"])
+        if floating_texts_enabled:
+            text.update()
+            text.draw(screen, fonts["large"])
 
-        if text.dead():
-            floating_texts.remove(text)
+            if text.dead():
+                floating_texts.remove(text)
 
 
     #----magical auto clicker config----#
