@@ -1122,17 +1122,17 @@ while running:
                                 game_data["settings"][key] = not game_data["settings"][key]
 
                                 if game_data["settings"]["sfx"] == True:
-                                    click_sound.play()
-                                    duck_click_sound.play()
-                                    purchase_sound.play()
-                                    hover_sound.play()
-                                    error_sound.play()
+                                    click_sound.set_volume(1.0)
+                                    duck_click_sound.set_volume(1.0)
+                                    purchase_sound.set_volume(1.0)
+                                    hover_sound.set_volume(1.0)
+                                    error_sound.set_volume(1.0)
                                 else:
-                                    click_sound.stop()
-                                    duck_click_sound.stop()
-                                    purchase_sound.stop()
-                                    hover_sound.stop()
-                                    error_sound.stop()
+                                    click_sound.set_volume(0.0)
+                                    duck_click_sound.set_volume(0.0)
+                                    purchase_sound.set_volume(0.0)
+                                    hover_sound.set_volume(0.0)
+                                    error_sound.set_volume(0.0)
 
                             elif key == "duckText":
                                 game_data["settings"][key] = not game_data["settings"][key]
@@ -1163,12 +1163,13 @@ while running:
                             
                             click_sound.play()
 
-                            pygame.mixer.music.set_volume(game_data["settings"]["volume"])
-                            click_sound.set_volume(game_data["settings"]["volume"])
-                            duck_click_sound.set_volume(game_data["settings"]["volume"])
-                            purchase_sound.set_volume(game_data["settings"]["volume"])
-                            hover_sound.set_volume(game_data["settings"]["volume"])
-                            error_sound.set_volume(game_data["settings"]["volume"])
+                            if game_data["settings"]["sfx"] == True:
+                                pygame.mixer.music.set_volume(game_data["settings"]["volume"])
+                                click_sound.set_volume(game_data["settings"]["volume"])
+                                duck_click_sound.set_volume(game_data["settings"]["volume"])
+                                purchase_sound.set_volume(game_data["settings"]["volume"])
+                                hover_sound.set_volume(game_data["settings"]["volume"])
+                                error_sound.set_volume(game_data["settings"]["volume"])
 
                             save_game(game_data)
 

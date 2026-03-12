@@ -887,7 +887,7 @@
       "save_key": "poolColor",
       "duck_color": null,
       "bonus": 87500,
-      "description": "Changes the pool color to a courageous scarlett color, giving off a passionate feeling. Gives +1 Ducks per click (DPC).",
+      "description": "Changes the pool color to a courageous scarlett color, giving off a passionate feeling. Gives +87500 Ducks per click (DPC).",
       "save_key2": null,
       "one_time": true,
       "pool_color": "scarlett",
