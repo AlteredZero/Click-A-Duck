@@ -16,6 +16,7 @@ from fonts import load_fonts
 from options import draw_options, open_options    
 from stats import draw_stats, open_stats
 from donate import draw_donate, open_donate
+from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel
 from floating_text import FloatingText
 from duck import Duck
 from pool import Pool
@@ -206,6 +207,8 @@ show_options = False
 show_stats = False
 show_donate = False
 
+show_spin_the_wheel = False
+
 show_warning_clear_data = False
 
 clear_button_rect = None
@@ -216,6 +219,10 @@ save_cooldown_until = 0
 support_url = "https://ko-fi.com/altered_games"
 
 support_button = None
+
+spin_the_wheel_icon = pygame.image.load("assets/Images/Spin-The-Wheel.png").convert_alpha()
+
+spin_the_wheel_info_icon = pygame.image.load("assets/Images/Spin-The-WheelInfo.png").convert_alpha()
 
 
 #---------------------#
@@ -445,6 +452,7 @@ magical_auto_clickers = []
 duck_pop_effects = []
 option_hover_rects = []
 donate_hover_rects = []
+spin_the_wheel_rects = []
 
 
 #---------------------#
@@ -935,6 +943,9 @@ while running:
     stats_rect = draw_stats(screen, mouse_pos, fonts)
     donate_rect = draw_donate(screen, mouse_pos, fonts)
 
+    #if game_data["purchases"][""] == True:
+    spin_the_wheel_rect = draw_SpinTheWheel(screen, spin_the_wheel_icon)
+
 
     target = game_data["ducks"]
 
@@ -1038,6 +1049,7 @@ while running:
                     show_options = not show_options
                     show_stats = False
                     show_donate = False
+                    show_spin_the_wheel = False
                     click_sound.play()
 
                     if show_options:
@@ -1052,6 +1064,7 @@ while running:
                     show_stats = not show_stats
                     show_options = False
                     show_donate = False
+                    show_spin_the_wheel = False
                     click_sound.play()
 
                     if show_stats:
@@ -1063,10 +1076,23 @@ while running:
                     show_donate = not show_donate
                     show_options = False
                     show_stats = False
+                    show_spin_the_wheel = False
                     click_sound.play()
 
                     if show_donate:
                         keys_to_reset = ["support_title", "support_desc", "support_desc2", "support_desc3", "support_button"]
+                        for key in keys_to_reset:
+                            tooltip_hover_start.pop(key, None)
+
+                if spin_the_wheel_rect.collidepoint(event.pos):
+                    show_spin_the_wheel = not show_spin_the_wheel
+                    show_options = False
+                    show_stats = False
+                    show_donate = False
+                    click_sound.play()
+
+                    if show_spin_the_wheel:
+                        keys_to_reset = [""]
                         for key in keys_to_reset:
                             tooltip_hover_start.pop(key, None)
 
@@ -1422,6 +1448,11 @@ while running:
         donate_hover_rects = open_donate(screen, fonts, game_data, draw_animated_text)
 
 
+    #----spin the wheel frame----#
+    if show_spin_the_wheel:
+        spin_the_wheel_rects = open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_info_icon)
+
+
     #----cannot afford message----#
     if cannot_afford_message and current_time < cannot_afford_timer:
         cannot_afford_text = fonts["large"].render(cannot_afford_message, False, (255, 255, 255))
@@ -1473,6 +1504,10 @@ while running:
 
     if not hovering:
         if options_rect.collidepoint(mouse_pos):
+            hovering = True
+
+    if not hovering:
+        if spin_the_wheel_rect.collidepoint(mouse_pos):
             hovering = True
 
     if not hovering:

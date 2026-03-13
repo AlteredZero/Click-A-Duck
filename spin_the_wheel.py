@@ -3,38 +3,38 @@ import pygame
 base_width = 2560
 base_height = 1440
 
+wheel_angle = 0
 
-def draw_SpinTheWheel(screen, mouse_pos, fonts):
+
+def draw_SpinTheWheel(screen, spin_the_wheel_icon):
 
     screen_width, screen_height = screen.get_size()
 
     scale_x = screen_width / base_width
     scale_y = screen_height / base_height
-
     scale = min(scale_x, scale_y)
 
     s = lambda v: int(v * scale)
-
     def sx(x): return int(x * scale)
     def sy(y): return int(y * scale)
 
     background = (60, 60, 60)
+    border = (255, 255, 255)
 
-    icon = pygame.image.load("assets/Images/PLACEHOLDER.png").convert_alpha(),
-    icon = pygame.transform.scale(icon,(sx(70), sy(70)))
-
-    rect = pygame.Rect(sx(20), sy(160), sx(200), sy(60))
+    rect = pygame.Rect(sx(20), screen_height - sy(370), sx(80), sy(80))
 
     pygame.draw.rect(screen, background, rect)
-    pygame.draw.rect(screen, (255, 255, 255), rect, s(3))
+    pygame.draw.rect(screen, border, rect, s(3))
 
-    donate_text = fonts["large"].render("Spin The Wheel", False, (255, 255, 255))
-    screen.blit(donate_text, donate_text.get_rect(center=rect.center))
+    icon = pygame.transform.scale(spin_the_wheel_icon, (sx(50), sy(50)))
+    icon_rect = icon.get_rect(center=rect.center)
+    screen.blit(icon, icon_rect)
 
     return rect
 
 
-def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text):
+def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_icon):
+    global wheel_angle
 
     clickable_rects = []
 
@@ -48,46 +48,28 @@ def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text):
     def sx(x): return int(x * scale)
     def sy(y): return int(y * scale)
 
-    menu_rect = pygame.Rect(sx(250), sy(20), sx(750), sy(280))
+    menu_rect = pygame.Rect(sx(135), sy(400), sx(750), sy(750))
 
     pygame.draw.rect(screen, (60, 60, 60), menu_rect)
     pygame.draw.rect(screen, (255, 255, 255), menu_rect, 3)
 
+    wheel_angle -= 0.1
+
+    icon = pygame.transform.scale(spin_the_wheel_icon, (sx(400), sy(400)))
+
+    rotated_icon = pygame.transform.rotate(icon, wheel_angle)
+    icon_rect = rotated_icon.get_rect(center=menu_rect.center)
+
+    screen.blit(rotated_icon, icon_rect)
+
 
     draw_animated_text(
         screen,
-        "Support",
+        "SPIN-THE-WHEEL",
         fonts["large"],
         (255, 255, 255),
-        (menu_rect.centerx, sy(60)),
-        "support_title"
-    )
-
-    draw_animated_text(
-        screen,
-        "If you're enjoying the game, consider supporting me!",
-        fonts["small"],
-        (255, 255, 255),
-        (menu_rect.centerx, sy(100)),
-        "support_desc"
-    )
-
-    draw_animated_text(
-        screen,
-        "Every little bit helps me keep making more fun stuff.",
-        fonts["small"],
-        (255, 255, 255),
-        (menu_rect.centerx, sy(140)),
-        "support_desc2"
-    )
-
-    draw_animated_text(
-        screen,
-        "(opens in a new tab)",
-        fonts["verysmall"],
-        (255, 255, 255),
-        (menu_rect.centerx, sy(180)),
-        "support_desc3"
+        (menu_rect.centerx, menu_rect.top + sy(30)),
+        "SPIN-THE-WHEEL_title"
     )
 
     support_center_y = menu_rect.bottom - sy(70) + fonts["small"].get_height() // 2
@@ -107,7 +89,7 @@ def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text):
 
     draw_animated_text(
         screen,
-        "SUPPORT!",
+        "SPIN!",
         fonts["small"],
         (255, 255, 255),
         (menu_rect.centerx, support_center_y),
