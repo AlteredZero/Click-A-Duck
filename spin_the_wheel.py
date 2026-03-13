@@ -48,6 +48,9 @@ def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_whe
     def sx(x): return int(x * scale)
     def sy(y): return int(y * scale)
 
+    def spin_the_wheel():
+        pass
+
     menu_rect = pygame.Rect(sx(135), sy(400), sx(750), sy(750))
 
     pygame.draw.rect(screen, (60, 60, 60), menu_rect)

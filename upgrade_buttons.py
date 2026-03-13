@@ -95,8 +95,10 @@ class UpgradeButton:
     
     def purchase(self, game_data):
         game_data["ducks"] -= self.cost
-        purchase_sound.set_volume(game_data["settings"]["volume"])
-        purchase_sound.play()
+
+        if game_data["settings"]["sfx"] == True:
+            purchase_sound.set_volume(game_data["settings"]["volume"])
+            purchase_sound.play()
 
         if self.save_key == "spawnTime":
             game_data[self.save_key] *= 0.95
@@ -359,8 +361,9 @@ class UpgradeManager:
                     button.update_cost(game_data)
                     return True, button.cost
                 else:
-                    error_sound.set_volume(game_data["settings"]["volume"])
-                    error_sound.play()
+                    if game_data["settings"]["sfx"] == True:
+                        error_sound.set_volume(game_data["settings"]["volume"])
+                        error_sound.play()
                     return False, button.cost
 
 
@@ -378,8 +381,9 @@ class UpgradeManager:
 
                     return True, buttonE.cost
                 else:
-                    error_sound.set_volume(game_data["settings"]["volume"])
-                    error_sound.play()
+                    if game_data["settings"]["sfx"] == True:
+                        error_sound.set_volume(game_data["settings"]["volume"])
+                        error_sound.play()
                     return False, buttonE.cost
 
         return False, 0

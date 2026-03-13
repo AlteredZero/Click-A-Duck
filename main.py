@@ -235,6 +235,11 @@ purchase_sound = pygame.mixer.Sound("assets/audio/PurchaseSound.mp3")
 hover_sound = pygame.mixer.Sound("assets/audio/HoverSound.mp3")
 error_sound = pygame.mixer.Sound("assets/audio/ErrorSound.mp3")
 
+##################################################
+# SET MUSIC OPTION ONCE MUSIC IS ADDED!!!!!
+##################################################
+music_sound = pygame.mixer.Sound("assets/audio/DuckQuack.mp3")
+
 
 #---------------------#
 #----DICTIONARIES-----#
@@ -878,11 +883,16 @@ def clear_data_warning():
 game_data = load_game(default_data)
 
 pygame.mixer.music.set_volume(game_data["settings"]["volume"])
-click_sound.set_volume(game_data["settings"]["volume"])
-duck_click_sound.set_volume(game_data["settings"]["volume"])
-purchase_sound.set_volume(game_data["settings"]["volume"])
-hover_sound.set_volume(game_data["settings"]["volume"])
-error_sound.set_volume(game_data["settings"]["volume"])
+if game_data["settings"]["sfx"] == True:
+    pygame.mixer.music.set_volume(game_data["settings"]["volume"])
+    click_sound.set_volume(game_data["settings"]["volume"])
+    duck_click_sound.set_volume(game_data["settings"]["volume"])
+    purchase_sound.set_volume(game_data["settings"]["volume"])
+    hover_sound.set_volume(game_data["settings"]["volume"])
+    error_sound.set_volume(game_data["settings"]["volume"])
+                            
+if game_data["settings"]["music"] == True:
+    music_sound.set_volume(game_data["settings"]["volume"])
 
 console = Console(screen_width, screen_height, scale, quit_game, save_game, reset_game_callback)
 
@@ -1092,7 +1102,7 @@ while running:
                     click_sound.play()
 
                     if show_spin_the_wheel:
-                        keys_to_reset = [""]
+                        keys_to_reset = ["SPIN-THE-WHEEL_title", "support_button"]
                         for key in keys_to_reset:
                             tooltip_hover_start.pop(key, None)
 
@@ -1140,9 +1150,9 @@ while running:
                                 game_data["settings"][key] = not game_data["settings"][key]
                                 
                                 if game_data["settings"]["music"] == True:
-                                    pass
+                                    music_sound.set_volume(1.0)
                                 else:
-                                    pass
+                                    music_sound.set_volume(0.0)
  
                             elif key == "sfx":
                                 game_data["settings"][key] = not game_data["settings"][key]
@@ -1196,6 +1206,9 @@ while running:
                                 purchase_sound.set_volume(game_data["settings"]["volume"])
                                 hover_sound.set_volume(game_data["settings"]["volume"])
                                 error_sound.set_volume(game_data["settings"]["volume"])
+                            
+                            if game_data["settings"]["music"] == True:
+                                music_sound.set_volume(game_data["settings"]["volume"])
 
                             save_game(game_data)
 
@@ -1203,6 +1216,12 @@ while running:
                     for rect, key in donate_hover_rects:
                         if rect.collidepoint(event.pos):
                             webbrowser.open(support_url)
+
+                if show_spin_the_wheel:
+                    for rect, key in spin_the_wheel_rects:
+                        if rect.collidepoint(event.pos):
+                            if key == "support_button":
+                                pass
 
                 if bought:
                     if game_data["magicalAutoClickers"] > len(magical_auto_clickers):
@@ -1542,6 +1561,12 @@ while running:
     
     if not hovering and show_donate:
         for rect, key in donate_hover_rects:
+            if rect.collidepoint(mouse_pos):
+                hovering = True
+                break
+    
+    if not hovering and show_spin_the_wheel:
+        for rect, key in spin_the_wheel_rects:
             if rect.collidepoint(mouse_pos):
                 hovering = True
                 break

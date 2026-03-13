@@ -51,7 +51,8 @@ class MagicalAutoClicker:
 
                 current_time_now = pygame.time.get_ticks()
                 if current_time_now - self.last_duck_sound_time > 1000:
-                    duck_click_sound.play()
+                    if game_data["settings"]["sfx"] == True:
+                        duck_click_sound.play()
                     self.last_duck_sound_time = current_time_now
 
                 if self.target.shiny:
