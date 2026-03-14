@@ -16,7 +16,7 @@ from fonts import load_fonts
 from options import draw_options, open_options    
 from stats import draw_stats, open_stats
 from donate import draw_donate, open_donate
-from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel
+from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel
 from floating_text import FloatingText
 from duck import Duck
 from pool import Pool
@@ -221,8 +221,8 @@ support_url = "https://ko-fi.com/altered_games"
 support_button = None
 
 spin_the_wheel_icon = pygame.image.load("assets/Images/Spin-The-Wheel.png").convert_alpha()
-
 spin_the_wheel_info_icon = pygame.image.load("assets/Images/Spin-The-WheelInfo.png").convert_alpha()
+spin_the_wheel_arrow_icon = pygame.image.load("assets/Images/Spin-The-WheelArrow.png").convert_alpha()
 
 
 #---------------------#
@@ -1102,7 +1102,7 @@ while running:
                     click_sound.play()
 
                     if show_spin_the_wheel:
-                        keys_to_reset = ["SPIN-THE-WHEEL_title", "support_button"]
+                        keys_to_reset = ["SPIN-THE-WHEEL_title", "spin_button"]
                         for key in keys_to_reset:
                             tooltip_hover_start.pop(key, None)
 
@@ -1220,8 +1220,8 @@ while running:
                 if show_spin_the_wheel:
                     for rect, key in spin_the_wheel_rects:
                         if rect.collidepoint(event.pos):
-                            if key == "support_button":
-                                pass
+                            if key == "spin_button":
+                                spin_the_wheel()
 
                 if bought:
                     if game_data["magicalAutoClickers"] > len(magical_auto_clickers):
@@ -1469,7 +1469,7 @@ while running:
 
     #----spin the wheel frame----#
     if show_spin_the_wheel:
-        spin_the_wheel_rects = open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_info_icon)
+        spin_the_wheel_rects = open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_info_icon, spin_the_wheel_arrow_icon)
 
 
     #----cannot afford message----#
