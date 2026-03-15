@@ -96,5 +96,8 @@
         "sfx": true,
         "duckText": true,
         "magicalAutoClickers": true
+    },
+    "extras": {
+        "spin_the_wheel_ready": false
     }
 }

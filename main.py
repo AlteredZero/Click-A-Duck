@@ -16,7 +16,7 @@ from fonts import load_fonts
 from options import draw_options, open_options    
 from stats import draw_stats, open_stats
 from donate import draw_donate, open_donate
-from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel
+from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, draw_exclamation
 from floating_text import FloatingText
 from duck import Duck
 from pool import Pool
@@ -224,6 +224,8 @@ spin_the_wheel_icon = pygame.image.load("assets/Images/Spin-The-Wheel.png").conv
 spin_the_wheel_info_icon = pygame.image.load("assets/Images/Spin-The-WheelInfo.png").convert_alpha()
 spin_the_wheel_arrow_icon = pygame.image.load("assets/Images/Spin-The-WheelArrow.png").convert_alpha()
 
+exclamation_icon = pygame.image.load("assets/Images/ExclamationIcon.png").convert_alpha()
+
 
 #---------------------#
 #--------AUDIO--------#
@@ -343,6 +345,9 @@ default_data = {
         "sfx": True,
         "duckText": True,
         "magicalAutoClickers": True
+    },
+    "extras": {
+        "spin_the_wheel_ready": False
     }
 }
 
@@ -1397,6 +1402,11 @@ while running:
 
     #----draw enhancements----#
     enhancements_hover_rects = draw_enhancements(screen, game_data, enhancement_icons, enhancement_positions)
+
+
+    #----draw spin the wheel exclamation----#
+    if game_data["extras"]["spin_the_wheel_ready"]:
+        draw_exclamation(screen, exclamation_icon)
 
 
     #----upgrade icon tooltips----#

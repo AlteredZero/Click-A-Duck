@@ -60,6 +60,7 @@ Principles\\Click-A-Duck\\Files\\Python313\\python.exe': [Errno 2] No such file 
 [ ] make all descriptions consistent with the (DPS) and (DPC) and wording
 [X] add basic foundations of Spin the Wheel feature
 [ ] add proper chances and physics to the Spin The Wheel
+[ ] add cards feature foundations
 
 
 

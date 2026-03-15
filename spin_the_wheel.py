@@ -8,6 +8,28 @@ wheel_velocity = 0
 wheel_spinning = False
 wheel_idle = True
 
+slices = {
+    "15min x1.2": 292,
+    "30min x1.2": 245,
+    "60min x1.2": 203,
+    "15min x1.5": 70,
+    "30min x1.5": 24,
+    "60min x1.5": 340,
+    "15min x2": 158,
+    "30min x2": 112
+}
+
+chances = {
+    "15min x1.2": 26,
+    "30min x1.2": 18,
+    "60min x1.2": 8,
+    "15min x1.5": 17,
+    "30min x1.5": 12,
+    "60min x1.5": 3,
+    "15min x2": 11,
+    "30min x2": 5
+}
+
 
 def draw_SpinTheWheel(screen, spin_the_wheel_icon):
 
@@ -34,6 +56,22 @@ def draw_SpinTheWheel(screen, spin_the_wheel_icon):
     screen.blit(icon, icon_rect)
 
     return rect
+
+def draw_exclamation(screen, icon, rect):
+    screen_width, screen_height = screen.get_size()
+
+    scale_x = screen_width / base_width
+    scale_y = screen_height / base_height
+    scale = min(scale_x, scale_y)
+
+    def sx(x): return int(x * scale)
+    def sy(y): return int(y * scale)
+
+    icon = pygame.transform.scale(icon, (sx(30), sy(30)))
+
+    icon_rect = icon.get_rect(center=(rect.right - sx(10), rect.top + sy(10)))
+
+    screen.blit(icon, icon_rect)
 
 
 
