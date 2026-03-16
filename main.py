@@ -293,6 +293,7 @@ default_data = {
         "rubberDuckArmyB": False,
         "radiantPlungeIIB": False,
         "TurquoiseDuckB": False,
+        "spinTheWheelB": False,
         "fortuneFeathersIIB": False,
         "DuckHeaterB": False,
         "BreadStormMachineB": False,
@@ -958,8 +959,8 @@ while running:
     stats_rect = draw_stats(screen, mouse_pos, fonts)
     donate_rect = draw_donate(screen, mouse_pos, fonts)
 
-    #if game_data["purchases"][""] == True:
-    spin_the_wheel_rect = draw_SpinTheWheel(screen, spin_the_wheel_icon)
+    if game_data["purchases"]["spinTheWheelB"]:
+        spin_the_wheel_rect = draw_SpinTheWheel(screen, spin_the_wheel_icon)
 
 
     target = game_data["ducks"]
@@ -1099,12 +1100,14 @@ while running:
                         for key in keys_to_reset:
                             tooltip_hover_start.pop(key, None)
 
-                if spin_the_wheel_rect.collidepoint(event.pos):
-                    show_spin_the_wheel = not show_spin_the_wheel
-                    show_options = False
-                    show_stats = False
-                    show_donate = False
-                    click_sound.play()
+                if game_data["purchases"]["spinTheWheelB"]:
+                    if 'spin_the_wheel_rect' in locals() and spin_the_wheel_rect.collidepoint(event.pos):
+                        show_spin_the_wheel = not show_spin_the_wheel
+                        show_options = False
+                        show_stats = False
+                        show_donate = False
+                        click_sound.play()
+
 
                     if show_spin_the_wheel:
                         keys_to_reset = ["SPIN-THE-WHEEL_title", "spin_button"]
@@ -1405,8 +1408,8 @@ while running:
 
 
     #----draw spin the wheel exclamation----#
-    if game_data["extras"]["spin_the_wheel_ready"]:
-        draw_exclamation(screen, exclamation_icon)
+    if game_data["purchases"]["spinTheWheelB"] and game_data["extras"]["spin_the_wheel_ready"]:
+            draw_exclamation(screen, exclamation_icon, spin_the_wheel_rect)
 
 
     #----upgrade icon tooltips----#
@@ -1536,7 +1539,7 @@ while running:
             hovering = True
 
     if not hovering:
-        if spin_the_wheel_rect.collidepoint(mouse_pos):
+        if game_data["purchases"]["spinTheWheelB"] and spin_the_wheel_rect.collidepoint(mouse_pos):
             hovering = True
 
     if not hovering:

@@ -176,6 +176,9 @@ class UpgradeButton:
         elif self.title == "Auto Clicker Speed +1":
             game_data["magicalAutoClickerSpeed"] += 0.5
 
+        elif self.title == "Spin The Wheel":
+            pass
+
         else:
             game_data[self.save_key] += 1
 

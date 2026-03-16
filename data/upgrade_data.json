@@ -322,8 +322,21 @@
       "purchase_key": "TurquoiseDuckB"
     },
     {
-      "title": "Fortune Feathers II",
+      "title": "Spin The Wheel",
       "cost": 210000,
+      "icon": "assets/Images/Spin-The-Wheel.png",
+      "save_key": null,
+      "duck_color": null,
+      "bonus": null,
+      "description": "A special spinning wheel that you can spin for various special boosts, improving your duck earnings. You can spin the wheel every 24 hours.",
+      "save_key2": null,
+      "one_time": true,
+      "pool_color": null,
+      "purchase_key": "spinTheWheelB"
+    },
+    {
+      "title": "Fortune Feathers II",
+      "cost": 230000,
       "icon": "assets/Images/CritChance1.png",
       "save_key": "criticalChance",
       "duck_color": null,
