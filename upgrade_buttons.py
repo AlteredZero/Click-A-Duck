@@ -310,7 +310,7 @@ class UpgradeManager:
         self.buttons_upgrades = []
         self.buttons_enhancements = []
 
-        button_width = self.s(430)
+        button_width = self.s(450)
         button_height = self.s(75)
         spacing = self.s(85)
         start_y = self.s(100)

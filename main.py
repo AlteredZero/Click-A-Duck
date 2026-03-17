@@ -226,6 +226,8 @@ spin_the_wheel_arrow_icon = pygame.image.load("assets/Images/Spin-The-WheelArrow
 
 exclamation_icon = pygame.image.load("assets/Images/ExclamationIcon.png").convert_alpha()
 
+spin_the_wheel_rect = None
+
 
 #---------------------#
 #--------AUDIO--------#
@@ -1101,18 +1103,17 @@ while running:
                             tooltip_hover_start.pop(key, None)
 
                 if game_data["purchases"]["spinTheWheelB"]:
-                    if 'spin_the_wheel_rect' in locals() and spin_the_wheel_rect.collidepoint(event.pos):
+                    if spin_the_wheel_rect and spin_the_wheel_rect.collidepoint(event.pos):
                         show_spin_the_wheel = not show_spin_the_wheel
                         show_options = False
                         show_stats = False
                         show_donate = False
                         click_sound.play()
 
-
-                    if show_spin_the_wheel:
-                        keys_to_reset = ["SPIN-THE-WHEEL_title", "spin_button"]
-                        for key in keys_to_reset:
-                            tooltip_hover_start.pop(key, None)
+                        if show_spin_the_wheel:
+                            keys_to_reset = ["SPIN-THE-WHEEL_title", "spin_button"]
+                            for key in keys_to_reset:
+                                tooltip_hover_start.pop(key, None)
 
                 if show_options:
                     for rect, key in option_hover_rects:
@@ -1408,7 +1409,7 @@ while running:
 
 
     #----draw spin the wheel exclamation----#
-    if game_data["purchases"]["spinTheWheelB"] and game_data["extras"]["spin_the_wheel_ready"]:
+    if game_data["purchases"]["spinTheWheelB"] and game_data["extras"]["spin_the_wheel_ready"] and spin_the_wheel_rect:
             draw_exclamation(screen, exclamation_icon, spin_the_wheel_rect)
 
 
@@ -1539,8 +1540,9 @@ while running:
             hovering = True
 
     if not hovering:
-        if game_data["purchases"]["spinTheWheelB"] and spin_the_wheel_rect.collidepoint(mouse_pos):
-            hovering = True
+        if game_data["purchases"]["spinTheWheelB"]:
+            if spin_the_wheel_rect.collidepoint(mouse_pos):
+                hovering = True
 
     if not hovering:
         if stats_rect.collidepoint(mouse_pos):
