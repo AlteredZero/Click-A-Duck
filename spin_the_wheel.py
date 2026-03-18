@@ -1,4 +1,5 @@
 import pygame
+import random
 
 base_width = 2560
 base_height = 1440
@@ -77,6 +78,14 @@ def draw_exclamation(screen, icon, rect):
 
 def spin_the_wheel():
     global wheel_velocity, wheel_spinning, wheel_idle
+
+    indx = random.randrange(len(slices))
+
+    reward_name = list(slices.keys())[indx]
+    reward_angle = slices[reward_name]
+
+    reward_name_chances = list(chances.keys())[indx]
+    reward_chances = chances[reward_name_chances]
 
     wheel_velocity = -35
     wheel_spinning = True
