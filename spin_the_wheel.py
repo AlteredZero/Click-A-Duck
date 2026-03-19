@@ -1,5 +1,6 @@
 import pygame
 import random
+import time
 
 base_width = 2560
 base_height = 1440
@@ -8,6 +9,10 @@ wheel_angle = 0
 wheel_velocity = 0
 wheel_spinning = False
 wheel_idle = True
+
+spin_time = 0
+spin_duration = 4.5
+start_angle = 0
 
 slices = {
     "15min x1.2": 292,
@@ -30,7 +35,7 @@ chances = {
     "15min x2": 11,
     "30min x2": 5
 }
-
+ 
 
 def draw_SpinTheWheel(screen, spin_the_wheel_icon):
 
@@ -77,35 +82,49 @@ def draw_exclamation(screen, icon, rect):
 
 
 def spin_the_wheel():
-    global wheel_velocity, wheel_spinning, wheel_idle
+    global wheel_spinning, wheel_idle
+    global reward_name, target_angle, spin_time, start_angle, wheel_angle
 
-    indx = random.randrange(len(slices))
+    reward_name = random.choices(
+        list(chances.keys()),
+        weights=list(chances.values())
+    )[0]
 
-    reward_name = list(slices.keys())[indx]
     reward_angle = slices[reward_name]
 
-    reward_name_chances = list(chances.keys())[indx]
-    reward_chances = chances[reward_name_chances]
+    wheel_angle = wheel_angle % 360
+    start_angle = wheel_angle
 
-    wheel_velocity = -35
+    rotations = random.randint(6, 10)
+
+    target_angle = start_angle - (360 * rotations + (start_angle % 360) - reward_angle)
+
     wheel_spinning = True
     wheel_idle = False
+
+    spin_time = time.time()
+
+    print("Chosen:", reward_name)
 
 
 
 def update_wheel():
-    global wheel_angle, wheel_velocity, wheel_spinning
+    global wheel_angle, wheel_spinning, target_angle
+    global spin_time, spin_duration, start_angle
 
     if wheel_spinning:
+        elapsed = time.time() - spin_time
+        t = min(elapsed / spin_duration, 1)
 
-        wheel_angle += wheel_velocity
+        ease = 1 - (1 - t) ** 5
 
-        wheel_velocity *= 0.995
+        wheel_angle = start_angle + (target_angle - start_angle) * ease
 
-        if abs(wheel_velocity) < 0.03:
-            wheel_velocity = 0
+        if t >= 1:
+            wheel_angle = target_angle
             wheel_spinning = False
 
+            print("Landed on:", reward_name)
 
 
 def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_icon, spin_the_wheel_arrow_icon):
