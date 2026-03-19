@@ -11,8 +11,10 @@ wheel_spinning = False
 wheel_idle = True
 
 spin_time = 0
-spin_duration = 4.5
+spin_duration = 7
 start_angle = 0
+
+landed = False
 
 slices = {
     "15min x1.2": 292,
@@ -81,6 +83,85 @@ def draw_exclamation(screen, icon, rect):
 
 
 
+def landed_on_frame(screen, fonts, draw_animated_text, reward):
+
+    screen_width, screen_height = screen.get_size()
+
+    scale_x = screen_width / base_width
+    scale_y = screen_height / base_height
+
+    scale = min(scale_x, scale_y)
+
+    def sx(x): return int(x * scale)
+    def sy(y): return int(y * scale)
+
+    overlay = pygame.Surface((screen_width, screen_height), pygame.SRCALPHA)
+    overlay.fill((0, 0, 0, 180))
+    screen.blit(overlay, (0, 0))
+
+    popup_width = sx(600)
+    popup_height = sy(300)
+
+    main_rect = pygame.Rect(0, 0, popup_width, popup_height)
+    main_rect.center = (screen_width // 2, screen_height // 2)
+
+    pygame.draw.rect(screen, (60, 60, 60), main_rect)
+    pygame.draw.rect(screen, (255, 255, 255), main_rect, 3)
+
+    reward_title = fonts["large"].render("You Landed On..", True, (255, 255, 255))
+    reward_title_rect = reward_title.get_rect(
+        center=(main_rect.centerx, main_rect.top + sy(40))
+    )
+
+    reward_description = fonts["small"].render(f"{reward}!", True, (255, 255, 255))
+
+    reward_description_rect = reward_description.get_rect(
+        center=(main_rect.centerx, main_rect.top + sy(100))
+    )
+
+    button_width = sx(180)
+    button_height = sy(50)
+
+    claim_button_rect = pygame.Rect(0, 0, button_width, button_height)
+    claim_button_rect.center = (main_rect.centerx, main_rect.bottom - sy(60))
+
+    pygame.draw.rect(screen, (4, 207, 116), claim_button_rect)
+
+    claim_text = fonts["small"].render("CLAIM", True, (255, 255, 255))
+    claim_text_rect = claim_text.get_rect(center=claim_button_rect.center)
+
+    draw_animated_text(
+        screen,
+        "You Landed On..",
+        fonts["verylarge"],
+        (255, 255, 255),
+        reward_title_rect.center,
+        "reward_title"
+    )
+
+    draw_animated_text(
+        screen,
+        f"{reward}!",
+        fonts["small"],
+        (255, 255, 255),
+        reward_description_rect.center,
+        "reward_name"
+    )
+
+    draw_animated_text(
+        screen,
+        "CLAIM",
+        fonts["small"],
+        (255, 255, 255),
+        claim_text_rect.center,
+        "claim_button"
+    )
+
+
+    return claim_text_rect
+
+
+
 def spin_the_wheel():
     global wheel_spinning, wheel_idle
     global reward_name, target_angle, spin_time, start_angle, wheel_angle
@@ -125,6 +206,8 @@ def update_wheel():
             wheel_spinning = False
 
             print("Landed on:", reward_name)
+
+            return landed
 
 
 def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_icon, spin_the_wheel_arrow_icon):

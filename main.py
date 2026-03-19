@@ -16,7 +16,7 @@ from fonts import load_fonts
 from options import draw_options, open_options    
 from stats import draw_stats, open_stats
 from donate import draw_donate, open_donate
-from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, draw_exclamation
+from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, draw_exclamation, landed_on_frame
 from floating_text import FloatingText
 from duck import Duck
 from pool import Pool
