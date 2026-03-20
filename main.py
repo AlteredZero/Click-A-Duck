@@ -16,7 +16,7 @@ from fonts import load_fonts
 from options import draw_options, open_options    
 from stats import draw_stats, open_stats
 from donate import draw_donate, open_donate
-from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, draw_exclamation, landed_on_frame
+from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, draw_exclamation, sping_the_wheel_reward_frame
 from floating_text import FloatingText
 from duck import Duck
 from pool import Pool
@@ -227,6 +227,8 @@ spin_the_wheel_arrow_icon = pygame.image.load("assets/Images/Spin-The-WheelArrow
 exclamation_icon = pygame.image.load("assets/Images/ExclamationIcon.png").convert_alpha()
 
 spin_the_wheel_rect = None
+
+show_spin_the_wheel_frame = False
 
 
 #---------------------#
@@ -888,6 +890,10 @@ def clear_data_warning():
     return clear_button_rect, cancel_button_rect
 
 
+def apply_bonus_effect(reward_name):
+    pass
+
+
 game_data = load_game(default_data)
 
 pygame.mixer.music.set_volume(game_data["settings"]["volume"])
@@ -1232,6 +1238,11 @@ while running:
                             if key == "spin_button":
                                 spin_the_wheel()
 
+                if show_spin_the_wheel_frame:
+                    if claim_button_rect.collidepoint(event.pos):
+                        show_spin_the_wheel_frame = False
+                        apply_bonus_effect(reward_name)
+
                 if bought:
                     if game_data["magicalAutoClickers"] > len(magical_auto_clickers):
                         magical_auto_clickers.clear()
@@ -1483,7 +1494,7 @@ while running:
 
     #----spin the wheel frame----#
     if show_spin_the_wheel:
-        spin_the_wheel_rects = open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_info_icon, spin_the_wheel_arrow_icon)
+        spin_the_wheel_rects, show_spin_the_wheel_frame, reward_name = open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_info_icon, spin_the_wheel_arrow_icon, show_spin_the_wheel_frame)
 
 
     #----cannot afford message----#
@@ -1501,9 +1512,15 @@ while running:
     #----upgrde list draw----#
     upgade_manager.draw(screen, fonts["large"], fonts["small"], fonts["verysmall"], game_data)
 
+
     #----show clear data warning frame----#
     if show_warning_clear_data:
         clear_button_rect, cancel_button_rect = clear_data_warning()
+
+    
+    #----show spin the wheel reward frame----#
+    if show_spin_the_wheel_frame:
+        claim_button_rect = sping_the_wheel_reward_frame(screen, fonts, draw_animated_text, reward_name)
 
 
     # ---------------------#
@@ -1534,6 +1551,10 @@ while running:
             if b.rect.collidepoint(mouse_pos):
                 hovering = True
                 break
+
+    if not hovering and show_spin_the_wheel_frame:
+        if claim_button_rect.collidepoint(mouse_pos):
+            hovering = True
 
     if not hovering:
         if options_rect.collidepoint(mouse_pos):

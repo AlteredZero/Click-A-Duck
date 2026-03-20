@@ -16,6 +16,8 @@ start_angle = 0
 
 landed = False
 
+reward_name = None
+
 slices = {
     "15min x1.2": 292,
     "30min x1.2": 245,
@@ -37,7 +39,7 @@ chances = {
     "15min x2": 11,
     "30min x2": 5
 }
- 
+
 
 def draw_SpinTheWheel(screen, spin_the_wheel_icon):
 
@@ -83,7 +85,7 @@ def draw_exclamation(screen, icon, rect):
 
 
 
-def landed_on_frame(screen, fonts, draw_animated_text, reward):
+def sping_the_wheel_reward_frame(screen, fonts, draw_animated_text, reward):
 
     screen_width, screen_height = screen.get_size()
 
@@ -158,7 +160,7 @@ def landed_on_frame(screen, fonts, draw_animated_text, reward):
     )
 
 
-    return claim_text_rect
+    return claim_button_rect
 
 
 
@@ -189,7 +191,7 @@ def spin_the_wheel():
 
 
 
-def update_wheel():
+def update_wheel(show_spin_the_wheel_frame):
     global wheel_angle, wheel_spinning, target_angle
     global spin_time, spin_duration, start_angle
 
@@ -198,7 +200,6 @@ def update_wheel():
         t = min(elapsed / spin_duration, 1)
 
         ease = 1 - (1 - t) ** 5
-
         wheel_angle = start_angle + (target_angle - start_angle) * ease
 
         if t >= 1:
@@ -207,10 +208,12 @@ def update_wheel():
 
             print("Landed on:", reward_name)
 
-            return landed
+            return True, reward_name
+
+    return show_spin_the_wheel_frame, reward_name
 
 
-def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_icon, spin_the_wheel_arrow_icon):
+def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_icon, spin_the_wheel_arrow_icon, show_spin_the_wheel_frame):
     global wheel_angle
 
     clickable_rects = []
@@ -230,7 +233,7 @@ def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_whe
     pygame.draw.rect(screen, (60, 60, 60), menu_rect)
     pygame.draw.rect(screen, (255, 255, 255), menu_rect, 3)
 
-    update_wheel()
+    show_spin_the_wheel_frame, reward_name = update_wheel(show_spin_the_wheel_frame)
 
     if wheel_idle:
         wheel_angle -= 0.1
@@ -284,4 +287,4 @@ def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_whe
     clickable_rects.append((support_rect, "spin_button"))
 
 
-    return clickable_rects
+    return clickable_rects, show_spin_the_wheel_frame, reward_name
