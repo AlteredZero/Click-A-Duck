@@ -213,7 +213,7 @@ def update_wheel(show_spin_the_wheel_frame):
     return show_spin_the_wheel_frame, reward_name
 
 
-def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_icon, spin_the_wheel_arrow_icon, show_spin_the_wheel_frame):
+def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_icon, spin_the_wheel_arrow_icon, show_spin_the_wheel_frame, get_spin_time_remaining, format_time):
     global wheel_angle
 
     clickable_rects = []
@@ -275,16 +275,24 @@ def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_whe
         support_rect
     )
 
+    remaining = get_spin_time_remaining(game_data)
+
+    if remaining == 0:
+        button_text = "SPIN!"
+    else:
+        button_text = format_time(remaining)
+    
     draw_animated_text(
         screen,
-        "SPIN!",
+        button_text,
         fonts["small"],
         (255, 255, 255),
         (menu_rect.centerx, support_center_y),
         "spin_button"
     )
 
-    clickable_rects.append((support_rect, "spin_button"))
+    if game_data["extras"]["spin_the_wheel_ready"]:
+        clickable_rects.append((support_rect, "spin_button"))
 
 
     return clickable_rects, show_spin_the_wheel_frame, reward_name

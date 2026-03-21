@@ -352,7 +352,8 @@ default_data = {
         "magicalAutoClickers": True
     },
     "extras": {
-        "spin_the_wheel_ready": False
+        "spin_the_wheel_ready": True,
+        "spin_the_wheel_next_time": 0
     }
 }
 
@@ -890,6 +891,32 @@ def clear_data_warning():
     return clear_button_rect, cancel_button_rect
 
 
+def get_spin_time_remaining(game_data):
+    extras = game_data["extras"]
+
+    if extras.get("spin_the_wheel_ready", True):
+        return 0
+
+    next_time = extras.get("spin_the_wheel_next_time", 0)
+    remaining = int(next_time - time.time())
+
+    if remaining <= 0:
+        extras["spin_the_wheel_ready"] = True
+        extras["spin_the_wheel_next_time"] = 0
+        save_game(game_data)
+        return 0
+
+    return remaining
+
+
+def format_time(seconds):
+    hours = seconds // 3600
+    minutes = (seconds % 3600) // 60
+    secs = seconds % 60
+
+    return f"{hours:02}:{minutes:02}:{secs:02}"
+
+
 def apply_bonus_effect(reward_name):
     pass
 
@@ -1236,7 +1263,13 @@ while running:
                     for rect, key in spin_the_wheel_rects:
                         if rect.collidepoint(event.pos):
                             if key == "spin_button":
-                                spin_the_wheel()
+                                if game_data["extras"]["spin_the_wheel_ready"]:
+                                    spin_the_wheel()
+
+                                    game_data["extras"]["spin_the_wheel_ready"] = False
+                                    game_data["extras"]["spin_the_wheel_next_time"] = time.time() + 86400
+
+                                    save_game(game_data)
 
                 if show_spin_the_wheel_frame:
                     if claim_button_rect.collidepoint(event.pos):
@@ -1494,7 +1527,7 @@ while running:
 
     #----spin the wheel frame----#
     if show_spin_the_wheel:
-        spin_the_wheel_rects, show_spin_the_wheel_frame, reward_name = open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_info_icon, spin_the_wheel_arrow_icon, show_spin_the_wheel_frame)
+        spin_the_wheel_rects, show_spin_the_wheel_frame, reward_name = open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_info_icon, spin_the_wheel_arrow_icon, show_spin_the_wheel_frame, get_spin_time_remaining, format_time)
 
 
     #----cannot afford message----#
