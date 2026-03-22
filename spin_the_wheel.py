@@ -269,18 +269,14 @@ def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_whe
         sy(40)
     )
 
-    pygame.draw.rect(
-        screen,
-        (4, 207, 116),
-        support_rect
-    )
-
     remaining = get_spin_time_remaining(game_data)
 
     if remaining == 0:
         button_text = "SPIN!"
+        pygame.draw.rect(screen, (4, 207, 116), support_rect)
     else:
         button_text = format_time(remaining)
+        pygame.draw.rect(screen, (60, 60, 60), support_rect)
     
     draw_animated_text(
         screen,

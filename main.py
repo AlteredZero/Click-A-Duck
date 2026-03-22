@@ -17,7 +17,7 @@ from options import draw_options, open_options
 from stats import draw_stats, open_stats
 from donate import draw_donate, open_donate
 from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, draw_exclamation, sping_the_wheel_reward_frame
-from tarot_cards import draw_tarot_cards_button, open_tarot_card_frame
+from tarot_cards import draw_tarot_cards_button, open_tarot_card_frame, pull_tarot_card
 from floating_text import FloatingText
 from duck import Duck
 from pool import Pool
@@ -231,12 +231,30 @@ tarot_card_icon = pygame.image.load("assets/Images/TarotCardsIcon.png").convert_
 tarot_card_background_icon = pygame.image.load("assets/Images/TarrotCardsBackgroundCards.png").convert_alpha()
 tarot_card_single_icon = pygame.image.load("assets/Images/SingleTarrotCard.png").convert_alpha()
 
+the_sun_tarot_card = pygame.image.load("assets/Images/TheSunTarotCard.png").convert_alpha() # +x ducks
+the_devil_tarot_card = pygame.image.load("assets/Images/TheDevilTarotCard.png").convert_alpha() # -x ducks
+the_empress_tarot_card = pygame.image.load("assets/Images/TheEmpressTarotCard.png").convert_alpha() # x1.5 total ducks
+death_tarot_card = pygame.image.load("assets/Images/TheDeathTarotCard.png").convert_alpha() # x0.5 total ducks
+wheel_of_fortune_tarot_card = pygame.image.load("assets/Images/ThWheelOfFortuneTarotCard.png").convert_alpha() # x2 total ducks
+the_tower_tarot_card = pygame.image.load("assets/Images/TheTowerTarotCard.png").convert_alpha() # x0.1 total ducks
+the_fool_tarot_card = pygame.image.load("assets/Images/TheFoolTarotCard.png").convert_alpha() # does nothing
+the_world_tarot_card = pygame.image.load("assets/Images/TheWorldTarotCards.png").convert_alpha() # simulate 5 minutes
+page_of_cups_tarot_card = pygame.image.load("assets/Images/PageOfCupsTarotCards.png").convert_alpha() # gives huge reward but turns out to be a fake
+ace_of_pentacles_tarot_card = pygame.image.load("assets/Images/AceOfPentaclesTaroCard.png").convert_alpha() # gives 2 tarot cards
+
+the__tarot_card = pygame.image.load("assets/Images/TheSunTarotCard.png").convert_alpha()
+
 exclamation_icon = pygame.image.load("assets/Images/ExclamationIcon.png").convert_alpha()
 
 spin_the_wheel_rect = None
+
 tarot_cards_rect = None
 
+help_button_rect = None
+
 show_spin_the_wheel_frame = False
+
+tarot_cards_list = []
 
 
 #---------------------#
@@ -364,7 +382,7 @@ default_data = {
         "spin_the_wheel_ready": True,
         "spin_the_wheel_next_time": 0,
         "tarrot_cards_ready": True,
-        "tarrot_cards_available": 8
+        "tarrot_cards_available": 4
     }
 }
 
@@ -461,11 +479,11 @@ enhancement_positions = {
 }
 
 special_tooltips = {
-    "shiny": "The entire pool is filled with riches now. Ducks give 3x Ducks per click and 2x Ducks per second for 30 seconds."
+    "shiny": "The entire pool is filled with riches now. Ducks give 3x Ducks per click and 2x Ducks per second for 30 seconds.",
+    "tarot_cards_help": "Tarot cards are special items that grant random buffs or debuffs. They are purely luck-based and can lead to massive earnings or total loss. Earn a card by filling your earnings meter. You are limited to eight cards every 24 hours. Play at your own risk."
 }
 
 tooltip_hover_start = {}
-
 enhancements_info = {}
 
 
@@ -1177,7 +1195,7 @@ while running:
                         click_sound.play()
 
                         if show_tarot_card_frame:
-                            keys_to_reset = ["tarot_cards_title", "pull_card_button", "help_info"]
+                            keys_to_reset = ["tarot_cards_title", "pull_card_button", "help_info", "tarot_card_reward"]
                             for key in keys_to_reset:
                                 tooltip_hover_start.pop(key, None)
 
@@ -1307,7 +1325,15 @@ while running:
                 if show_tarot_card_frame:
                     for rect, key in tarot_card_rects:
                         if rect.collidepoint(event.pos):
-                            pass
+                            if key == "pull_card_button":
+                                pull_tarot_card(tarot_cards_list)
+
+                                game_data["extras"]["tarrot_cards_available"] -= 1
+
+                                if game_data["extras"]["tarrot_cards_available"] == 0:
+                                    game_data["extras"]["tarrot_cards_ready"] = False
+                                else:
+                                    game_data["extras"]["tarrot_cards_ready"] = True
 
 
                 if show_spin_the_wheel_frame:
@@ -1576,7 +1602,7 @@ while running:
 
     #----tarot cards frame----#
     if show_tarot_card_frame:
-        tarot_card_rects = open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, tarot_card_background_icon, tarot_card_single_icon)
+        tarot_card_rects, help_button_rect, tarot_cards_list = open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, tarot_card_background_icon, tarot_card_single_icon, the_sun_tarot_card, the_devil_tarot_card, the_empress_tarot_card, death_tarot_card, wheel_of_fortune_tarot_card, the_tower_tarot_card, the_fool_tarot_card, the_world_tarot_card, page_of_cups_tarot_card, ace_of_pentacles_tarot_card)
 
 
     #----cannot afford message----#
@@ -1604,6 +1630,20 @@ while running:
     if show_spin_the_wheel_frame:
         claim_button_rect = sping_the_wheel_reward_frame(screen, fonts, draw_animated_text, reward_name)
 
+
+    #----tarot card help tooltip----#
+    if help_button_rect:
+        draw_animated_tooltip(
+            screen,
+            special_tooltips["tarot_cards_help"],
+            fonts["verysmall"],
+            help_button_rect,
+            mouse_pos,
+            "tarot_cards_help_tooltip",
+            sx(10),
+            0
+        )
+        
 
     # ---------------------#
     # --- CURSOR / HOVER---#
