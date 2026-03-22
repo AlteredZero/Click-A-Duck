@@ -17,7 +17,7 @@ from options import draw_options, open_options
 from stats import draw_stats, open_stats
 from donate import draw_donate, open_donate
 from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, draw_exclamation, sping_the_wheel_reward_frame
-from tarot_cards import draw_tarot_cards_button
+from tarot_cards import draw_tarot_cards_button, open_tarot_card_frame
 from floating_text import FloatingText
 from duck import Duck
 from pool import Pool
@@ -210,6 +210,8 @@ show_donate = False
 
 show_spin_the_wheel = False
 
+show_tarot_card_frame = False
+
 show_warning_clear_data = False
 
 clear_button_rect = None
@@ -222,9 +224,13 @@ support_url = "https://ko-fi.com/altered_games" # CHANGE URL
 support_button = None
 
 spin_the_wheel_icon = pygame.image.load("assets/Images/Spin-The-Wheel.png").convert_alpha()
-tarot_card_icon = pygame.image.load("assets/Images/TarotCardsIcon.png").convert_alpha()
 spin_the_wheel_info_icon = pygame.image.load("assets/Images/Spin-The-WheelInfo.png").convert_alpha()
 spin_the_wheel_arrow_icon = pygame.image.load("assets/Images/Spin-The-WheelArrow.png").convert_alpha()
+
+tarot_card_icon = pygame.image.load("assets/Images/TarotCardsIcon.png").convert_alpha()
+tarot_card_background_icon = pygame.image.load("assets/Images/TarrotCardsBackgroundCards.png").convert_alpha()
+tarot_card_single_icon = pygame.image.load("assets/Images/SingleTarrotCard.png").convert_alpha()
+
 exclamation_icon = pygame.image.load("assets/Images/ExclamationIcon.png").convert_alpha()
 
 spin_the_wheel_rect = None
@@ -357,7 +363,8 @@ default_data = {
     "extras": {
         "spin_the_wheel_ready": True,
         "spin_the_wheel_next_time": 0,
-        "tarrot_cards_ready": True
+        "tarrot_cards_ready": True,
+        "tarrot_cards_available": 8
     }
 }
 
@@ -473,6 +480,7 @@ duck_pop_effects = []
 option_hover_rects = []
 donate_hover_rects = []
 spin_the_wheel_rects = []
+tarot_card_rects = []
 
 
 #---------------------#
@@ -1108,6 +1116,7 @@ while running:
                     show_stats = False
                     show_donate = False
                     show_spin_the_wheel = False
+                    show_tarot_card_frame = False
                     click_sound.play()
 
                     if show_options:
@@ -1123,6 +1132,7 @@ while running:
                     show_options = False
                     show_donate = False
                     show_spin_the_wheel = False
+                    show_tarot_card_frame = False
                     click_sound.play()
 
                     if show_stats:
@@ -1135,6 +1145,7 @@ while running:
                     show_options = False
                     show_stats = False
                     show_spin_the_wheel = False
+                    show_tarot_card_frame = False
                     click_sound.play()
 
                     if show_donate:
@@ -1148,10 +1159,25 @@ while running:
                         show_options = False
                         show_stats = False
                         show_donate = False
+                        show_tarot_card_frame = False
                         click_sound.play()
 
                         if show_spin_the_wheel:
                             keys_to_reset = ["SPIN-THE-WHEEL_title", "spin_button"]
+                            for key in keys_to_reset:
+                                tooltip_hover_start.pop(key, None)
+
+                if game_data["purchases"]["tarotCardsB"]:
+                    if tarot_cards_rect and tarot_cards_rect.collidepoint(event.pos):
+                        show_tarot_card_frame = not show_tarot_card_frame
+                        show_options = False
+                        show_stats = False
+                        show_donate = False
+                        show_spin_the_wheel = False
+                        click_sound.play()
+
+                        if show_tarot_card_frame:
+                            keys_to_reset = ["tarot_cards_title", "pull_card_button", "help_info"]
                             for key in keys_to_reset:
                                 tooltip_hover_start.pop(key, None)
 
@@ -1274,9 +1300,15 @@ while running:
                                     spin_the_wheel()
 
                                     game_data["extras"]["spin_the_wheel_ready"] = False
-                                    game_data["extras"]["spin_the_wheel_next_time"] = time.time() + 86400
+                                    game_data["extras"]["spin_the_wheel_next_time"] = round(time.time() + 86400, 2)
 
                                     save_game(game_data)
+
+                if show_tarot_card_frame:
+                    for rect, key in tarot_card_rects:
+                        if rect.collidepoint(event.pos):
+                            pass
+
 
                 if show_spin_the_wheel_frame:
                     if claim_button_rect.collidepoint(event.pos):
@@ -1542,6 +1574,11 @@ while running:
         spin_the_wheel_rects, show_spin_the_wheel_frame, reward_name = open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_info_icon, spin_the_wheel_arrow_icon, show_spin_the_wheel_frame, get_spin_time_remaining, format_time)
 
 
+    #----tarot cards frame----#
+    if show_tarot_card_frame:
+        tarot_card_rects = open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, tarot_card_background_icon, tarot_card_single_icon)
+
+
     #----cannot afford message----#
     if cannot_afford_message and current_time < cannot_afford_timer:
         cannot_afford_text = fonts["large"].render(cannot_afford_message, False, (255, 255, 255))
@@ -1611,6 +1648,11 @@ while running:
                 hovering = True
 
     if not hovering:
+        if game_data["purchases"]["tarotCardsB"]:
+            if tarot_cards_rect.collidepoint(mouse_pos):
+                hovering = True
+
+    if not hovering:
         if stats_rect.collidepoint(mouse_pos):
             hovering = True
 
@@ -1648,6 +1690,12 @@ while running:
     
     if not hovering and show_spin_the_wheel:
         for rect, key in spin_the_wheel_rects:
+            if rect.collidepoint(mouse_pos):
+                hovering = True
+                break
+
+    if not hovering and show_tarot_card_frame:
+        for rect, key in tarot_card_rects:
             if rect.collidepoint(mouse_pos):
                 hovering = True
                 break

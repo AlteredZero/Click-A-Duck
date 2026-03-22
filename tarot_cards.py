@@ -1,9 +1,12 @@
 import pygame
 import random
 import time
+import math
 
 base_width = 2560
 base_height = 1440
+
+float_time = 0
 
 
 def draw_tarot_cards_button(screen, tarot_card_icon):
@@ -18,7 +21,7 @@ def draw_tarot_cards_button(screen, tarot_card_icon):
     def sx(x): return int(x * scale)
     def sy(y): return int(y * scale)
 
-    background = (60, 60, 60)
+    background = (70, 70, 255)
     border = (255, 255, 255)
 
     rect = pygame.Rect(sx(20), screen_height - sy(460), sx(80), sy(80))
@@ -129,8 +132,8 @@ def sping_the_wheel_reward_frame(screen, fonts, draw_animated_text, reward):
 
 
 
-def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_icon, spin_the_wheel_arrow_icon, show_spin_the_wheel_frame, get_spin_time_remaining, format_time):
-    global wheel_angle
+def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, background_cards_icon, tarot_card_icon):
+    global float_time
 
     clickable_rects = []
 
@@ -144,55 +147,47 @@ def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_whe
     def sx(x): return int(x * scale)
     def sy(y): return int(y * scale)
 
-    menu_rect = pygame.Rect(sx(135), sy(400), sx(750), sy(750))
+    menu_rect = pygame.Rect(sx(135), sy(500), sx(500), sy(650))
 
-    pygame.draw.rect(screen, (60, 60, 60), menu_rect)
+    pygame.draw.rect(screen, (70, 70, 255), menu_rect)
     pygame.draw.rect(screen, (255, 255, 255), menu_rect, 3)
 
+    float_time += 0.03
 
-    icon = pygame.transform.scale(spin_the_wheel_icon, (sx(400), sy(400)))
+    x_offset = math.sin(float_time) * sx(10)
+    y_offset = math.cos(float_time * 0.8) * sy(10)
 
-    rotated_icon = pygame.transform.rotate(icon, wheel_angle)
-    icon_rect = rotated_icon.get_rect(center=menu_rect.center)
-    screen.blit(rotated_icon, icon_rect)
+    scale_pulse = math.sin(float_time * 1.5) * 5
 
+    background_cards = pygame.transform.scale(background_cards_icon, (sx(200), sy(200)))
+    background_cards_rect = background_cards.get_rect(center=(menu_rect.centerx, menu_rect.centery))
+    screen.blit(background_cards, background_cards_rect)
 
-    arrow_icon = pygame.transform.scale(spin_the_wheel_arrow_icon, (sx(80), sy(80)))
-
-    arrow_icon_rect = arrow_icon.get_rect(center=(menu_rect.centerx + sx(180), menu_rect.centery))
-    screen.blit(arrow_icon, arrow_icon_rect)
-
+    icon = pygame.transform.scale(tarot_card_icon, (sx(200) + int(scale_pulse), sy(200) + int(scale_pulse)))
+    icon_rect = icon.get_rect(
+    center=(menu_rect.centerx + x_offset, menu_rect.centery + y_offset))
+    screen.blit(icon, icon_rect)
 
     draw_animated_text(
         screen,
-        "SPIN-THE-WHEEL",
+        "Tarot Cards",
         fonts["large"],
         (255, 255, 255),
         (menu_rect.centerx, menu_rect.top + sy(30)),
-        "SPIN-THE-WHEEL_title"
+        "tarot_cards_title"
     )
 
     support_center_y = menu_rect.bottom - sy(70) + fonts["small"].get_height() // 2
+    support_rect = pygame.Rect(menu_rect.centerx - sx(120), support_center_y - sy(20), sx(240), sy(40))
+    pygame.draw.rect(screen, (4, 207, 116), support_rect)
 
-    support_rect = pygame.Rect(
-        menu_rect.centerx - sx(120),
-        support_center_y - sy(20),
-        sx(240),
-        sy(40)
-    )
+    remaining = True
 
-    pygame.draw.rect(
-        screen,
-        (4, 207, 116),
-        support_rect
-    )
-
-    remaining = get_spin_time_remaining(game_data)
-
-    if remaining == 0:
-        button_text = "SPIN!"
+    if remaining:
+        button_text = f"PULL CARD ({str(game_data["extras"]["tarrot_cards_available"])})"
     else:
-        button_text = format_time(remaining)
+        pass
+        #button_text = format_time(remaining)
     
     draw_animated_text(
         screen,
@@ -200,11 +195,29 @@ def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_whe
         fonts["small"],
         (255, 255, 255),
         (menu_rect.centerx, support_center_y),
-        "spin_button"
+        "pull_card_button"
     )
 
-    if game_data["extras"]["spin_the_wheel_ready"]:
-        clickable_rects.append((support_rect, "spin_button"))
+    help_button_y = menu_rect.top + sy(20) + fonts["large"].get_height() // 2
+    help_button_center = (menu_rect.centerx + sx(215), help_button_y)
+
+    help_button_rect = pygame.Rect(0, 0, sx(35), sy(35))
+    help_button_rect.center = help_button_center
+
+    pygame.draw.rect(screen, (102, 102, 255), help_button_rect)
+
+    draw_animated_text(
+        screen,
+        "?",
+        fonts["large"],
+        (255, 255, 255),
+        help_button_center,
+        "help_info"
+    )
+
+    if game_data["extras"]["tarrot_cards_ready"]:
+        clickable_rects.append((support_rect, "pull_card_button"))
+        clickable_rects.append((help_button_rect, "help_info"))
 
 
-    return clickable_rects, show_spin_the_wheel_frame
+    return clickable_rects

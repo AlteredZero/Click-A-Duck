@@ -53,7 +53,7 @@ def draw_SpinTheWheel(screen, spin_the_wheel_icon):
     def sx(x): return int(x * scale)
     def sy(y): return int(y * scale)
 
-    background = (60, 60, 60)
+    background = (255, 70, 70)
     border = (255, 255, 255)
 
     rect = pygame.Rect(sx(20), screen_height - sy(370), sx(80), sy(80))
@@ -228,9 +228,9 @@ def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_whe
     def sx(x): return int(x * scale)
     def sy(y): return int(y * scale)
 
-    menu_rect = pygame.Rect(sx(135), sy(400), sx(750), sy(750))
+    menu_rect = pygame.Rect(sx(135), sy(550), sx(600), sy(600))
 
-    pygame.draw.rect(screen, (60, 60, 60), menu_rect)
+    pygame.draw.rect(screen, (255, 70, 70), menu_rect)
     pygame.draw.rect(screen, (255, 255, 255), menu_rect, 3)
 
     show_spin_the_wheel_frame, reward_name = update_wheel(show_spin_the_wheel_frame)
