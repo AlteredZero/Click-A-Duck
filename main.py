@@ -17,6 +17,7 @@ from options import draw_options, open_options
 from stats import draw_stats, open_stats
 from donate import draw_donate, open_donate
 from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, draw_exclamation, sping_the_wheel_reward_frame
+from tarot_cards import draw_tarot_cards_button
 from floating_text import FloatingText
 from duck import Duck
 from pool import Pool
@@ -216,17 +217,18 @@ cancel_button_rect = None
 
 save_cooldown_until = 0
 
-support_url = "https://ko-fi.com/altered_games"
+support_url = "https://ko-fi.com/altered_games" # CHANGE URL
 
 support_button = None
 
 spin_the_wheel_icon = pygame.image.load("assets/Images/Spin-The-Wheel.png").convert_alpha()
+tarot_card_icon = pygame.image.load("assets/Images/TarotCardsIcon.png").convert_alpha()
 spin_the_wheel_info_icon = pygame.image.load("assets/Images/Spin-The-WheelInfo.png").convert_alpha()
 spin_the_wheel_arrow_icon = pygame.image.load("assets/Images/Spin-The-WheelArrow.png").convert_alpha()
-
 exclamation_icon = pygame.image.load("assets/Images/ExclamationIcon.png").convert_alpha()
 
 spin_the_wheel_rect = None
+tarot_cards_rect = None
 
 show_spin_the_wheel_frame = False
 
@@ -317,6 +319,7 @@ default_data = {
         "cyanPoolB": False,
         "radiantPlungeIIIB": False,
         "pondLanternB": False,
+        "tarotCardsB": False,
         "decorativePondArchB": False,
         "enchantedWaterWheelB": False,
         "platinumStrongCursorB": False,
@@ -353,7 +356,8 @@ default_data = {
     },
     "extras": {
         "spin_the_wheel_ready": True,
-        "spin_the_wheel_next_time": 0
+        "spin_the_wheel_next_time": 0,
+        "tarrot_cards_ready": True
     }
 }
 
@@ -997,6 +1001,9 @@ while running:
     if game_data["purchases"]["spinTheWheelB"]:
         spin_the_wheel_rect = draw_SpinTheWheel(screen, spin_the_wheel_icon)
 
+    if game_data["purchases"]["tarotCardsB"]:
+        tarot_cards_rect = draw_tarot_cards_button(screen, tarot_card_icon)
+
 
     target = game_data["ducks"]
 
@@ -1455,6 +1462,11 @@ while running:
     #----draw spin the wheel exclamation----#
     if game_data["purchases"]["spinTheWheelB"] and game_data["extras"]["spin_the_wheel_ready"] and spin_the_wheel_rect:
             draw_exclamation(screen, exclamation_icon, spin_the_wheel_rect)
+
+
+    #----draw tarot cards exclamation----#
+    if game_data["purchases"]["tarotCardsB"] and game_data["extras"]["tarrot_cards_ready"] and tarot_cards_rect:
+            draw_exclamation(screen, exclamation_icon, tarot_cards_rect)
 
 
     #----upgrade icon tooltips----#

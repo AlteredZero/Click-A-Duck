@@ -582,6 +582,19 @@
       "purchase_key": "pondLanternB"
     },
     {
+      "title": "Tarot Cards",
+      "cost": 2486271,
+      "icon": "assets/Images/TarotCardsIcon.png",
+      "save_key": null,
+      "duck_color": null,
+      "bonus": null,
+      "description": "Mysterious cards that can affect your past, present, and future. You get 8 cards daily, and unlock a card after filling up the earnings bar. You can choose to pull the card, it can give great buffs, but can also give great debuffs. Play at your own risk..",
+      "save_key2": null,
+      "one_time": true,
+      "pool_color": null,
+      "purchase_key": "tarotCardsB"
+    },
+    {
       "title": "Decorative Pond Arch",
       "cost": 2600000,
       "icon": "assets/Images/DecorativeDuckArch.png",

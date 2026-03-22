@@ -105,7 +105,8 @@ class UpgradeButton:
             game_data[self.save_key] = max(0, round(game_data[self.save_key], 2))
 
         elif self.save_key == "shinyDuckChance":
-            game_data[self.save_key] += round(0.0001, 4)
+            game_data[self.save_key] += 0.0001
+            game_data[self.save_key] = round(game_data[self.save_key], 4)
 
         elif self.save_key == "criticalChance":
             game_data[self.save_key] += round(self.bonus, 3)
@@ -177,6 +178,9 @@ class UpgradeButton:
             game_data["magicalAutoClickerSpeed"] += 0.5
 
         elif self.title == "Spin The Wheel":
+            pass
+
+        elif self.title == "Tarot Cards":
             pass
 
         else:
