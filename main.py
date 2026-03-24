@@ -241,6 +241,8 @@ the_fool_tarot_card = pygame.image.load("assets/Images/TheFoolTarotCard.png").co
 the_world_tarot_card = pygame.image.load("assets/Images/TheWorldTarotCards.png").convert_alpha() # simulate 5 minutes
 page_of_cups_tarot_card = pygame.image.load("assets/Images/PageOfCupsTarotCards.png").convert_alpha() # gives huge reward but turns out to be a fake
 ace_of_pentacles_tarot_card = pygame.image.load("assets/Images/AceOfPentaclesTaroCard.png").convert_alpha() # gives 2 tarot cards
+tarot_card_background_design = pygame.image.load("assets/Images/TarotCardBackgroundDesign.png").convert_alpha()
+sping_the_wheel_background_design = pygame.image.load("assets/Images/spin_the_wheel_background_design.png").convert_alpha()
 
 the__tarot_card = pygame.image.load("assets/Images/TheSunTarotCard.png").convert_alpha()
 
@@ -1597,12 +1599,12 @@ while running:
 
     #----spin the wheel frame----#
     if show_spin_the_wheel:
-        spin_the_wheel_rects, show_spin_the_wheel_frame, reward_name = open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_info_icon, spin_the_wheel_arrow_icon, show_spin_the_wheel_frame, get_spin_time_remaining, format_time)
+        spin_the_wheel_rects, show_spin_the_wheel_frame, reward_name = open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_info_icon, spin_the_wheel_arrow_icon, show_spin_the_wheel_frame, get_spin_time_remaining, format_time, sping_the_wheel_background_design)
 
 
     #----tarot cards frame----#
     if show_tarot_card_frame:
-        tarot_card_rects, help_button_rect, tarot_cards_list = open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, tarot_card_background_icon, tarot_card_single_icon, the_sun_tarot_card, the_devil_tarot_card, the_empress_tarot_card, death_tarot_card, wheel_of_fortune_tarot_card, the_tower_tarot_card, the_fool_tarot_card, the_world_tarot_card, page_of_cups_tarot_card, ace_of_pentacles_tarot_card, get_current_dps)
+        tarot_card_rects, help_button_rect, tarot_cards_list = open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, tarot_card_background_icon, tarot_card_single_icon, the_sun_tarot_card, the_devil_tarot_card, the_empress_tarot_card, death_tarot_card, wheel_of_fortune_tarot_card, the_tower_tarot_card, the_fool_tarot_card, the_world_tarot_card, page_of_cups_tarot_card, ace_of_pentacles_tarot_card, get_current_dps, tarot_card_background_design)
 
 
     #----cannot afford message----#

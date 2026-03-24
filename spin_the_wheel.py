@@ -213,7 +213,7 @@ def update_wheel(show_spin_the_wheel_frame):
     return show_spin_the_wheel_frame, reward_name
 
 
-def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_icon, spin_the_wheel_arrow_icon, show_spin_the_wheel_frame, get_spin_time_remaining, format_time):
+def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_icon, spin_the_wheel_arrow_icon, show_spin_the_wheel_frame, get_spin_time_remaining, format_time, sping_the_wheel_background_design):
     global wheel_angle
 
     clickable_rects = []
@@ -234,6 +234,10 @@ def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_whe
     pygame.draw.rect(screen, (255, 255, 255), menu_rect, 3)
 
     show_spin_the_wheel_frame, reward_name = update_wheel(show_spin_the_wheel_frame)
+
+    sping_the_wheel_background_design = pygame.transform.scale(sping_the_wheel_background_design, (sx(550), sy(550)))
+    sping_the_wheel_background_design_rect = sping_the_wheel_background_design.get_rect(center=(menu_rect.centerx, menu_rect.centery))
+    screen.blit(sping_the_wheel_background_design, sping_the_wheel_background_design_rect)
 
     if wheel_idle:
         wheel_angle -= 0.1

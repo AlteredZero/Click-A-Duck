@@ -33,7 +33,6 @@ LuxuryNestGroundB
 [X] add stats menu
 [X] give warning prompt for wipe save
 [X] make save game and quit game button work in options
-[ ] add locked cover frame for hidden upgrades and enhancements
 [X] add niltimeto command
 [X] set positions for enhancement icons
 [X] make opulentNestingGrounds actually set values and change image
@@ -62,9 +61,10 @@ Principles\\Click-A-Duck\\Files\\Python313\\python.exe': [Errno 2] No such file 
 [X] add proper chances and physics to the Spin The Wheel
 [X] add cards feature foundations
 [ ] fix incorrect angles for the spin the wheel
-[ ] add signature background shapes to spin the wheel and tarot cards
+[X] add signature background shapes to spin the wheel and tarot cards
 [X] add help ? hover in tarot cards menu
 [ ] finish tarot cards feature
+[ ] add locked cover frame for hidden upgrades and enhancements
 
 
 

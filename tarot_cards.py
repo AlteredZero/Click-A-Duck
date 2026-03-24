@@ -145,7 +145,7 @@ def pull_tarot_card(tarot_cards_list, game_data):
 
 
 
-def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, background_cards_icon, tarot_card_icon, the_sun_tarot_card, the_devil_tarot_card, the_empress_tarot_card, death_tarot_card, wheel_of_fortune_tarot_card, the_tower_tarot_card, the_fool_tarot_card, the_world_tarot_card, page_of_cups_tarot_card, ace_of_pentacles_tarot_card, get_current_dps):
+def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, background_cards_icon, tarot_card_icon, the_sun_tarot_card, the_devil_tarot_card, the_empress_tarot_card, death_tarot_card, wheel_of_fortune_tarot_card, the_tower_tarot_card, the_fool_tarot_card, the_world_tarot_card, page_of_cups_tarot_card, ace_of_pentacles_tarot_card, get_current_dps, tarot_card_background_design):
 
     global float_time, is_flipping, flip_progress, selected_card, is_fading, fade_alpha, reveal_scale, reveal_timer, current_reward, reward_applied, fake_timer, fake_fade_alpha, fake_switching
 
@@ -194,12 +194,15 @@ def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, backgrou
     x_offset = math.sin(float_time) * sx(10)
     y_offset = math.cos(float_time * 0.8) * sy(10)
 
+    tarot_cards_background_design = pygame.transform.scale(tarot_card_background_design, (sx(450), sy(450)))
+    tarot_cards_background_design_rect = tarot_cards_background_design.get_rect(center=(menu_rect.centerx, menu_rect.centery))
+    screen.blit(tarot_cards_background_design, tarot_cards_background_design_rect)
+
     background_cards = pygame.transform.scale(background_cards_icon, (sx(300), sy(300)))
     background_cards_rect = background_cards.get_rect(center=(menu_rect.centerx, menu_rect.centery))
     screen.blit(background_cards, background_cards_rect)
 
     fade_alpha = 255
-
     card_width = sx(300)
     card_height = sy(300)
 
