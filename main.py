@@ -1326,7 +1326,7 @@ while running:
                     for rect, key in tarot_card_rects:
                         if rect.collidepoint(event.pos):
                             if key == "pull_card_button":
-                                pull_tarot_card(tarot_cards_list)
+                                pull_tarot_card(tarot_cards_list, game_data)
 
                                 game_data["extras"]["tarrot_cards_available"] -= 1
 
@@ -1602,7 +1602,7 @@ while running:
 
     #----tarot cards frame----#
     if show_tarot_card_frame:
-        tarot_card_rects, help_button_rect, tarot_cards_list = open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, tarot_card_background_icon, tarot_card_single_icon, the_sun_tarot_card, the_devil_tarot_card, the_empress_tarot_card, death_tarot_card, wheel_of_fortune_tarot_card, the_tower_tarot_card, the_fool_tarot_card, the_world_tarot_card, page_of_cups_tarot_card, ace_of_pentacles_tarot_card)
+        tarot_card_rects, help_button_rect, tarot_cards_list = open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, tarot_card_background_icon, tarot_card_single_icon, the_sun_tarot_card, the_devil_tarot_card, the_empress_tarot_card, death_tarot_card, wheel_of_fortune_tarot_card, the_tower_tarot_card, the_fool_tarot_card, the_world_tarot_card, page_of_cups_tarot_card, ace_of_pentacles_tarot_card, get_current_dps)
 
 
     #----cannot afford message----#

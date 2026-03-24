@@ -17,6 +17,15 @@ is_fading = False
 reveal_scale = 1.0
 reveal_timer = 0
 
+current_reward = ""
+reward_value = 0
+reward_type = None
+reward_applied = False
+
+fake_timer = 0
+fake_switching = False
+fake_fade_alpha = 255
+
 
 def draw_tarot_cards_button(screen, tarot_card_icon):
 
@@ -62,25 +71,83 @@ def draw_exclamation(screen, icon, rect):
     screen.blit(icon, icon_rect)
 
 
-def pull_tarot_card(tarot_cards_list):
+def pull_tarot_card(tarot_cards_list, game_data):
     global is_flipping, flip_progress, selected_card
-    global is_fading, fade_alpha
+    global current_reward, reward_value, reward_type, reward_applied, fake_timer, fake_switching, fake_fade_alpha
 
-    if selected_card and not is_flipping:
-        is_fading = True
-        fade_alpha = 255
+    if is_flipping:
         return
 
-    if not is_flipping:
-        selected_card = random.choice(tarot_cards_list)
-        flip_progress = 0
-        is_flipping = True
+    reward_applied = False
+
+    fake_timer = 0
+    fake_switching = False
+    fake_fade_alpha = 255
+
+    selected_card = random.choice(tarot_cards_list)
+
+    dpc = game_data["ducksPerClick"]
+    dps = game_data["ducksPerSecond"]
+    base = dpc + dps
+
+    low = int(base * 0.5)
+    high = int(base * 30)
+
+    if selected_card == tarot_cards_list[0]:
+        reward_value = random.randint(low, high)
+        reward_type = "add"
+        current_reward = f"+{reward_value:,} ducks"
+
+    elif selected_card == tarot_cards_list[1]:
+        reward_value = random.randint(low, high)
+        reward_type = "subtract"
+        current_reward = f"-{reward_value:,} ducks"
+
+    elif selected_card == tarot_cards_list[2]:
+        reward_value = 1.5
+        reward_type = "multiply"
+        current_reward = "x1.5 total ducks"
+
+    elif selected_card == tarot_cards_list[3]:
+        reward_value = 0.5
+        reward_type = "multiply"
+        current_reward = "x0.5 total ducks"
+
+    elif selected_card == tarot_cards_list[4]:
+        reward_value = 2
+        reward_type = "multiply"
+        current_reward = "x2 total ducks"
+
+    elif selected_card == tarot_cards_list[5]:
+        reward_value = 0.1
+        reward_type = "multiply"
+        current_reward = "x0.1 total ducks"
+
+    elif selected_card == tarot_cards_list[6]:
+        reward_type = "none"
+        current_reward = "Nothing!"
+
+    elif selected_card == tarot_cards_list[7]:
+        reward_type = "simulate"
+        current_reward = "simulate 5 minutes"
+
+    elif selected_card == tarot_cards_list[8]:
+        reward_type = "fake"
+        reward_value = random.randint(18203192, 172919082731)
+        current_reward = f"+{reward_value:,}"
+
+    elif selected_card == tarot_cards_list[9]:
+        reward_type = "cards"
+        current_reward = "+2 tarot cards"
+
+    flip_progress = 0
+    is_flipping = True
 
 
 
-def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, background_cards_icon, tarot_card_icon, the_sun_tarot_card, the_devil_tarot_card, the_empress_tarot_card, death_tarot_card, wheel_of_fortune_tarot_card, the_tower_tarot_card, the_fool_tarot_card, the_world_tarot_card, page_of_cups_tarot_card, ace_of_pentacles_tarot_card):
+def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, background_cards_icon, tarot_card_icon, the_sun_tarot_card, the_devil_tarot_card, the_empress_tarot_card, death_tarot_card, wheel_of_fortune_tarot_card, the_tower_tarot_card, the_fool_tarot_card, the_world_tarot_card, page_of_cups_tarot_card, ace_of_pentacles_tarot_card, get_current_dps):
 
-    global float_time, is_flipping, flip_progress, selected_card, is_fading, fade_alpha, reveal_scale, reveal_timer
+    global float_time, is_flipping, flip_progress, selected_card, is_fading, fade_alpha, reveal_scale, reveal_timer, current_reward, reward_applied, fake_timer, fake_fade_alpha, fake_switching
 
     tarot_cards = [
         the_sun_tarot_card,
@@ -96,16 +163,16 @@ def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, backgrou
     ]
 
     tarot_cards_rewards = {
-        the_sun_tarot_card: f"+{random.randint(1, 5000000)} ducks",
-        the_devil_tarot_card: f"-{random.randint(1, 5000000)} ducks",
-        the_empress_tarot_card: "x1.5 total ducks",
-        death_tarot_card: "x0.5 total ducks",
-        wheel_of_fortune_tarot_card: "x2 total ducks",
-        the_tower_tarot_card: "x0.1 total ducks",
-        the_fool_tarot_card: "Nothing!",
-        the_world_tarot_card: "simulate 5 minutes",
-        page_of_cups_tarot_card: f"+{random.randint(18203192, 172919082731)}",  # FAKE REWARD! ITS ACTUALLY NOTHING!!!!
-        ace_of_pentacles_tarot_card: "+2 tarot cards"
+        the_sun_tarot_card: "sun",
+        the_devil_tarot_card: "devil",
+        the_empress_tarot_card: "empress",
+        death_tarot_card: "death",
+        wheel_of_fortune_tarot_card: "wheel",
+        the_tower_tarot_card: "tower",
+        the_fool_tarot_card: "fool",
+        the_world_tarot_card: "world",
+        page_of_cups_tarot_card: "fake",
+        ace_of_pentacles_tarot_card: "ace"
     }
 
     clickable_rects = []
@@ -131,17 +198,7 @@ def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, backgrou
     background_cards_rect = background_cards.get_rect(center=(menu_rect.centerx, menu_rect.centery))
     screen.blit(background_cards, background_cards_rect)
 
-    if is_fading:
-        fade_alpha -= 15
-
-        if fade_alpha <= 0:
-            fade_alpha = 0
-            is_fading = False
-
-            selected_card = random.choice(tarot_cards)
-            flip_progress = 0
-            is_flipping = True
-            fade_alpha = 255
+    fade_alpha = 255
 
     card_width = sx(300)
     card_height = sy(300)
@@ -153,6 +210,70 @@ def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, backgrou
         flip_progress = 1
         is_flipping = False
         reveal_timer = 1.0
+
+        if not reward_applied:
+            reward_applied = True
+
+            if reward_type == "add":
+                game_data["ducks"] += reward_value
+
+            elif reward_type == "subtract":
+                game_data["ducks"] = max(0, game_data["ducks"] - reward_value)
+
+            elif reward_type == "multiply":
+                game_data["ducks"] = int(game_data["ducks"] * reward_value)
+
+            elif reward_type == "simulate":
+                seconds = int(300)
+
+                dps = get_current_dps()
+                global_speed = game_data.get("globalGameSpeed", 1)
+
+                dps *= global_speed
+
+                base_dpc = game_data["ducksPerClick"] * game_data["multiplierDPC"]
+
+                crit_chance = game_data.get("criticalChance", 0)
+                crit_power = game_data.get("criticalPower", 1)
+
+                total_dps_gain = dps * seconds
+
+                dpc_triggers = seconds // 5
+
+                if crit_chance > 0:
+                    avg_multiplier = (1 - crit_chance) + (crit_chance * crit_power)
+                else:
+                    avg_multiplier = 1
+
+                avg_dpc = base_dpc * avg_multiplier * global_speed
+
+                total_dpc_gain = dpc_triggers * avg_dpc
+
+                total_added = total_dps_gain + total_dpc_gain
+
+                game_data["ducks"] += total_added
+                game_data["allTimeDucks"] += total_added
+                game_data["playtime"] += seconds
+
+            elif reward_type == "cards":
+                game_data["extras"]["tarrot_cards_available"] += 2
+
+            elif reward_type == "fake":
+                fake_timer = 120
+                fake_switching = False
+                fake_fade_alpha = 255
+
+    if reward_type == "fake":
+        if fake_timer > 0:
+            fake_timer -= 1
+        else:
+            fake_switching = True
+
+        if fake_switching:
+            fake_fade_alpha -= 15
+            if fake_fade_alpha <= 0:
+                fake_fade_alpha = 0
+                current_reward = "Fake!"
 
     flip_scale = abs(math.cos(flip_progress * math.pi))
 
@@ -170,15 +291,32 @@ def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, backgrou
     else:
         card_image = selected_card if selected_card else tarot_card_icon
 
-    scaled_card = pygame.transform.scale(card_image, (current_width, current_height)).convert_alpha()
-    scaled_card.set_alpha(fade_alpha)
-
-    card_rect = scaled_card.get_rect(center=(
+    card_rect = pygame.Rect(0, 0, current_width, current_height)
+    card_rect.center = (
         menu_rect.centerx + x_offset,
         menu_rect.centery + y_offset
-    ))
+    )
 
-    screen.blit(scaled_card, card_rect)
+    if reward_type == "fake" and fake_switching:
+        old_card = pygame.transform.scale(selected_card, (current_width, current_height)).convert_alpha()
+        old_card.set_alpha(fake_fade_alpha)
+
+        fool_card = pygame.transform.scale(the_fool_tarot_card, (current_width, current_height)).convert_alpha()
+        fool_card.set_alpha(255 - fake_fade_alpha)
+
+        screen.blit(old_card, card_rect)
+        screen.blit(fool_card, card_rect)
+
+    else:
+        if flip_progress < 0.5:
+            card_image = tarot_card_icon
+        else:
+            card_image = selected_card if selected_card else tarot_card_icon
+
+        scaled_card = pygame.transform.scale(card_image, (current_width, current_height)).convert_alpha()
+        scaled_card.set_alpha(fade_alpha)
+
+        screen.blit(scaled_card, card_rect)
 
     draw_animated_text(
         screen,
@@ -193,7 +331,7 @@ def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, backgrou
 
     if not is_flipping and selected_card:
         if not is_flipping and selected_card:
-            tarot_card_reward = tarot_cards_rewards.get(selected_card, "")
+            tarot_card_reward = current_reward
             text_alpha = int(255 * (1 - reveal_timer))
         else:
             tarot_card_reward = ""
@@ -204,7 +342,7 @@ def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, backgrou
         tarot_card_reward,
         fonts["small"],
         (255, 255, 255),
-        (menu_rect.centerx, menu_rect.top + sy(500)),
+        (menu_rect.centerx, menu_rect.top + sy(530)),
         "tarot_cards_title"
     )
 
