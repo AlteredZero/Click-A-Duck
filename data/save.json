@@ -1,5 +1,5 @@
 {
-    "ducks": 59003755.164000005,
+    "ducks": 60109103.164000005,
     "ducksPerClick": 31491,
     "ducksPerSecond": 13991,
     "maxDucksInPool": 1,
@@ -7,7 +7,7 @@
     "DPCUpgradeBought": 0,
     "reainforcedCursorB": 0,
     "poolSize": 1,
-    "playtime": 3814,
+    "playtime": 3863,
     "cursorSize": 1,
     "duckColor": "lime",
     "poolColor": "cyan",
@@ -25,7 +25,7 @@
     "duckCoop": 0,
     "duckBeacon": 0,
     "globalGameSpeed": 1,
-    "allTimeDucks": 1000081972314.6558,
+    "allTimeDucks": 1000082863526.6558,
     "purchases": {
         "orangeDuckB": true,
         "yellowPoolB": true,

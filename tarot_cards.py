@@ -364,13 +364,19 @@ def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, backgrou
         "pull_card_button"
     )
 
+    current_progress = 794712837
+    progress_bar_goal = 1218309182
+
+    progress_percent = (current_progress / progress_bar_goal) * 100
+
     progress_bar_center_y = menu_rect.bottom - sy(40) + fonts["small"].get_height() // 2
     progress_bar_rect = pygame.Rect(menu_rect.centerx - sx(200), progress_bar_center_y - sy(14), sx(400), sy(30))
     pygame.draw.rect(screen, (80, 80, 80), progress_bar_rect)
-    pygame.draw.rect(screen, (0, 0, 0), progress_bar_rect, 3)
 
-    current_progress = 1218309182
-    progress_bar_goal = 121830918212
+    progress_rect = pygame.Rect(progress_bar_rect.x, progress_bar_rect.y, sx(progress_percent * 4), sy(30))
+    pygame.draw.rect(screen, (4, 207, 116), progress_rect)
+
+    pygame.draw.rect(screen, (0, 0, 0), progress_bar_rect, 3)
 
     progress_bar_text = f"{str(current_progress)} / {str(progress_bar_goal)}"
 
