@@ -27,6 +27,49 @@ fake_switching = False
 fake_fade_alpha = 255
 
 
+def get_tarot_goal(game_data):
+    return int((game_data["ducksPerClick"] + game_data["ducksPerSecond"]) * 1800)
+
+
+def add_tarot_progress(game_data, amount):
+    if game_data["extras"]["tarot_cards_earned_today"] >= 8:
+        return
+
+    game_data["extras"]["tarot_progress"] += amount
+
+    while game_data["extras"]["tarot_progress"] >= game_data["extras"]["tarot_goal"]:
+        game_data["extras"]["tarot_progress"] -= game_data["extras"]["tarot_goal"]
+        game_data["extras"]["tarot_cards_earned_today"] += 1
+        game_data["extras"]["tarrot_cards_available"] += 1
+
+        game_data["extras"]["tarot_goal"] = get_tarot_goal(game_data)
+
+        if game_data["extras"]["tarot_cards_earned_today"] >= 8:
+            game_data["extras"]["tarot_progress"] = 0
+            break
+
+
+def update_tarot_reset(game_data):
+    current_time = time.time()
+    elapsed = current_time - game_data["extras"]["tarot_last_reset_time"]
+
+    if elapsed >= 86400:
+        game_data["extras"]["tarot_cards_earned_today"] = 0
+        game_data["extras"]["tarot_last_reset_time"] = current_time
+
+
+def get_time_remaining(game_data):
+    current_time = time.time()
+    elapsed = current_time - game_data["extras"]["tarot_last_reset_time"]
+    remaining = max(0, 86400 - elapsed)
+
+    hours = int(remaining // 3600)
+    minutes = int((remaining % 3600) // 60)
+    seconds = int(remaining % 60)
+
+    return f"{hours:02}:{minutes:02}:{seconds:02}"
+
+
 def draw_tarot_cards_button(screen, tarot_card_icon):
 
     screen_width, screen_height = screen.get_size()
@@ -147,7 +190,7 @@ def pull_tarot_card(tarot_cards_list, game_data):
 
 def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, background_cards_icon, tarot_card_icon, the_sun_tarot_card, the_devil_tarot_card, the_empress_tarot_card, death_tarot_card, wheel_of_fortune_tarot_card, the_tower_tarot_card, the_fool_tarot_card, the_world_tarot_card, page_of_cups_tarot_card, ace_of_pentacles_tarot_card, get_current_dps, tarot_card_background_design):
 
-    global float_time, is_flipping, flip_progress, selected_card, is_fading, fade_alpha, reveal_scale, reveal_timer, current_reward, reward_applied, fake_timer, fake_fade_alpha, fake_switching
+    global float_time, is_flipping, flip_progress, selected_card, is_fading, fade_alpha, reveal_scale, reveal_timer, current_reward, reward_applied, fake_timer, fake_fade_alpha, fake_switching, get_time_remaining
 
     tarot_cards = [
         the_sun_tarot_card,
@@ -363,16 +406,25 @@ def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, backgrou
         (menu_rect.centerx, support_center_y),
         "pull_card_button"
     )
+    
+    current_progress = int(game_data["extras"]["tarot_progress"])
+    progress_bar_goal = int(game_data["extras"]["tarot_goal"])
+
+    progress_percent = (current_progress / progress_bar_goal) * 100
 
     progress_bar_center_y = menu_rect.bottom - sy(40) + fonts["small"].get_height() // 2
     progress_bar_rect = pygame.Rect(menu_rect.centerx - sx(200), progress_bar_center_y - sy(14), sx(400), sy(30))
     pygame.draw.rect(screen, (80, 80, 80), progress_bar_rect)
+
+    progress_rect = pygame.Rect(progress_bar_rect.x, progress_bar_rect.y, sx(progress_percent * 4), sy(30))
+    pygame.draw.rect(screen, (4, 207, 116), progress_rect)
+
     pygame.draw.rect(screen, (0, 0, 0), progress_bar_rect, 3)
 
-    current_progress = 1218309182
-    progress_bar_goal = 121830918212
-
-    progress_bar_text = f"{str(current_progress)} / {str(progress_bar_goal)}"
+    if game_data["extras"]["tarot_cards_earned_today"] >= 8:
+        progress_bar_text = f"Next reset in: {get_time_remaining(game_data)}"
+    else:
+        progress_bar_text = f"{current_progress:,} / {progress_bar_goal:,}"
 
     draw_animated_text(
         screen,

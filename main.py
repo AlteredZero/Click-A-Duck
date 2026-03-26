@@ -17,7 +17,7 @@ from options import draw_options, open_options
 from stats import draw_stats, open_stats
 from donate import draw_donate, open_donate
 from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, draw_exclamation, sping_the_wheel_reward_frame
-from tarot_cards import draw_tarot_cards_button, open_tarot_card_frame, pull_tarot_card
+from tarot_cards import draw_tarot_cards_button, open_tarot_card_frame, pull_tarot_card, add_tarot_progress, get_tarot_goal
 from floating_text import FloatingText
 from duck import Duck
 from pool import Pool
@@ -384,7 +384,11 @@ default_data = {
         "spin_the_wheel_ready": True,
         "spin_the_wheel_next_time": 0,
         "tarrot_cards_ready": True,
-        "tarrot_cards_available": 4
+        "tarrot_cards_available": 0,
+        "tarot_progress": 0,
+        "tarot_goal": 0,
+        "tarot_cards_earned_today": 0,
+        "tarot_last_reset_time": 0
     }
 }
 
@@ -997,6 +1001,14 @@ for enhancement in upgrade_data["enhancements"]:
 
 
 #---------------------#
+#----IF STATEMENTS----#
+#---------------------#
+
+if game_data["extras"]["tarot_goal"] == 0 and game_data["purchases"]["tarotCardsB"]:
+    game_data["extras"]["tarot_goal"] = get_tarot_goal(game_data)
+
+
+#---------------------#
 #-------RUNNING-------#
 #---------------------#
 
@@ -1112,6 +1124,7 @@ while running:
 
                         game_data["ducks"] += DPC
                         game_data["allTimeDucks"] += DPC
+                        add_tarot_progress(game_data, DPC)
                         
                         ducks.remove(duck)
                         duck_pop_effects.append(DuckPopEffect(duck.image, duck.rect.center))
@@ -1464,6 +1477,7 @@ while running:
     if current_time - tick_time >= 1000 / game_speed:
         game_data["ducks"] += get_current_dps()
         game_data["allTimeDucks"] += get_current_dps()
+        add_tarot_progress(game_data, get_current_dps())
         game_data["playtime"] += 1
         tick_time += 1000 / game_speed
         
