@@ -1659,6 +1659,10 @@ while running:
             sx(10),
             0
         )
+
+    #----tarot cards available and ready check----#
+    if game_data["extras"]["tarrot_cards_available"] > 0:
+        game_data["extras"]["tarrot_cards_ready"] = True
         
 
     # ---------------------#

@@ -65,6 +65,8 @@ Principles\\Click-A-Duck\\Files\\Python313\\python.exe': [Errno 2] No such file 
 [X] add help ? hover in tarot cards menu
 [ ] finish tarot cards feature
 [ ] add locked cover frame for hidden upgrades and enhancements
+[ ] fix the 24 hour timer not working after the 8 tarot cards are awarded
+[ ] add the boost functionality for spin the wheel
 
 
 

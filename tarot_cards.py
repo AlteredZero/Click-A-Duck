@@ -41,6 +41,7 @@ def add_tarot_progress(game_data, amount):
         game_data["extras"]["tarot_progress"] -= game_data["extras"]["tarot_goal"]
         game_data["extras"]["tarot_cards_earned_today"] += 1
         game_data["extras"]["tarrot_cards_available"] += 1
+        game_data["extras"]["tarrot_cards_ready"] = True
 
         game_data["extras"]["tarot_goal"] = get_tarot_goal(game_data)
 
@@ -303,6 +304,7 @@ def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, backgrou
 
             elif reward_type == "cards":
                 game_data["extras"]["tarrot_cards_available"] += 2
+                game_data["extras"]["tarrot_cards_ready"] = True
 
             elif reward_type == "fake":
                 fake_timer = 120
@@ -454,6 +456,7 @@ def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, backgrou
 
     if game_data["extras"]["tarrot_cards_ready"]:
         clickable_rects.append((support_rect, "pull_card_button"))
-        clickable_rects.append((help_button_rect, "help_info"))
+    
+    clickable_rects.append((help_button_rect, "help_info"))
 
     return clickable_rects, help_button_rect, tarot_cards
