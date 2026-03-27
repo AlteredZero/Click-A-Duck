@@ -1,5 +1,5 @@
 {
-    "ducks": 135447708.61808,
+    "ducks": 441404456.61808,
     "ducksPerClick": 31741,
     "ducksPerSecond": 14339,
     "maxDucksInPool": 52,
@@ -7,12 +7,12 @@
     "DPCUpgradeBought": 25,
     "reainforcedCursorB": 24,
     "poolSize": 1,
-    "playtime": 4782,
+    "playtime": 5379,
     "cursorSize": 1,
     "duckColor": "lime",
     "poolColor": "cyan",
-    "magicalAutoClickers": 2,
-    "magicalAutoClickerSpeed": 2.0,
+    "magicalAutoClickers": 40,
+    "magicalAutoClickerSpeed": 4.0,
     "multiplierDPC": 1.724,
     "multiplierDPS": 1.337,
     "twoDuckSpawnChance": 0.0,
@@ -25,7 +25,7 @@
     "duckCoop": 37,
     "duckBeacon": 0,
     "globalGameSpeed": 1,
-    "allTimeDucks": 1000150539809.2738,
+    "allTimeDucks": 1000164836979.2738,
     "purchases": {
         "orangeDuckB": true,
         "yellowPoolB": true,
@@ -93,20 +93,20 @@
         "duckMatrixB": false
     },
     "settings": {
-        "volume": 0.5,
+        "volume": 0.1,
         "music": true,
         "sfx": true,
         "duckText": true,
         "magicalAutoClickers": true
     },
     "extras": {
-        "spin_the_wheel_ready": true,
-        "spin_the_wheel_next_time": 0,
-        "tarrot_cards_ready": false,
-        "tarrot_cards_available": 0,
+        "spin_the_wheel_ready": false,
+        "spin_the_wheel_next_time": 1774656452.7,
+        "tarrot_cards_ready": true,
+        "tarrot_cards_available": 2,
         "tarot_progress": 0,
         "tarot_goal": 82944000,
         "tarot_cards_earned_today": 8,
-        "tarot_last_reset_time": 0
+        "tarot_last_reset_time": 1774570021.4805164
     }
 }

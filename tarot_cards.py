@@ -45,8 +45,9 @@ def add_tarot_progress(game_data, amount):
 
         game_data["extras"]["tarot_goal"] = get_tarot_goal(game_data)
 
-        if game_data["extras"]["tarot_cards_earned_today"] >= 8:
+        if game_data["extras"]["tarot_cards_earned_today"] == 8:
             game_data["extras"]["tarot_progress"] = 0
+            game_data["extras"]["tarot_last_reset_time"] = time.time()
             break
 
 
@@ -57,6 +58,8 @@ def update_tarot_reset(game_data):
     if elapsed >= 86400:
         game_data["extras"]["tarot_cards_earned_today"] = 0
         game_data["extras"]["tarot_last_reset_time"] = current_time
+        game_data["extras"]["tarot_progress"] = 0
+        game_data["extras"]["tarot_goal"] = get_tarot_goal(game_data)
 
 
 def get_time_remaining(game_data):
@@ -408,7 +411,7 @@ def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, backgrou
         (menu_rect.centerx, support_center_y),
         "pull_card_button"
     )
-    
+
     current_progress = int(game_data["extras"]["tarot_progress"])
     progress_bar_goal = int(game_data["extras"]["tarot_goal"])
 
@@ -424,7 +427,7 @@ def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, backgrou
     pygame.draw.rect(screen, (0, 0, 0), progress_bar_rect, 3)
 
     if game_data["extras"]["tarot_cards_earned_today"] >= 8:
-        progress_bar_text = f"Next reset in: {get_time_remaining(game_data)}"
+        progress_bar_text = f"Next 8 card reset in: {get_time_remaining(game_data)}"
     else:
         progress_bar_text = f"{current_progress:,} / {progress_bar_goal:,}"
 

@@ -3,6 +3,7 @@ import math
 import random
 from floating_text import FloatingText
 from duck_pop_effect import DuckPopEffect
+from tarot_cards import add_tarot_progress
 
 class MagicalAutoClicker:
     def __init__(self, pos, image):
@@ -61,6 +62,7 @@ class MagicalAutoClicker:
                 DPC, crit = get_current_dpc()
 
                 game_data["ducks"] += DPC
+                add_tarot_progress(game_data, DPC)
 
                 floating_texts.append(
                     FloatingText(
