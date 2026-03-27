@@ -437,7 +437,16 @@ def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, backgrou
         fonts["verysmall"],
         (255, 255, 255),
         (menu_rect.centerx, progress_bar_center_y),
-        "pull_card_button"
+        "progress_bar_text"
+    )
+
+    draw_animated_text(
+        screen,
+        f"Cards: {8 - game_data["extras"]["tarot_cards_earned_today"]}/8",
+        fonts["verysmall"],
+        (255, 255, 255),
+        (menu_rect.centerx, menu_rect.top + sy(60)),
+        "daily_cards_counter"
     )
 
     help_button_y = menu_rect.top + sy(20) + fonts["large"].get_height() // 2

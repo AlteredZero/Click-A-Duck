@@ -1210,7 +1210,7 @@ while running:
                         click_sound.play()
 
                         if show_tarot_card_frame:
-                            keys_to_reset = ["tarot_cards_title", "pull_card_button", "help_info", "tarot_card_reward"]
+                            keys_to_reset = ["tarot_cards_title", "pull_card_button", "help_info", "tarot_card_reward", "progress_bar_text", "daily_cards_counter"]
                             for key in keys_to_reset:
                                 tooltip_hover_start.pop(key, None)
 
