@@ -101,23 +101,6 @@ def draw_tarot_cards_button(screen, tarot_card_icon):
     return rect
 
 
-def draw_exclamation(screen, icon, rect):
-    screen_width, screen_height = screen.get_size()
-
-    scale_x = screen_width / base_width
-    scale_y = screen_height / base_height
-    scale = min(scale_x, scale_y)
-
-    def sx(x): return int(x * scale)
-    def sy(y): return int(y * scale)
-
-    icon = pygame.transform.scale(icon, (sx(30), sy(30)))
-
-    icon_rect = icon.get_rect(center=(rect.right - sx(10), rect.top + sy(10)))
-
-    screen.blit(icon, icon_rect)
-
-
 def pull_tarot_card(tarot_cards_list, game_data):
     global is_flipping, flip_progress, selected_card
     global current_reward, reward_value, reward_type, reward_applied, fake_timer, fake_switching, fake_fade_alpha

@@ -19,25 +19,25 @@ landed = False
 reward_name = None
 
 slices = {
-    "15min x1.2": 292,
-    "30min x1.2": 245,
-    "60min x1.2": 203,
-    "15min x1.5": 70,
-    "30min x1.5": 24,
-    "60min x1.5": 340,
-    "15min x2": 158,
-    "30min x2": 112
+    "15 min x1.2": 292,
+    "30 min x1.2": 245,
+    "60 min x1.2": 203,
+    "15 min x1.5": 70,
+    "30 min x1.5": 24,
+    "60 min x1.5": 340,
+    "15 min x2": 158,
+    "30 min x2": 112
 }
 
 chances = {
-    "15min x1.2": 26,
-    "30min x1.2": 18,
-    "60min x1.2": 8,
-    "15min x1.5": 17,
-    "30min x1.5": 12,
-    "60min x1.5": 3,
-    "15min x2": 11,
-    "30min x2": 5
+    "15 min x1.2": 26,
+    "30 min x1.2": 18,
+    "60 min x1.2": 8,
+    "15 min x1.5": 17,
+    "30 min x1.5": 12,
+    "60 min x1.5": 3,
+    "15 min x2": 11,
+    "30 min x2": 5
 }
 
 
@@ -175,13 +175,15 @@ def spin_the_wheel():
 
     reward_angle = slices[reward_name]
 
-    wheel_angle = wheel_angle % 360
+    wheel_angle = 0
     start_angle = wheel_angle
 
     rotations = random.randint(6, 10)
 
-    target_angle = start_angle - (360 * rotations + (start_angle % 360) - reward_angle)
+    target_angle = start_angle - (360 * rotations + (reward_angle - start_angle % 360))
 
+    print(target_angle)
+    
     wheel_spinning = True
     wheel_idle = False
 

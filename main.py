@@ -16,7 +16,7 @@ from fonts import load_fonts
 from options import draw_options, open_options    
 from stats import draw_stats, open_stats
 from donate import draw_donate, open_donate
-from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, draw_exclamation, sping_the_wheel_reward_frame
+from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, sping_the_wheel_reward_frame
 from tarot_cards import draw_tarot_cards_button, open_tarot_card_frame, pull_tarot_card, add_tarot_progress, get_tarot_goal
 from floating_text import FloatingText
 from duck import Duck
@@ -957,6 +957,23 @@ def apply_bonus_effect(reward_name):
     pass
 
 
+def draw_exclamation(screen, icon, rect):
+    screen_width, screen_height = screen.get_size()
+
+    scale_x = screen_width / base_width
+    scale_y = screen_height / base_height
+    scale = min(scale_x, scale_y)
+
+    def sx(x): return int(x * scale)
+    def sy(y): return int(y * scale)
+
+    icon = pygame.transform.scale(icon, (sx(30), sy(30)))
+
+    icon_rect = icon.get_rect(center=(rect.right - sx(10), rect.top + sy(10)))
+
+    screen.blit(icon, icon_rect)
+
+
 game_data = load_game(default_data)
 
 pygame.mixer.music.set_volume(game_data["settings"]["volume"])
@@ -1626,7 +1643,7 @@ while running:
         cannot_afford_text = fonts["large"].render(cannot_afford_message, False, (255, 255, 255))
         screen.blit(cannot_afford_text, cannot_afford_text.get_rect(centerx=screen_width // 2, y=300))
 
-    
+
     #----game saved message----#
     if save_message and current_time < save_message_timer:
         save_message_text = fonts["large"].render(save_message, False, (255, 255, 255))
@@ -1641,7 +1658,7 @@ while running:
     if show_warning_clear_data:
         clear_button_rect, cancel_button_rect = clear_data_warning()
 
-    
+
     #----show spin the wheel reward frame----#
     if show_spin_the_wheel_frame:
         claim_button_rect = sping_the_wheel_reward_frame(screen, fonts, draw_animated_text, reward_name)
@@ -1663,7 +1680,12 @@ while running:
     #----tarot cards available and ready check----#
     if game_data["extras"]["tarrot_cards_available"] > 0:
         game_data["extras"]["tarrot_cards_ready"] = True
-        
+
+
+    #----spin the wheel available and ready check----#
+    if game_data["extras"]["spin_the_wheel_next_time"] == 0:
+        game_data["extras"]["spin_the_wheel_ready"] = True
+
 
     # ---------------------#
     # --- CURSOR / HOVER---#
