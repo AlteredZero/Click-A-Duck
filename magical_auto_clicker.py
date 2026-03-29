@@ -66,7 +66,7 @@ class MagicalAutoClicker:
 
                 floating_texts.append(
                     FloatingText(
-                        f"+{DPC}",
+                        f"+{DPC:,}",
                         center,
                         critical=crit
                     )

@@ -67,8 +67,9 @@ Principles\\Click-A-Duck\\Files\\Python313\\python.exe': [Errno 2] No such file 
 [ ] add locked cover frame for hidden upgrades and enhancements
 [X] fix the 24 hour timer not working after the 8 tarot cards are awarded
 [ ] add the boost functionality for spin the wheel
-[ ] fix exclamation icon not appearing when wheel is ready
-[ ] fix tarot card countdown reaching 00:00:00 and not setting a new target
+[X] fix exclamation icon not appearing when wheel is ready
+[X] fix tarot card countdown reaching 00:00:00 and not setting a new target
+[X] add insentrix butterfly enhancement
 
 
 

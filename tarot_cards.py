@@ -56,7 +56,9 @@ def update_tarot_reset(game_data):
     elapsed = current_time - game_data["extras"]["tarot_last_reset_time"]
 
     if elapsed >= 86400:
-        game_data["extras"]["tarot_cards_earned_today"] = 0
+        game_data["extras"]["tarrot_cards_available"] = 0
+        game_data["extras"]["tarrot_cards_ready"] = False
+
         game_data["extras"]["tarot_last_reset_time"] = current_time
         game_data["extras"]["tarot_progress"] = 0
         game_data["extras"]["tarot_goal"] = get_tarot_goal(game_data)

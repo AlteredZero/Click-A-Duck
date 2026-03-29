@@ -17,7 +17,7 @@ from options import draw_options, open_options
 from stats import draw_stats, open_stats
 from donate import draw_donate, open_donate
 from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, sping_the_wheel_reward_frame
-from tarot_cards import draw_tarot_cards_button, open_tarot_card_frame, pull_tarot_card, add_tarot_progress, get_tarot_goal
+from tarot_cards import draw_tarot_cards_button, open_tarot_card_frame, pull_tarot_card, add_tarot_progress, get_tarot_goal, update_tarot_reset
 from floating_text import FloatingText
 from duck import Duck
 from pool import Pool
@@ -354,6 +354,7 @@ default_data = {
         "duck2.0B": False,
         "duckMultiversePortalB": False,
         "orangeBlueDuckB": False,
+        "friendlyButterflyB": False,
         "magicalAutoClickerB3": False,
         "grayPoolB": False,
         "mechanicalBreakShaker": False,
@@ -432,9 +433,9 @@ enhancement_icons = {
     "pondLanternB": load_scaled("assets/Images/PondLantern.png", 50, 50),
     "decorativePondArchB": load_scaled("assets/Images/DecorativeDuckArch.png", 50, 50),
     "enchantedWaterWheelB": load_scaled("assets/Images/EnhantedWaterWheel.png", 50, 50),
-    
     "duck2.0B": load_scaled("assets/Images/Duck2.0.png", 50, 50),
     "duckMultiversePortalB": load_scaled("assets/Images/DuckMultiversePortal.png", 50, 50),
+    "friendlyButterflyB": load_scaled("assets/Images/monarchButterfly.png", 50, 50),
     "mechanicalBreakShaker": load_scaled("assets/Images/MechanicalBreadShaker.png", 50, 50),
     "duckPythonTerminalB": load_scaled("assets/Images/DuckPythonTerminal.png", 50, 50),
     "nestSkyscrapperB": load_scaled("assets/Images/NestSkyscrapper.png", 50, 50),
@@ -470,6 +471,7 @@ enhancement_positions = {
     "duckIndustriesB": (sx(630),  sy(720)),
     "duck2.0B": (sx(1610), sy(380)),
     "duckMultiversePortalB": (sx(1780), sy(620)),
+    "friendlyButterflyB": (sx(1300), sy(250)),
     "mechanicalBreakShaker": (sx(1780), sy(820)),
     "duckPythonTerminalB": (sx(1650), sy(1000)),
     "nestSkyscrapperB": (sx(1400), sy(1120)),
@@ -1048,6 +1050,7 @@ while running:
 
     upgrade_hover_rects = draw_upgrade_rows(screen, game_data, upgade_manager)
 
+    update_tarot_reset(game_data)
 
     mouse_pos = pygame.mouse.get_pos()
 
@@ -1152,7 +1155,7 @@ while running:
 
                         floating_texts.append(
                             FloatingText(
-                                f"+{DPC}",
+                                f"+{DPC:,}",
                                 duck.rect.center,
                                 critical=crit
                             )

@@ -67,6 +67,7 @@ def draw_SpinTheWheel(screen, spin_the_wheel_icon):
 
     return rect
 
+
 def draw_exclamation(screen, icon, rect):
     screen_width, screen_height = screen.get_size()
 
@@ -82,7 +83,6 @@ def draw_exclamation(screen, icon, rect):
     icon_rect = icon.get_rect(center=(rect.right - sx(10), rect.top + sy(10)))
 
     screen.blit(icon, icon_rect)
-
 
 
 def sping_the_wheel_reward_frame(screen, fonts, draw_animated_text, reward):
@@ -163,7 +163,6 @@ def sping_the_wheel_reward_frame(screen, fonts, draw_animated_text, reward):
     return claim_button_rect
 
 
-
 def spin_the_wheel():
     global wheel_spinning, wheel_idle
     global reward_name, target_angle, spin_time, start_angle, wheel_angle
@@ -189,9 +188,6 @@ def spin_the_wheel():
 
     spin_time = time.time()
 
-    print("Chosen:", reward_name)
-
-
 
 def update_wheel(show_spin_the_wheel_frame):
     global wheel_angle, wheel_spinning, target_angle
@@ -207,8 +203,6 @@ def update_wheel(show_spin_the_wheel_frame):
         if t >= 1:
             wheel_angle = target_angle
             wheel_spinning = False
-
-            print("Landed on:", reward_name)
 
             return True, reward_name
 

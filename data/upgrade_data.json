@@ -699,6 +699,19 @@
       "purchase_key": "orangeBlueDuckB"
     },
     {
+      "title": "Friendly Butterfly",
+      "cost": 7500000,
+      "icon": "assets/Images/monarchButterfly.png",
+      "save_key": "ducksPerSecond",
+      "duck_color": null,
+      "bonus": 10000,
+      "description": "A friendly butterfly that makes friends with all the ducks in the pool, making the ducks happy. It's quite Insentrix. Grants +10000 ducks per second.",
+      "save_key2": null,
+      "one_time": true,
+      "pool_color": null,
+      "purchase_key": "friendlyButterflyB"
+    },
+    {
       "title": "Magical Auto Clicker",
       "cost": 7950000,
       "icon": "assets/Images/MagicalAutoClicker.png",
