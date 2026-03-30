@@ -256,6 +256,8 @@ help_button_rect = None
 
 show_spin_the_wheel_frame = False
 
+spin_the_wheel_boost_active = False
+
 tarot_cards_list = []
 
 
@@ -1413,6 +1415,44 @@ while running:
         pulse = 1 + 0.08 * math.sin(pygame.time.get_ticks() * 0.01)
 
         icon = pygame.transform.scale_by(shiny_duck_icon, pulse)
+
+        rect = pygame.Rect(x, y, size, size)
+        shiny_hover_rect = rect
+
+        overlay = pygame.Surface((screen_width, screen_height), pygame.SRCALPHA)
+        overlay.fill((255, 255, 120, 25))
+        screen.blit(overlay, (0,0))
+
+        pygame.draw.rect(screen, (255, 215, 0), rect)
+        pygame.draw.rect(screen, (255, 255, 255), rect, sx(2))
+
+        icon_rect = icon.get_rect(center=rect.center)
+        screen.blit(icon, icon_rect)
+
+        seconds = int(shiny_timer / 1000)
+        timer_text = fonts["small"].render(f"{seconds}s", False, (255, 255, 255))
+        screen.blit(timer_text, timer_text.get_rect(midtop=(rect.centerx, rect.bottom + sy(4))))
+
+        color = (255, 220, 80) if shiny_active else (255,255,255)
+
+        ducks_per_sec_text = fonts["large"].render(
+            f"{get_current_dps():,} Ducks Per Second",
+            False,
+            color
+        )
+
+
+    #----spin the wheel boost active----#
+    if spin_the_wheel_boost_active:
+        size = sx(45)
+        padding = sx(8)
+
+        x = screen_width // 2 - size // 2
+        y = sy(150)
+
+        pulse = 1 + 0.08 * math.sin(pygame.time.get_ticks() * 0.01)
+
+        icon = pygame.transform.scale_by(spin_the_wheel_icon, pulse)
 
         rect = pygame.Rect(x, y, size, size)
         shiny_hover_rect = rect
