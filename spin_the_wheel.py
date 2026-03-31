@@ -231,7 +231,7 @@ def update_wheel(show_spin_the_wheel_frame):
             wheel_angle = target_angle
             wheel_spinning = False
 
-            return True, reward_name
+            return True, reward_name, reward_bonus, reward_time
 
     return show_spin_the_wheel_frame, reward_name, reward_bonus, reward_time
 

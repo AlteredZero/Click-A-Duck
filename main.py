@@ -966,7 +966,7 @@ def format_time(seconds):
 
 
 def apply_bonus_effect(reward_name):
-    pass
+    spin_the_wheel_boost_active = True
 
 
 def draw_exclamation(screen, icon, rect):
@@ -1410,6 +1410,15 @@ while running:
         
         if shiny_timer <= 0:
             shiny_active = False
+
+
+    #----sping the wheel boost active check----#
+    if spin_the_wheel_boost_active:
+        duck_time = clock.get_time()
+        reward_time -= duck_time
+        
+        if reward_time <= 0:
+            spin_the_wheel_boost_active = False
 
 
     #----shiny active----#

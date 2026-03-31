@@ -1,5 +1,5 @@
 {
-    "ducks": 2730728073.61808,
+    "ducks": 3059223773.61808,
     "ducksPerClick": 379241,
     "ducksPerSecond": 199339,
     "maxDucksInPool": 67,
@@ -7,7 +7,7 @@
     "DPCUpgradeBought": 25,
     "reainforcedCursorB": 24,
     "poolSize": 1,
-    "playtime": 6567,
+    "playtime": 6603,
     "cursorSize": 1,
     "duckColor": "redblue",
     "poolColor": "scarlett",
@@ -25,7 +25,7 @@
     "duckCoop": 37,
     "duckBeacon": 103,
     "globalGameSpeed": 1,
-    "allTimeDucks": 1000330930861.2738,
+    "allTimeDucks": 1000344113521.2738,
     "purchases": {
         "orangeDuckB": true,
         "yellowPoolB": true,
@@ -102,12 +102,12 @@
     },
     "extras": {
         "spin_the_wheel_ready": false,
-        "spin_the_wheel_next_time": 1774885658.85,
-        "tarrot_cards_ready": true,
-        "tarrot_cards_available": 2,
-        "tarot_progress": 53922512,
+        "spin_the_wheel_next_time": 1775059710.25,
+        "tarrot_cards_ready": false,
+        "tarrot_cards_available": 0,
+        "tarot_progress": 328495700,
         "tarot_goal": 1041444000,
         "tarot_cards_earned_today": 2,
-        "tarot_last_reset_time": 1774800455.6966584
+        "tarot_last_reset_time": 1774973180.8006077
     }
 }
