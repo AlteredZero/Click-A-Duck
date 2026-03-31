@@ -490,7 +490,8 @@ enhancement_positions = {
 
 special_tooltips = {
     "shiny": "The entire pool is filled with riches now. Ducks give 3x Ducks per click and 2x Ducks per second for 30 seconds.",
-    "tarot_cards_help": "Tarot cards are special items that grant random buffs or debuffs. They are purely luck-based and can lead to massive earnings or total loss. Earn a card by filling your earnings meter. You are limited to eight cards every 24 hours. Play at your own risk."
+    "tarot_cards_help": "Tarot cards are special items that grant random buffs or debuffs. They are purely luck-based and can lead to massive earnings or total loss. Earn a card by filling your earnings meter. You are limited to eight cards every 24 hours. Play at your own risk.",
+    "spin_the_wheel_bonus": f"The spin-the-wheel rewarded you with .",
 }
 
 tooltip_hover_start = {}
@@ -625,6 +626,10 @@ def get_current_dps():
 
     if shiny_active:
         dps *= shiny_dps_multiplier
+
+    if spin_the_wheel_boost_active:
+        dps *= reward_bonus
+
     return int(dps)
 
 
@@ -640,6 +645,9 @@ def get_current_dpc():
 
     if shiny_active:
         dpc *= shiny_dpc_multiplier
+
+    if spin_the_wheel_boost_active:
+        dpc *= reward_bonus
 
     crit = False
 
@@ -1467,7 +1475,7 @@ while running:
         icon_rect = icon.get_rect(center=rect.center)
         screen.blit(icon, icon_rect)
 
-        seconds = int(shiny_timer / 1000)
+        seconds = int(reward_time / 1000)
         timer_text = fonts["small"].render(f"{seconds}s", False, (255, 255, 255))
         screen.blit(timer_text, timer_text.get_rect(midtop=(rect.centerx, rect.bottom + sy(4))))
 
@@ -1673,7 +1681,7 @@ while running:
 
     #----spin the wheel frame----#
     if show_spin_the_wheel:
-        spin_the_wheel_rects, show_spin_the_wheel_frame, reward_name = open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_info_icon, spin_the_wheel_arrow_icon, show_spin_the_wheel_frame, get_spin_time_remaining, format_time, sping_the_wheel_background_design)
+        spin_the_wheel_rects, show_spin_the_wheel_frame, reward_name, reward_bonus, reward_time = open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_info_icon, spin_the_wheel_arrow_icon, show_spin_the_wheel_frame, get_spin_time_remaining, format_time, sping_the_wheel_background_design)
 
 
     #----tarot cards frame----#

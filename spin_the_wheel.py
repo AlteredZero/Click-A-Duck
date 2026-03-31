@@ -17,6 +17,8 @@ start_angle = 0
 landed = False
 
 reward_name = None
+reward_time = None
+reward_bonus = None
 
 slices = {
     "15 min x1.2": 292,
@@ -38,6 +40,28 @@ chances = {
     "60 min x1.5": 3,
     "15 min x2": 11,
     "30 min x2": 5
+}
+
+reward_times = {
+    "15 min x1.2": 900000,
+    "30 min x1.2": 1800000,
+    "60 min x1.2": 3600000,
+    "15 min x1.5": 900000,
+    "30 min x1.5": 1800000,
+    "60 min x1.5": 3600000,
+    "15 min x2": 900000,
+    "30 min x2": 1800000
+}
+
+reward_bonuses = {
+    "15 min x1.2": 1.2,
+    "30 min x1.2": 1.2,
+    "60 min x1.2": 1.2,
+    "15 min x1.5": 1.5,
+    "30 min x1.5": 1.5,
+    "60 min x1.5": 1.5,
+    "15 min x2": 2,
+    "30 min x2": 2
 }
 
 
@@ -165,7 +189,7 @@ def sping_the_wheel_reward_frame(screen, fonts, draw_animated_text, reward):
 
 def spin_the_wheel():
     global wheel_spinning, wheel_idle
-    global reward_name, target_angle, spin_time, start_angle, wheel_angle
+    global target_angle, spin_time, start_angle, wheel_angle, reward_name, reward_bonus, reward_time
 
     reward_name = random.choices(
         list(chances.keys()),
@@ -173,6 +197,9 @@ def spin_the_wheel():
     )[0]
 
     reward_angle = slices[reward_name]
+
+    reward_bonus = reward_bonuses[reward_name]
+    reward_time = reward_times[reward_name]
 
     wheel_angle = 0
     start_angle = wheel_angle
@@ -206,7 +233,7 @@ def update_wheel(show_spin_the_wheel_frame):
 
             return True, reward_name
 
-    return show_spin_the_wheel_frame, reward_name
+    return show_spin_the_wheel_frame, reward_name, reward_bonus, reward_time
 
 
 def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_icon, spin_the_wheel_arrow_icon, show_spin_the_wheel_frame, get_spin_time_remaining, format_time, sping_the_wheel_background_design):
@@ -229,7 +256,7 @@ def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_whe
     pygame.draw.rect(screen, (255, 70, 70), menu_rect)
     pygame.draw.rect(screen, (255, 255, 255), menu_rect, 3)
 
-    show_spin_the_wheel_frame, reward_name = update_wheel(show_spin_the_wheel_frame)
+    show_spin_the_wheel_frame, reward_name, reward_bonus, reward_time = update_wheel(show_spin_the_wheel_frame)
 
     sping_the_wheel_background_design = pygame.transform.scale(sping_the_wheel_background_design, (sx(550), sy(550)))
     sping_the_wheel_background_design_rect = sping_the_wheel_background_design.get_rect(center=(menu_rect.centerx, menu_rect.centery))
@@ -291,4 +318,4 @@ def open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_whe
         clickable_rects.append((support_rect, "spin_button"))
 
 
-    return clickable_rects, show_spin_the_wheel_frame, reward_name
+    return clickable_rects, show_spin_the_wheel_frame, reward_name, reward_bonus, reward_time
