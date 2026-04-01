@@ -803,6 +803,19 @@
       "purchase_key": "thermalNestingStonesB"
     },
     {
+      "title": "The Duck Company Stock (DUCK)",
+      "cost": 15000000,
+      "icon": "assets/Images/PLACEHOLDER.png",
+      "save_key": null,
+      "duck_color": null,
+      "bonus": null,
+      "description": "The Duck Company is officially launching its IPO. Buy and sell stocks of the Duck Company (DUCK), allowing you to earn (or lose) money.",
+      "save_key2": null,
+      "one_time": true,
+      "pool_color": null,
+      "purchase_key": "tarotCardsB"
+    },
+    {
       "title": "Radiant Plumage IV",
       "cost": 15650000,
       "icon": "assets/Images/ShinyDuck.png",

@@ -364,6 +364,7 @@ default_data = {
         "nestSkyscrapperB": False,
         "nestExpansionPermitB": False,
         "thermalNestingStonesB": False,
+        "theDuckCompanyStockB": False,
         "radiantPlungeIVB": False,
         "duckLogisticsBoardB": False,
         "flockSupervisorPostB": False,
