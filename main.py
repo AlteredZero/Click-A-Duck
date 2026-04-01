@@ -100,7 +100,7 @@ def loading_screen(screen, screen_width, screen_height, scale, fonts):
         screen.blit(rotated, rect)
 
         pygame.display.flip()
-        clock.tick(60)
+        global_time = clock.tick(60)
 
         if displayed_percent >= 100 and elapsed >= minimum_time:
             pygame.time.delay(hold_time)
@@ -966,6 +966,7 @@ def format_time(seconds):
 
 
 def apply_bonus_effect(reward_name):
+    global spin_the_wheel_boost_active, reward_time, reward_bonus
     spin_the_wheel_boost_active = True
 
 
@@ -1384,7 +1385,10 @@ while running:
                 if show_spin_the_wheel_frame:
                     if claim_button_rect.collidepoint(event.pos):
                         show_spin_the_wheel_frame = False
-                        apply_bonus_effect(reward_name)
+
+                        spin_the_wheel_boost_active = True
+                        active_reward_time = reward_time
+                        active_reward_bonus = reward_bonus
 
                 if bought:
                     if game_data["magicalAutoClickers"] > len(magical_auto_clickers):
@@ -1416,8 +1420,9 @@ while running:
     if spin_the_wheel_boost_active:
         duck_time = clock.get_time()
         reward_time -= duck_time
-        
+
         if reward_time <= 0:
+            reward_time = 0
             spin_the_wheel_boost_active = False
 
 
@@ -1469,7 +1474,8 @@ while running:
 
         pulse = 1 + 0.08 * math.sin(pygame.time.get_ticks() * 0.01)
 
-        icon = pygame.transform.scale_by(spin_the_wheel_icon, pulse)
+        icon = pygame.transform.scale(spin_the_wheel_icon, (sx(35), sy(35)))
+        icon = pygame.transform.scale_by(icon, pulse)
 
         rect = pygame.Rect(x, y, size, size)
         shiny_hover_rect = rect
@@ -1478,17 +1484,26 @@ while running:
         overlay.fill((255, 255, 120, 25))
         screen.blit(overlay, (0,0))
 
-        pygame.draw.rect(screen, (255, 215, 0), rect)
+        pygame.draw.rect(screen, (255, 70, 70), rect)
         pygame.draw.rect(screen, (255, 255, 255), rect, sx(2))
 
         icon_rect = icon.get_rect(center=rect.center)
         screen.blit(icon, icon_rect)
 
-        seconds = int(reward_time / 1000)
-        timer_text = fonts["small"].render(f"{seconds}s", False, (255, 255, 255))
+        total_seconds = max(0, reward_time // 1000)
+
+        minutes = total_seconds // 60
+        seconds = total_seconds % 60
+
+        timer_text = fonts["small"].render(
+            f"{minutes:02d}:{seconds:02d}",
+            False,
+            (255, 255, 255)
+        )
+
         screen.blit(timer_text, timer_text.get_rect(midtop=(rect.centerx, rect.bottom + sy(4))))
 
-        color = (255, 220, 80) if shiny_active else (255,255,255)
+        color = (255,255,255)
 
         ducks_per_sec_text = fonts["large"].render(
             f"{get_current_dps():,} Ducks Per Second",
