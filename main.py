@@ -204,6 +204,8 @@ shiny_duck_icon = load_scaled("assets/Images/ShinyDuck.png", 40, 40)
 
 shiny_hover_rect = None
 
+spin_hover_rect = None
+
 show_options = False
 show_stats = False
 show_donate = False
@@ -492,7 +494,6 @@ enhancement_positions = {
 special_tooltips = {
     "shiny": "The entire pool is filled with riches now. Ducks give 3x Ducks per click and 2x Ducks per second for 30 seconds.",
     "tarot_cards_help": "Tarot cards are special items that grant random buffs or debuffs. They are purely luck-based and can lead to massive earnings or total loss. Earn a card by filling your earnings meter. You are limited to eight cards every 24 hours. Play at your own risk.",
-    "spin_the_wheel_bonus": f"The spin-the-wheel rewarded you with .",
 }
 
 tooltip_hover_start = {}
@@ -1432,7 +1433,11 @@ while running:
         size = sx(45)
         padding = sx(8)
 
-        x = screen_width // 2 - size // 2
+        if spin_the_wheel_boost_active:
+            x = screen_width // 2 - size // 2 - 30
+        else:
+            x = screen_width // 2 - size // 2
+
         y = sy(150)
 
         pulse = 1 + 0.08 * math.sin(pygame.time.get_ticks() * 0.01)
@@ -1470,7 +1475,11 @@ while running:
         size = sx(45)
         padding = sx(8)
 
-        x = screen_width // 2 - size // 2
+        if shiny_active:
+            x = screen_width // 2 - size // 2 + 30
+        else:
+            x = screen_width // 2 - size // 2
+
         y = sy(150)
 
         pulse = 1 + 0.08 * math.sin(pygame.time.get_ticks() * 0.01)
@@ -1479,7 +1488,7 @@ while running:
         icon = pygame.transform.scale_by(icon, pulse)
 
         rect = pygame.Rect(x, y, size, size)
-        shiny_hover_rect = rect
+        spin_hover_rect = rect
 
         overlay = pygame.Surface((screen_width, screen_height), pygame.SRCALPHA)
         overlay.fill((255, 255, 120, 25))
@@ -1687,6 +1696,19 @@ while running:
             sx(10),
             0
         )
+
+    #----Spin the wheel boost icon tooltip----#
+    if spin_hover_rect:
+        draw_animated_tooltip(
+            screen,
+            f"Spin Boost Active! x{reward_bonus} Ducks!",
+            fonts["verysmall"],
+            spin_hover_rect,
+            mouse_pos,
+            "spin_boost_tooltip",
+            sx(10),
+            0
+        )
         
 
     #----options frame----#
@@ -1706,7 +1728,21 @@ while running:
 
     #----spin the wheel frame----#
     if show_spin_the_wheel:
-        spin_the_wheel_rects, show_spin_the_wheel_frame, reward_name, reward_bonus, reward_time = open_SpinTheWheel(screen, fonts, game_data, draw_animated_text, spin_the_wheel_info_icon, spin_the_wheel_arrow_icon, show_spin_the_wheel_frame, get_spin_time_remaining, format_time, sping_the_wheel_background_design)
+        result = open_SpinTheWheel(
+            screen, fonts, game_data, draw_animated_text,
+            spin_the_wheel_info_icon, spin_the_wheel_arrow_icon,
+            show_spin_the_wheel_frame, get_spin_time_remaining,
+            format_time, sping_the_wheel_background_design
+        )
+
+        spin_the_wheel_rects, show_spin_the_wheel_frame, new_reward_name, new_reward_bonus, new_reward_time = result
+
+        if show_spin_the_wheel_frame:
+            reward_name = new_reward_name
+            reward_bonus = new_reward_bonus
+
+            if not spin_the_wheel_boost_active:
+                reward_time = new_reward_time
 
 
     #----tarot cards frame----#
@@ -1826,6 +1862,9 @@ while running:
             hovering = True
 
     if not hovering and shiny_hover_rect and shiny_hover_rect.collidepoint(mouse_pos):
+        hovering = True
+ 
+    if not hovering and spin_hover_rect and spin_hover_rect.collidepoint(mouse_pos):
         hovering = True
 
     if not hovering:
