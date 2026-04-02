@@ -183,6 +183,9 @@ class UpgradeButton:
         elif self.title == "Tarot Cards":
             pass
 
+        elif self.title == "The Duck Company Stock":
+            pass
+
         else:
             game_data[self.save_key] += 1
 

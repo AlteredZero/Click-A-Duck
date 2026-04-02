@@ -803,17 +803,17 @@
       "purchase_key": "thermalNestingStonesB"
     },
     {
-      "title": "The Duck Company Stock (DUCK)",
+      "title": "The Duck Company Stock",
       "cost": 15000000,
-      "icon": "assets/Images/PLACEHOLDER.png",
+      "icon": "assets/Images/DuckCompanyStockMarketPurchaseIcon.png",
       "save_key": null,
       "duck_color": null,
       "bonus": null,
-      "description": "The Duck Company is officially launching its IPO. Buy and sell stocks of the Duck Company (DUCK), allowing you to earn (or lose) money.",
+      "description": "The Duck Company is officially launching its IPO. Buy and sell stocks of the Duck Company (DUCK), allowing you to earn (or lose) ducks.",
       "save_key2": null,
       "one_time": true,
       "pool_color": null,
-      "purchase_key": "tarotCardsB"
+      "purchase_key": "theDuckCompanyStockB"
     },
     {
       "title": "Radiant Plumage IV",

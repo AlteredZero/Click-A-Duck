@@ -1,5 +1,5 @@
 {
-    "ducks": 25624585225.61808,
+    "ducks": 30033527121.61808,
     "ducksPerClick": 379241,
     "ducksPerSecond": 199339,
     "maxDucksInPool": 67,
@@ -7,7 +7,7 @@
     "DPCUpgradeBought": 25,
     "reainforcedCursorB": 24,
     "poolSize": 1,
-    "playtime": 7930,
+    "playtime": 8262,
     "cursorSize": 1,
     "duckColor": "redblue",
     "poolColor": "scarlett",
@@ -25,7 +25,7 @@
     "duckCoop": 37,
     "duckBeacon": 103,
     "globalGameSpeed": 1,
-    "allTimeDucks": 1001015856618.2738,
+    "allTimeDucks": 1001148415618.2738,
     "purchases": {
         "orangeDuckB": true,
         "yellowPoolB": true,
@@ -81,6 +81,7 @@
         "nestSkyscrapperB": true,
         "nestExpansionPermitB": true,
         "thermalNestingStonesB": true,
+        "theDuckCompanyStockB": true,
         "radiantPlungeIVB": true,
         "duckLogisticsBoardB": true,
         "flockSupervisorPostB": true,

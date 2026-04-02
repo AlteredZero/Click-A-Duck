@@ -18,6 +18,7 @@ from stats import draw_stats, open_stats
 from donate import draw_donate, open_donate
 from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, sping_the_wheel_reward_frame
 from tarot_cards import draw_tarot_cards_button, open_tarot_card_frame, pull_tarot_card, add_tarot_progress, get_tarot_goal, update_tarot_reset
+from duck_company_stock import draw_duck_company_stock_button, open_duck_company_stock_frame
 from floating_text import FloatingText
 from duck import Duck
 from pool import Pool
@@ -214,6 +215,8 @@ show_spin_the_wheel = False
 
 show_tarot_card_frame = False
 
+show_the_duck_company_stock_frame = False
+
 show_warning_clear_data = False
 
 clear_button_rect = None
@@ -246,7 +249,7 @@ ace_of_pentacles_tarot_card = pygame.image.load("assets/Images/AceOfPentaclesTar
 tarot_card_background_design = pygame.image.load("assets/Images/TarotCardBackgroundDesign.png").convert_alpha()
 sping_the_wheel_background_design = pygame.image.load("assets/Images/spin_the_wheel_background_design.png").convert_alpha()
 
-the__tarot_card = pygame.image.load("assets/Images/TheSunTarotCard.png").convert_alpha()
+the_duck_stock_icon = pygame.image.load("assets/Images/DuckCompanyStockMarketIcon.png").convert_alpha()
 
 exclamation_icon = pygame.image.load("assets/Images/ExclamationIcon.png").convert_alpha()
 
@@ -512,6 +515,7 @@ option_hover_rects = []
 donate_hover_rects = []
 spin_the_wheel_rects = []
 tarot_card_rects = []
+duck_company_stock_rects = []
 
 
 #---------------------#
@@ -1076,6 +1080,9 @@ while running:
 
     if game_data["purchases"]["tarotCardsB"]:
         tarot_cards_rect = draw_tarot_cards_button(screen, tarot_card_icon)
+        
+    if game_data["purchases"]["theDuckCompanyStockB"]:
+        duck_company_stock_rect = draw_duck_company_stock_button(screen, the_duck_stock_icon)
 
 
     target = game_data["ducks"]
@@ -1183,6 +1190,7 @@ while running:
                     show_donate = False
                     show_spin_the_wheel = False
                     show_tarot_card_frame = False
+                    show_the_duck_company_stock_frame = False
                     click_sound.play()
 
                     if show_options:
@@ -1199,6 +1207,7 @@ while running:
                     show_donate = False
                     show_spin_the_wheel = False
                     show_tarot_card_frame = False
+                    show_the_duck_company_stock_frame = False
                     click_sound.play()
 
                     if show_stats:
@@ -1212,6 +1221,7 @@ while running:
                     show_stats = False
                     show_spin_the_wheel = False
                     show_tarot_card_frame = False
+                    show_the_duck_company_stock_frame = False
                     click_sound.play()
 
                     if show_donate:
@@ -1226,6 +1236,7 @@ while running:
                         show_stats = False
                         show_donate = False
                         show_tarot_card_frame = False
+                        show_the_duck_company_stock_frame = False
                         click_sound.play()
 
                         if show_spin_the_wheel:
@@ -1240,10 +1251,26 @@ while running:
                         show_stats = False
                         show_donate = False
                         show_spin_the_wheel = False
+                        show_the_duck_company_stock_frame = False
                         click_sound.play()
 
                         if show_tarot_card_frame:
                             keys_to_reset = ["tarot_cards_title", "pull_card_button", "help_info", "tarot_card_reward", "progress_bar_text", "daily_cards_counter"]
+                            for key in keys_to_reset:
+                                tooltip_hover_start.pop(key, None)
+
+                if game_data["purchases"]["theDuckCompanyStockB"]:
+                    if duck_company_stock_rect and duck_company_stock_rect.collidepoint(event.pos):
+                        show_the_duck_company_stock_frame = not show_the_duck_company_stock_frame
+                        show_options = False
+                        show_stats = False
+                        show_donate = False
+                        show_spin_the_wheel = False
+                        show_tarot_card_frame = False
+                        click_sound.play()
+
+                        if show_the_duck_company_stock_frame:
+                            keys_to_reset = ["duck_company_stock_title", "duck_company_stock_symbol"]
                             for key in keys_to_reset:
                                 tooltip_hover_start.pop(key, None)
 
@@ -1383,6 +1410,8 @@ while running:
                                 else:
                                     game_data["extras"]["tarrot_cards_ready"] = True
 
+                if show_the_duck_company_stock_frame:
+                    pass
 
                 if show_spin_the_wheel_frame:
                     if claim_button_rect.collidepoint(event.pos):
@@ -1750,6 +1779,11 @@ while running:
         tarot_card_rects, help_button_rect, tarot_cards_list = open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, tarot_card_background_icon, tarot_card_single_icon, the_sun_tarot_card, the_devil_tarot_card, the_empress_tarot_card, death_tarot_card, wheel_of_fortune_tarot_card, the_tower_tarot_card, the_fool_tarot_card, the_world_tarot_card, page_of_cups_tarot_card, ace_of_pentacles_tarot_card, get_current_dps, tarot_card_background_design)
 
 
+    #----duck company stock frame----#
+    if show_the_duck_company_stock_frame:
+        duck_company_stock_rects = open_duck_company_stock_frame(screen, fonts, game_data, draw_animated_text)
+
+
     #----cannot afford message----#
     if cannot_afford_message and current_time < cannot_afford_timer:
         cannot_afford_text = fonts["large"].render(cannot_afford_message, False, (255, 255, 255))
@@ -1847,6 +1881,11 @@ while running:
                 hovering = True
 
     if not hovering:
+        if game_data["purchases"]["theDuckCompanyStockB"]:
+            if duck_company_stock_rect.collidepoint(mouse_pos):
+                hovering = True
+
+    if not hovering:
         if stats_rect.collidepoint(mouse_pos):
             hovering = True
 
@@ -1893,6 +1932,12 @@ while running:
 
     if not hovering and show_tarot_card_frame:
         for rect, key in tarot_card_rects:
+            if rect.collidepoint(mouse_pos):
+                hovering = True
+                break
+
+    if not hovering and show_the_duck_company_stock_frame:
+        for rect, key in duck_company_stock_rects:
             if rect.collidepoint(mouse_pos):
                 hovering = True
                 break
