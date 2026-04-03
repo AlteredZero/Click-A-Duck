@@ -48,7 +48,7 @@ def open_duck_company_stock_frame(screen, fonts, game_data, draw_animated_text):
     def sx(x): return int(x * scale)
     def sy(y): return int(y * scale)
 
-    menu_rect = pygame.Rect(sx(135), sy(500), sx(700), sy(450))
+    menu_rect = pygame.Rect(sx(135), sy(700), sx(700), sy(450))
     pygame.draw.rect(screen, (30, 30, 30), menu_rect)
     pygame.draw.rect(screen, (255, 255, 255), menu_rect, 3)
 
@@ -61,15 +61,41 @@ def open_duck_company_stock_frame(screen, fonts, game_data, draw_animated_text):
         "duck_company_stock_title"
     )
 
+    buy_center_y = menu_rect.bottom - sy(80) + fonts["small"].get_height() // 2
+    buy_rect = pygame.Rect(menu_rect.centerx - sx(200), buy_center_y - sy(20), sx(200), sy(40))
+
+    button_text_buy = f"BUY"
+
+    pygame.draw.rect(screen, (4, 207, 116), buy_rect)
+
+
     draw_animated_text(
         screen,
-        "(DUCK)",
+        button_text_buy,
         fonts["small"],
         (255, 255, 255),
-        (menu_rect.centerx, menu_rect.top + sy(30)),
-        "duck_company_stock_symbol"
+        (menu_rect.centerx, buy_center_y),
+        "buy_button"
+    )
+
+    sell_center_y = menu_rect.bottom - sy(80) + fonts["small"].get_height() // 2
+    sell_rect = pygame.Rect(menu_rect.centerx + sx(200), sell_center_y - sy(20), sx(200), sy(40))
+
+    button_text_sell = f"SELL"
+
+    pygame.draw.rect(screen, (4, 207, 116), sell_rect)
+
+
+    draw_animated_text(
+        screen,
+        button_text_sell,
+        fonts["small"],
+        (255, 255, 255),
+        (menu_rect.centerx, sell_center_y),
+        "sell_button"
     )
     
-    clickable_rects.append(())
+    clickable_rects.append((buy_rect, "buy_button"))
+    clickable_rects.append((sell_rect, "sell_button"))
 
     return clickable_rects

@@ -384,9 +384,14 @@ def open_tarot_card_frame(screen, fonts, game_data, draw_animated_text, backgrou
 
     support_center_y = menu_rect.bottom - sy(80) + fonts["small"].get_height() // 2
     support_rect = pygame.Rect(menu_rect.centerx - sx(120), support_center_y - sy(20), sx(240), sy(40))
-    pygame.draw.rect(screen, (4, 207, 116), support_rect)
 
     button_text = f"PULL CARD ({str(game_data['extras']['tarrot_cards_available'])})"
+
+    if game_data['extras']['tarrot_cards_available'] == 0:
+        pygame.draw.rect(screen, (60, 60, 60), support_rect)
+    else:
+        pygame.draw.rect(screen, (4, 207, 116), support_rect)
+
 
     draw_animated_text(
         screen,
