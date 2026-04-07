@@ -4,10 +4,7 @@ NOTES
 
 TO DO:
 
-[ ] add cursor size enhancement
-[ ] add arcade enhancement
 [ ] add stock market enhancement
-[ ] add flappy bird arcade game enhancement
 [ ] add crit power enhancements throughout the enhancements list
 [ ] add music to the game
 [ ] make music option work enable/disable
@@ -16,10 +13,13 @@ TO DO:
 [ ] fix the support/donate page
 [ ] make all descriptions consistent with the (DPS) and (DPC) and wording
 [ ] add card flip sfx
-[ ] fix exclamation icon not appearing when wheel is ready
 [ ] add locked cover frame for hidden upgrades and enhancements
+[ ] add cursor size enhancement - TBD
+[ ] add arcade enhancement - TBD
+[ ] add flappy bird arcade game enhancement - TBD
 
 
+[X] fix exclamation icon not appearing when wheel is ready
 [X] reduce magical auto clicker speed
 [X] add duck nest enhancement
 [X] add strong cursor enhancement
