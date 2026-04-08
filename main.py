@@ -1270,7 +1270,7 @@ while running:
                         click_sound.play()
 
                         if show_the_duck_company_stock_frame:
-                            keys_to_reset = ["duck_company_stock_title", "duck_company_stock_symbol", "buy_button", "sell_button"]
+                            keys_to_reset = ["duck_company_stock_title", "duck_company_stock_symbol", "buy_button", "sell_button", "duck_price"]
                             for key in keys_to_reset:
                                 tooltip_hover_start.pop(key, None)
 
