@@ -35,14 +35,21 @@ def draw_duck_company_stock_button(screen, tarot_card_icon):
 
 def tick_stock_market(game_data):
     stock = game_data["extras"]["duck_stock"]
-    change = random.uniform(-0.02, 0.02) 
-    new_price = stock["current_price"] * (1 + change)
-    
-    stock["current_price"] = round(new_price, 2)
+
+    earnings_base = game_data["ducksPerClick"] + game_data["ducksPerSecond"]
+    target_price = earnings_base * 50
+
+    change = random.uniform(-0.15, 0.15)
+
+    pull_factor = 0.1
+    new_price = (stock["current_price"] * (1 + change)) + (target_price - stock["current_price"]) * pull_factor
+
+    stock["current_price"] = max(1, int(round(new_price, 0)))
+
     stock["history"].append(stock["current_price"])
-    
     if len(stock["history"]) > 30:
         stock["history"].pop(0)
+
 
 def draw_stock_graph(screen, menu_rect, stock_history, sx, sy, fonts):
     if len(stock_history) < 2:
@@ -72,8 +79,9 @@ def draw_stock_graph(screen, menu_rect, stock_history, sx, sy, fonts):
 
     pygame.draw.lines(screen, color, False, points, 3)
 
-    max_label = fonts["small"].render(f"${max_p:.2f}", True, (150, 150, 150))
-    min_label = fonts["small"].render(f"${min_p:.2f}", True, (150, 150, 150))
+    max_label = fonts["small"].render(f"{int(max_p):,} Ducks", True, (150, 150, 150))
+    min_label = fonts["small"].render(f"{int(min_p):,} Ducks", True, (150, 150, 150))
+
     screen.blit(max_label, (graph_area.right + sx(10), graph_area.top))
     screen.blit(min_label, (graph_area.right + sx(10), graph_area.bottom - sy(20)))
 
@@ -137,10 +145,11 @@ def open_duck_company_stock_frame(screen, fonts, game_data, draw_animated_text):
 
     draw_animated_text(
         screen, 
-        f"Price per share: {current_price:.2f} Ducks", 
+        f"Price per share: {int(current_price):,} Ducks",
         fonts["small"], 
         (255, 255, 255), 
-        (menu_rect.centerx, menu_rect.top + sy(60)), "duck_price"
+        (menu_rect.centerx, menu_rect.top + sy(60)), 
+        "duck_price"
     )
 
     draw_stock_graph(screen, menu_rect, history, sx, sy, fonts)

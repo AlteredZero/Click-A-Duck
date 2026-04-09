@@ -18,7 +18,7 @@ from stats import draw_stats, open_stats
 from donate import draw_donate, open_donate
 from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, sping_the_wheel_reward_frame
 from tarot_cards import draw_tarot_cards_button, open_tarot_card_frame, pull_tarot_card, add_tarot_progress, get_tarot_goal, update_tarot_reset
-from duck_company_stock import draw_duck_company_stock_button, open_duck_company_stock_frame
+from duck_company_stock import draw_duck_company_stock_button, open_duck_company_stock_frame, tick_stock_market
 from floating_text import FloatingText
 from duck import Duck
 from pool import Pool
@@ -263,7 +263,8 @@ show_spin_the_wheel_frame = False
 
 spin_the_wheel_boost_active = False
 
-tarot_cards_list = []
+last_stock_tick = 0
+stock_tick_delay = 1000
 
 
 #---------------------#
@@ -516,6 +517,7 @@ donate_hover_rects = []
 spin_the_wheel_rects = []
 tarot_card_rects = []
 duck_company_stock_rects = []
+tarot_cards_list = []
 
 
 #---------------------#
@@ -1782,6 +1784,13 @@ while running:
     #----duck company stock frame----#
     if show_the_duck_company_stock_frame:
         duck_company_stock_rects = open_duck_company_stock_frame(screen, fonts, game_data, draw_animated_text)
+
+
+    # ----duck company stock tick---- #
+    if game_data["purchases"]["theDuckCompanyStockB"]:
+        if current_time - last_stock_tick > stock_tick_delay:
+            tick_stock_market(game_data)
+            last_stock_tick = current_time
 
 
     #----cannot afford message----#
