@@ -10,6 +10,7 @@ import json
 import webbrowser
 import os
 import sys
+import traceback
 import subprocess
 from save_manager import load_game, save_game
 from fonts import load_fonts
@@ -139,7 +140,7 @@ pygame.display.set_caption("Click-A-Duck")
 pygame.display.set_icon(pygame.image.load("assets/Images/Duck1.png").convert_alpha())
 
 with open("data/upgrade_data.json", "r") as f:
-    upgrade_data = json.load(f)
+    upgrade_data = json.load(f) 
 
 
 #---------------------#
@@ -993,6 +994,24 @@ def draw_exclamation(screen, icon, rect):
     icon_rect = icon.get_rect(center=(rect.right - sx(10), rect.top + sy(10)))
 
     screen.blit(icon, icon_rect)
+
+
+def show_crash_screen(screen, error_text):
+    lines = error_text.split('\n')
+    
+    while True:
+        screen.fill((30, 0, 0))
+        for i, line in enumerate(lines):
+            error_surface = fonts["large"](line, True, (255, 255, 255))
+            screen.blit(error_surface, (10, 10 + (i * 20)))
+        
+        pygame.display.flip()
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
 
 
 game_data = load_game(default_data)
