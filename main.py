@@ -1246,7 +1246,7 @@ while running:
                     click_sound.play()
 
                     if show_donate:
-                        keys_to_reset = ["support_title", "support_desc", "support_desc2", "support_desc3", "support_button"]
+                        keys_to_reset = ["support_title", "support_desc", "support_desc2", "support_desc3", "support_button", "venmo_desc", "cashapp_desc"]
                         for key in keys_to_reset:
                             tooltip_hover_start.pop(key, None)
 

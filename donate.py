@@ -45,7 +45,7 @@ def open_donate(screen, fonts, game_data, draw_animated_text):
     def sx(x): return int(x * scale)
     def sy(y): return int(y * scale)
 
-    menu_rect = pygame.Rect(sx(250), sy(20), sx(750), sy(280))
+    menu_rect = pygame.Rect(sx(250), sy(20), sx(750), sy(360))
 
     pygame.draw.rect(screen, (60, 60, 60), menu_rect)
     pygame.draw.rect(screen, (255, 255, 255), menu_rect, 3)
@@ -80,10 +80,28 @@ def open_donate(screen, fonts, game_data, draw_animated_text):
 
     draw_animated_text(
         screen,
+        "Cashapp: $AlteredDan",
+        fonts["small"],
+        (255, 255, 255),
+        (menu_rect.centerx, sy(180)),
+        "cashapp_desc"
+    )
+
+    draw_animated_text(
+        screen,
+        "Venmo: @Altered_Stuff",
+        fonts["small"],
+        (255, 255, 255),
+        (menu_rect.centerx, sy(220)),
+        "venmo_desc"
+    )
+
+    draw_animated_text(
+        screen,
         "(opens in a new tab)",
         fonts["verysmall"],
         (255, 255, 255),
-        (menu_rect.centerx, sy(180)),
+        (menu_rect.centerx, sy(260)),
         "support_desc3"
     )
 
