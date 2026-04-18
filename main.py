@@ -19,7 +19,7 @@ from stats import draw_stats, open_stats
 from donate import draw_donate, open_donate
 from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, sping_the_wheel_reward_frame
 from tarot_cards import draw_tarot_cards_button, open_tarot_card_frame, pull_tarot_card, add_tarot_progress, get_tarot_goal, update_tarot_reset
-from duck_company_stock import draw_duck_company_stock_button, open_duck_company_stock_frame, tick_stock_market
+from duck_company_stock import draw_duck_company_stock_button, open_duck_company_stock_frame, tick_stock_market, buy_stock, sell_stock
 from floating_text import FloatingText
 from duck import Duck
 from pool import Pool
@@ -1432,7 +1432,12 @@ while running:
                                     game_data["extras"]["tarrot_cards_ready"] = True
 
                 if show_the_duck_company_stock_frame:
-                    pass
+                    for rect, action in duck_company_stock_rects:
+                        if rect.collidepoint(mouse_pos):
+                            if key == "buy_button":
+                                buy_stock(game_data)
+                            elif key == "sell_button":
+                                sell_stock(game_data)
 
                 if show_spin_the_wheel_frame:
                     if claim_button_rect.collidepoint(event.pos):

@@ -74,16 +74,40 @@ def draw_stock_graph(screen, menu_rect, stock_history, sx, sy, fonts):
     fill_surface = pygame.Surface((graph_area.width, graph_area.height), pygame.SRCALPHA)
     fill_points = [(p[0] - graph_area.x, p[1] - graph_area.y) for p in points]
     fill_points += [(fill_points[-1][0], graph_area.height), (0, graph_area.height)]
-    pygame.draw.polygon(fill_surface, (*color, 50), fill_points) # 50 is alpha/transparency
+    pygame.draw.polygon(fill_surface, (*color, 50), fill_points)
     screen.blit(fill_surface, (graph_area.x, graph_area.y))
 
     pygame.draw.lines(screen, color, False, points, 3)
 
-    max_label = fonts["small"].render(f"{int(max_p):,} Ducks", True, (150, 150, 150))
+"""    max_label = fonts["small"].render(f"{int(max_p):,} Ducks", True, (150, 150, 150))
     min_label = fonts["small"].render(f"{int(min_p):,} Ducks", True, (150, 150, 150))
 
     screen.blit(max_label, (graph_area.right + sx(10), graph_area.top))
-    screen.blit(min_label, (graph_area.right + sx(10), graph_area.bottom - sy(20)))
+    screen.blit(min_label, (graph_area.right + sx(10), graph_area.bottom - sy(20)))"""
+
+
+def buy_stock(game_data):
+    stock = game_data["extras"]["duck_stock"]
+    price = stock["current_price"]
+
+    if game_data["ducks"] >= price:
+        game_data["ducks"] -= price
+        
+        total_cost = stock["avg_price"] * stock["shares_owned"]
+        stock["shares_owned"] += 1
+        stock["avg_price"] = (total_cost + price) / stock["shares_owned"]
+
+
+def sell_stock(game_data):
+    stock = game_data["extras"]["duck_stock"]
+    price = stock["current_price"]
+
+    if stock["shares_owned"] > 0:
+        stock["shares_owned"] -= 1
+        game_data["ducks"] += price
+
+        if stock["shares_owned"] == 0:
+            stock["avg_price"] = 0
 
 
 def open_duck_company_stock_frame(screen, fonts, game_data, draw_animated_text):
@@ -142,6 +166,10 @@ def open_duck_company_stock_frame(screen, fonts, game_data, draw_animated_text):
     stock_data = game_data["extras"].get("duck_stock", {"current_price": 100, "history": [100]})
     history = stock_data["history"]
     current_price = stock_data["current_price"]
+    shares = stock_data.get("shares_owned", 0)
+    current_value = shares * current_price
+    cost_basis = shares * game_data["extras"].get("avg_price", 0)
+    profit = current_value - cost_basis
 
     draw_animated_text(
         screen, 
@@ -150,6 +178,26 @@ def open_duck_company_stock_frame(screen, fonts, game_data, draw_animated_text):
         (255, 255, 255), 
         (menu_rect.centerx, menu_rect.top + sy(60)), 
         "duck_price"
+    )
+
+    draw_animated_text(
+        screen,
+        f"Shares Owned: {shares}",
+        fonts["small"],
+        (255, 255, 255),
+        (menu_rect.centerx, menu_rect.top + sy(90)),
+        "shares_owned"
+    )
+
+    color = (4, 207, 116) if profit >= 0 else (207, 4, 4)
+
+    draw_animated_text(
+        screen,
+        f"Profit: {int(profit):,} Ducks",
+        fonts["small"],
+        color,
+        (menu_rect.centerx, menu_rect.bottom - sy(130)),
+        "profit"
     )
 
     draw_stock_graph(screen, menu_rect, history, sx, sy, fonts)
