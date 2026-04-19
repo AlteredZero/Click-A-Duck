@@ -1,5 +1,6 @@
 import pygame
 import json
+from utils import resource_path
 
 class Console:
     def __init__(self, screen_width, screen_height, scale, quit_callback, save_callback, reset_callback):
@@ -23,7 +24,7 @@ class Console:
 
         self.max_history = 200
 
-        with open("data/console_commands.json", "r") as f:
+        with open(resource_path("data/console_commands.json"), "r") as f:
             self.commands = json.load(f)
 
     def toggle(self):

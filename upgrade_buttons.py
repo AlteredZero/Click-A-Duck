@@ -6,9 +6,9 @@ upgrade_data_file_dir = "data/upgrade_data.json"
 
 pygame.mixer.init()
 
-purchase_sound = pygame.mixer.Sound("assets/audio/PurchaseSound.mp3")
-click_sound = pygame.mixer.Sound("assets/audio/MouseClick.mp3")
-error_sound = pygame.mixer.Sound("assets/audio/ErrorSound.mp3")
+purchase_sound = pygame.mixer.Sound(resource_path("assets/audio/PurchaseSound.mp3"))
+click_sound = pygame.mixer.Sound(resource_path("assets/audio/MouseClick.mp3"))
+error_sound = pygame.mixer.Sound(resource_path("assets/audio/ErrorSound.mp3"))
 
 
 enhancement_effects = {
@@ -326,7 +326,7 @@ class UpgradeManager:
         right_margin = self.s(20)
 
 
-        with open(upgrade_data_file_dir, "r") as f:
+        with open(resource_path(upgrade_data_file_dir), "r") as f:
             data = json.load(f)
 
         upgrades = data["upgrades"]
