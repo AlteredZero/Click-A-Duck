@@ -20,6 +20,7 @@ from donate import draw_donate, open_donate
 from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, sping_the_wheel_reward_frame
 from tarot_cards import draw_tarot_cards_button, open_tarot_card_frame, pull_tarot_card, add_tarot_progress, get_tarot_goal, update_tarot_reset
 from duck_company_stock import draw_duck_company_stock_button, open_duck_company_stock_frame, tick_stock_market, buy_stock, sell_stock
+from utils import resource_path
 from floating_text import FloatingText
 from duck import Duck
 from pool import Pool
@@ -36,21 +37,21 @@ from console import Console
 def loading_screen(screen, screen_width, screen_height, scale, fonts):
     clock = pygame.time.Clock()
 
-    duck_image = pygame.image.load("assets/Images/Duck1.png").convert_alpha()
+    duck_image = pygame.image.load(resource_path("assets/Images/Duck1.png")).convert_alpha()
     duck_image = pygame.transform.scale(duck_image, (int(80 * scale), int(80 * scale)))
 
     loading_steps = [
-        lambda: pygame.mixer.Sound("assets/audio/DuckQuack.mp3"),
-        lambda: pygame.mixer.Sound("assets/audio/MouseClick.mp3"),
-        lambda: pygame.mixer.Sound("assets/audio/PurchaseSound.mp3"),
-        lambda: pygame.mixer.Sound("assets/audio/HoverSound.mp3"),
-        lambda: pygame.mixer.Sound("assets/audio/ErrorSound.mp3"),
-        lambda: pygame.image.load("assets/Images/BackgroundBlue.png").convert_alpha(),
-        lambda: pygame.image.load("assets/Images/Pool1.png").convert_alpha(),
-        lambda: pygame.image.load("assets/Images/YellowPool.png").convert_alpha(),
-        lambda: pygame.image.load("assets/Images/HotPinkPool.png").convert_alpha(),
-        lambda: pygame.image.load("assets/Images/CoralPool.png").convert_alpha(),
-        lambda: pygame.image.load("assets/Images/CyanPool.png").convert_alpha(),
+        lambda: pygame.mixer.Sound(resource_path("assets/audio/DuckQuack.mp3")),
+        lambda: pygame.mixer.Sound(resource_path("assets/audio/MouseClick.mp3")),
+        lambda: pygame.mixer.Sound(resource_path("assets/audio/PurchaseSound.mp3")),
+        lambda: pygame.mixer.Sound(resource_path("assets/audio/HoverSound.mp3")),
+        lambda: pygame.mixer.Sound(resource_path("assets/audio/ErrorSound.mp3")),
+        lambda: pygame.image.load(resource_path("assets/Images/BackgroundBlue.png")).convert_alpha(),
+        lambda: pygame.image.load(resource_path("assets/Images/Pool1.png")).convert_alpha(),
+        lambda: pygame.image.load(resource_path("assets/Images/YellowPool.png")).convert_alpha(),
+        lambda: pygame.image.load(resource_path("assets/Images/HotPinkPool.png")).convert_alpha(),
+        lambda: pygame.image.load(resource_path("assets/Images/CoralPool.png")).convert_alpha(),
+        lambda: pygame.image.load(resource_path("assets/Images/CyanPool.png")).convert_alpha(),
     ]
 
     total_steps = len(loading_steps)
@@ -137,9 +138,9 @@ fonts = load_fonts(scale)
 loading_screen(screen, screen_width, screen_height, scale, fonts)
 
 pygame.display.set_caption("Click-A-Duck")
-pygame.display.set_icon(pygame.image.load("assets/Images/Duck1.png").convert_alpha())
+pygame.display.set_icon(pygame.image.load(resource_path("assets/Images/Duck1.png")).convert_alpha())
 
-with open("data/upgrade_data.json", "r") as f:
+with open(resource_path("data/upgrade_data.json"), "r") as f:
     upgrade_data = json.load(f) 
 
 
@@ -154,7 +155,7 @@ def sr(rect):
 
 
 def load_scaled(path, width, height):
-    image = pygame.image.load(path).convert_alpha()
+    image = pygame.image.load(resource_path(path)).convert_alpha()
     return pygame.transform.scale(image, (sx(width), sy(height)))
 
 
@@ -162,7 +163,7 @@ def load_scaled(path, width, height):
 #------VARIABLES------#
 #---------------------#
 
-original_pool_image = pygame.image.load("assets/Images/Pool1.png").convert_alpha()
+original_pool_image = pygame.image.load(resource_path("assets/Images/Pool1.png")).convert_alpha()
 
 pool = Pool(
     image=original_pool_image,
@@ -170,7 +171,7 @@ pool = Pool(
     scale=scale
 )
 
-background = pygame.image.load("assets/Images/BackgroundBlue.png").convert_alpha()
+background = pygame.image.load(resource_path("assets/Images/BackgroundBlue.png")).convert_alpha()
 background = pygame.transform.scale(background, (screen_width, screen_height))
 
 cursor_image = load_scaled("assets/Images/CursorImageDefault.png", 40, 40)
@@ -229,30 +230,30 @@ support_url = "https://ko-fi.com/altered_games" # CHANGE URL
 
 support_button = None
 
-spin_the_wheel_icon = pygame.image.load("assets/Images/Spin-The-Wheel.png").convert_alpha()
-spin_the_wheel_info_icon = pygame.image.load("assets/Images/Spin-The-WheelInfo.png").convert_alpha()
-spin_the_wheel_arrow_icon = pygame.image.load("assets/Images/Spin-The-WheelArrow.png").convert_alpha()
+spin_the_wheel_icon = pygame.image.load(resource_path("assets/Images/Spin-The-Wheel.png")).convert_alpha()
+spin_the_wheel_info_icon = pygame.image.load(resource_path("assets/Images/Spin-The-WheelInfo.png")).convert_alpha()
+spin_the_wheel_arrow_icon = pygame.image.load(resource_path("assets/Images/Spin-The-WheelArrow.png")).convert_alpha()
 
-tarot_card_icon = pygame.image.load("assets/Images/TarotCardsIcon.png").convert_alpha()
-tarot_card_background_icon = pygame.image.load("assets/Images/TarrotCardsBackgroundCards.png").convert_alpha()
-tarot_card_single_icon = pygame.image.load("assets/Images/SingleTarrotCard.png").convert_alpha()
+tarot_card_icon = pygame.image.load(resource_path("assets/Images/TarotCardsIcon.png")).convert_alpha()
+tarot_card_background_icon = pygame.image.load(resource_path("assets/Images/TarrotCardsBackgroundCards.png")).convert_alpha()
+tarot_card_single_icon = pygame.image.load(resource_path("assets/Images/SingleTarrotCard.png")).convert_alpha()
 
-the_sun_tarot_card = pygame.image.load("assets/Images/TheSunTarotCard.png").convert_alpha() # +x ducks
-the_devil_tarot_card = pygame.image.load("assets/Images/TheDevilTarotCard.png").convert_alpha() # -x ducks
-the_empress_tarot_card = pygame.image.load("assets/Images/TheEmpressTarotCard.png").convert_alpha() # x1.5 total ducks
-death_tarot_card = pygame.image.load("assets/Images/TheDeathTarotCard.png").convert_alpha() # x0.5 total ducks
-wheel_of_fortune_tarot_card = pygame.image.load("assets/Images/ThWheelOfFortuneTarotCard.png").convert_alpha() # x2 total ducks
-the_tower_tarot_card = pygame.image.load("assets/Images/TheTowerTarotCard.png").convert_alpha() # x0.1 total ducks
-the_fool_tarot_card = pygame.image.load("assets/Images/TheFoolTarotCard.png").convert_alpha() # does nothing
-the_world_tarot_card = pygame.image.load("assets/Images/TheWorldTarotCards.png").convert_alpha() # simulate 5 minutes
-page_of_cups_tarot_card = pygame.image.load("assets/Images/PageOfCupsTarotCards.png").convert_alpha() # gives huge reward but turns out to be a fake
-ace_of_pentacles_tarot_card = pygame.image.load("assets/Images/AceOfPentaclesTaroCard.png").convert_alpha() # gives 2 tarot cards
-tarot_card_background_design = pygame.image.load("assets/Images/TarotCardBackgroundDesign.png").convert_alpha()
-sping_the_wheel_background_design = pygame.image.load("assets/Images/spin_the_wheel_background_design.png").convert_alpha()
+the_sun_tarot_card = pygame.image.load(resource_path("assets/Images/TheSunTarotCard.png")).convert_alpha() # +x ducks
+the_devil_tarot_card = pygame.image.load(resource_path("assets/Images/TheDevilTarotCard.png")).convert_alpha() # -x ducks
+the_empress_tarot_card = pygame.image.load(resource_path("assets/Images/TheEmpressTarotCard.png")).convert_alpha() # x1.5 total ducks
+death_tarot_card = pygame.image.load(resource_path("assets/Images/TheDeathTarotCard.png")).convert_alpha() # x0.5 total ducks
+wheel_of_fortune_tarot_card = pygame.image.load(resource_path("assets/Images/ThWheelOfFortuneTarotCard.png")).convert_alpha() # x2 total ducks
+the_tower_tarot_card = pygame.image.load(resource_path("assets/Images/TheTowerTarotCard.png")).convert_alpha() # x0.1 total ducks
+the_fool_tarot_card = pygame.image.load(resource_path("assets/Images/TheFoolTarotCard.png")).convert_alpha() # does nothing
+the_world_tarot_card = pygame.image.load(resource_path("assets/Images/TheWorldTarotCards.png")).convert_alpha() # simulate 5 minutes
+page_of_cups_tarot_card = pygame.image.load(resource_path("assets/Images/PageOfCupsTarotCards.png")).convert_alpha() # gives huge reward but turns out to be a fake
+ace_of_pentacles_tarot_card = pygame.image.load(resource_path("assets/Images/AceOfPentaclesTaroCard.png")).convert_alpha() # gives 2 tarot cards
+tarot_card_background_design = pygame.image.load(resource_path("assets/Images/TarotCardBackgroundDesign.png")).convert_alpha()
+sping_the_wheel_background_design = pygame.image.load(resource_path("assets/Images/spin_the_wheel_background_design.png")).convert_alpha()
 
-the_duck_stock_icon = pygame.image.load("assets/Images/DuckCompanyStockMarketIcon.png").convert_alpha()
+the_duck_stock_icon = pygame.image.load(resource_path("assets/Images/DuckCompanyStockMarketIcon.png")).convert_alpha()
 
-exclamation_icon = pygame.image.load("assets/Images/ExclamationIcon.png").convert_alpha()
+exclamation_icon = pygame.image.load(resource_path("assets/Images/ExclamationIcon.png")).convert_alpha()
 
 spin_the_wheel_rect = None
 
@@ -272,16 +273,12 @@ stock_tick_delay = 1000
 #--------AUDIO--------#
 #---------------------#
 
-duck_click_sound = pygame.mixer.Sound("assets/audio/DuckQuack.mp3")
-click_sound = pygame.mixer.Sound("assets/audio/MouseClick.mp3")
-purchase_sound = pygame.mixer.Sound("assets/audio/PurchaseSound.mp3")
-hover_sound = pygame.mixer.Sound("assets/audio/HoverSound.mp3")
-error_sound = pygame.mixer.Sound("assets/audio/ErrorSound.mp3")
-
-##################################################
-# SET MUSIC OPTION ONCE MUSIC IS ADDED!!!!!
-##################################################
-music_sound = pygame.mixer.Sound("assets/audio/DuckQuack.mp3")
+duck_click_sound = pygame.mixer.Sound(resource_path("assets/audio/DuckQuack.mp3"))
+click_sound = pygame.mixer.Sound(resource_path("assets/audio/MouseClick.mp3"))
+purchase_sound = pygame.mixer.Sound(resource_path("assets/audio/PurchaseSound.mp3"))
+hover_sound = pygame.mixer.Sound(resource_path("assets/audio/HoverSound.mp3"))
+error_sound = pygame.mixer.Sound(resource_path("assets/audio/ErrorSound.mp3"))
+music_sound = pygame.mixer.Sound(resource_path("assets/audio/Click-a-Duck Main Theme.mp3"))
 
 
 #---------------------#
@@ -399,7 +396,13 @@ default_data = {
         "tarot_progress": 0,
         "tarot_goal": 0,
         "tarot_cards_earned_today": 0,
-        "tarot_last_reset_time": 0
+        "tarot_last_reset_time": 0,
+        "duck_stock": {
+            "current_price": 0,
+            "history": [100],
+            "shares_owned": 0,
+            "avg_price": 0
+        }
     }
 }
 
@@ -415,13 +418,13 @@ duck_images = {
 }
 
 pool_images = {
-    "green": pygame.image.load("assets/Images/Pool1.png").convert_alpha(),
-    "yellow": pygame.image.load("assets/Images/YellowPool.png").convert_alpha(),
-    "hotPink": pygame.image.load("assets/Images/HotPinkPool.png").convert_alpha(),
-    "coral": pygame.image.load("assets/Images/CoralPool.png").convert_alpha(),
-    "cyan": pygame.image.load("assets/Images/CyanPool.png").convert_alpha(),
-    "gray": pygame.image.load("assets/Images/GrayPool.png").convert_alpha(),
-    "scarlett": pygame.image.load("assets/Images/ScarlettPool.png").convert_alpha(),
+    "green": pygame.image.load(resource_path("assets/Images/Pool1.png")).convert_alpha(),
+    "yellow": pygame.image.load(resource_path("assets/Images/YellowPool.png")).convert_alpha(),
+    "hotPink": pygame.image.load(resource_path("assets/Images/HotPinkPool.png")).convert_alpha(),
+    "coral": pygame.image.load(resource_path("assets/Images/CoralPool.png")).convert_alpha(),
+    "cyan": pygame.image.load(resource_path("assets/Images/CyanPool.png")).convert_alpha(),
+    "gray": pygame.image.load(resource_path("assets/Images/GrayPool.png")).convert_alpha(),
+    "scarlett": pygame.image.load(resource_path("assets/Images/ScarlettPool.png")).convert_alpha(),
 }
 
 enhancement_icons = {
@@ -1016,17 +1019,20 @@ def show_crash_screen(screen, error_text):
 
 game_data = load_game(default_data)
 
-pygame.mixer.music.set_volume(game_data["settings"]["volume"])
+pygame.mixer.music.load(resource_path("assets/audio/Click-a-Duck Main Theme.mp3"))
+pygame.mixer.music.play(-1)
+
 if game_data["settings"]["sfx"] == True:
-    pygame.mixer.music.set_volume(game_data["settings"]["volume"])
     click_sound.set_volume(game_data["settings"]["volume"])
     duck_click_sound.set_volume(game_data["settings"]["volume"])
     purchase_sound.set_volume(game_data["settings"]["volume"])
     hover_sound.set_volume(game_data["settings"]["volume"])
     error_sound.set_volume(game_data["settings"]["volume"])
                             
-if game_data["settings"]["music"] == True:
-    music_sound.set_volume(game_data["settings"]["volume"])
+if game_data["settings"]["music"]:
+    pygame.mixer.music.set_volume(game_data["settings"]["volume"])
+else:
+    pygame.mixer.music.set_volume(0.0)
 
 console = Console(screen_width, screen_height, scale, quit_game, save_game, reset_game_callback)
 
@@ -1212,7 +1218,9 @@ while running:
                     show_spin_the_wheel = False
                     show_tarot_card_frame = False
                     show_the_duck_company_stock_frame = False
-                    click_sound.play()
+                    if game_data["settings"]["sfx"] == True:
+                        click_sound.set_volume(game_data["settings"]["volume"])
+                        click_sound.play()
 
                     if show_options:
                         keys_to_reset = ["options_title", "volume_text", "vol_minus", "vol_plus",
@@ -1229,7 +1237,9 @@ while running:
                     show_spin_the_wheel = False
                     show_tarot_card_frame = False
                     show_the_duck_company_stock_frame = False
-                    click_sound.play()
+                    if game_data["settings"]["sfx"] == True:
+                        click_sound.set_volume(game_data["settings"]["volume"])
+                        click_sound.play()
 
                     if show_stats:
                         keys_to_reset = ["stats_title"] + [f"stats_line_{i}" for i in range(23)]
@@ -1243,7 +1253,9 @@ while running:
                     show_spin_the_wheel = False
                     show_tarot_card_frame = False
                     show_the_duck_company_stock_frame = False
-                    click_sound.play()
+                    if game_data["settings"]["sfx"] == True:
+                        click_sound.set_volume(game_data["settings"]["volume"])
+                        click_sound.play()
 
                     if show_donate:
                         keys_to_reset = ["support_title", "support_desc", "support_desc2", "support_desc3", "support_button", "venmo_desc", "cashapp_desc"]
@@ -1258,7 +1270,9 @@ while running:
                         show_donate = False
                         show_tarot_card_frame = False
                         show_the_duck_company_stock_frame = False
-                        click_sound.play()
+                        if game_data["settings"]["sfx"] == True:
+                            click_sound.set_volume(game_data["settings"]["volume"])
+                            click_sound.play()
 
                         if show_spin_the_wheel:
                             keys_to_reset = ["SPIN-THE-WHEEL_title", "spin_button"]
@@ -1273,7 +1287,9 @@ while running:
                         show_donate = False
                         show_spin_the_wheel = False
                         show_the_duck_company_stock_frame = False
-                        click_sound.play()
+                        if game_data["settings"]["sfx"] == True:
+                            click_sound.set_volume(game_data["settings"]["volume"])
+                            click_sound.play()
 
                         if show_tarot_card_frame:
                             keys_to_reset = ["tarot_cards_title", "pull_card_button", "help_info", "tarot_card_reward", "progress_bar_text", "daily_cards_counter"]
@@ -1288,7 +1304,9 @@ while running:
                         show_donate = False
                         show_spin_the_wheel = False
                         show_tarot_card_frame = False
-                        click_sound.play()
+                        if game_data["settings"]["sfx"] == True:
+                            click_sound.set_volume(game_data["settings"]["volume"])
+                            click_sound.play()
 
                         if show_the_duck_company_stock_frame:
                             keys_to_reset = ["duck_company_stock_title", "duck_company_stock_symbol", "buy_button", "sell_button", "duck_price"]
@@ -1330,28 +1348,27 @@ while running:
                                     save_game(game_data)
                                     save_message_timer = current_time + 3000
                                     save_cooldown_until = current_time + 1500
-                                    click_sound.play()
+                                    if game_data["settings"]["sfx"] == True:
+                                        click_sound.set_volume(game_data["settings"]["volume"])
+                                        click_sound.play()
 
-                            ##################################################
-                            # SET MUSIC OPTION ONCE MUSIC IS ADDED!!!!!
-                            ##################################################
                             elif key == "music":
                                 game_data["settings"][key] = not game_data["settings"][key]
                                 
-                                if game_data["settings"]["music"] == True:
-                                    music_sound.set_volume(1.0)
+                                if game_data["settings"]["music"]:
+                                    pygame.mixer.music.set_volume(game_data["settings"]["volume"])
                                 else:
-                                    music_sound.set_volume(0.0)
+                                    pygame.mixer.music.set_volume(0.0)
  
                             elif key == "sfx":
                                 game_data["settings"][key] = not game_data["settings"][key]
 
                                 if game_data["settings"]["sfx"] == True:
-                                    click_sound.set_volume(1.0)
-                                    duck_click_sound.set_volume(1.0)
-                                    purchase_sound.set_volume(1.0)
-                                    hover_sound.set_volume(1.0)
-                                    error_sound.set_volume(1.0)
+                                    click_sound.set_volume(game_data["settings"]["volume"])
+                                    duck_click_sound.set_volume(game_data["settings"]["volume"])
+                                    purchase_sound.set_volume(game_data["settings"]["volume"])
+                                    hover_sound.set_volume(game_data["settings"]["volume"])
+                                    error_sound.set_volume(game_data["settings"]["volume"])
                                 else:
                                     click_sound.set_volume(0.0)
                                     duck_click_sound.set_volume(0.0)
@@ -1386,10 +1403,11 @@ while running:
                             else:
                                 game_data["settings"][key] = not game_data["settings"][key]
                             
-                            click_sound.play()
+                            if game_data["settings"]["sfx"] == True:
+                                click_sound.set_volume(game_data["settings"]["volume"])
+                                click_sound.play()
 
                             if game_data["settings"]["sfx"] == True:
-                                pygame.mixer.music.set_volume(game_data["settings"]["volume"])
                                 click_sound.set_volume(game_data["settings"]["volume"])
                                 duck_click_sound.set_volume(game_data["settings"]["volume"])
                                 purchase_sound.set_volume(game_data["settings"]["volume"])
@@ -1397,7 +1415,7 @@ while running:
                                 error_sound.set_volume(game_data["settings"]["volume"])
                             
                             if game_data["settings"]["music"] == True:
-                                music_sound.set_volume(game_data["settings"]["volume"])
+                                pygame.mixer.music.set_volume(game_data["settings"]["volume"])
 
                             save_game(game_data)
 

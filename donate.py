@@ -96,6 +96,9 @@ def open_donate(screen, fonts, game_data, draw_animated_text):
         "venmo_desc"
     )
 
+    return clickable_rects
+
+"""
     draw_animated_text(
         screen,
         "(opens in a new tab)",
@@ -131,5 +134,4 @@ def open_donate(screen, fonts, game_data, draw_animated_text):
 
     clickable_rects.append((support_rect, "support_button"))
 
-
-    return clickable_rects
+    return clickable_rects"""

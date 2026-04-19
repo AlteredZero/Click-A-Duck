@@ -1,5 +1,6 @@
 import pygame
 import json
+from utils import resource_path
 
 upgrade_data_file_dir = "data/upgrade_data.json"
 
@@ -39,7 +40,7 @@ enhancement_effects = {
 
 
 def load_icon(path, size):
-    icon = pygame.image.load(path).convert_alpha()
+    icon = pygame.image.load(resource_path(path)).convert_alpha()
     return pygame.transform.scale(icon, (size, size))
 
 

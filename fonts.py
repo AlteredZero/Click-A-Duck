@@ -1,6 +1,7 @@
 import pygame
+from utils import resource_path
 
-font_path = "assets/fonts/pixelFont.ttf"
+font_path = resource_path("assets/fonts/pixelFont.ttf")
 
 base_sizes = {
     "header": 48,
