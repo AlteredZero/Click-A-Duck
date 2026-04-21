@@ -1,0 +1,25 @@
+Metadata-Version: 2.4
+Name: steamworks
+Version: 2.0.0
+Summary: Interact with Steamworks API
+Home-page: https://github.com/Gramps/SteamworksPy
+Author: GP Garcia
+Author-email: 
+License: MIT
+Keywords: steamworks sdk valve steamapi api
+Classifier: Natural Language :: English
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.7
+License-File: LICENSE
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: summary
+
+Interact with Steamworks API

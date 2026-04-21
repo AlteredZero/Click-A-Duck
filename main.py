@@ -28,6 +28,7 @@ from upgrade_buttons import UpgradeManager
 from magical_auto_clicker import MagicalAutoClicker
 from duck_pop_effect import DuckPopEffect
 from console import Console
+from steam_manager import steam
 
 
 #---------------------#
@@ -118,7 +119,7 @@ def loading_screen(screen, screen_width, screen_height, scale, fonts):
         pygame.display.flip()
         pygame.time.delay(15)
 
-
+steam.init()
 pygame.init()
 pygame.mixer.init()
 
@@ -765,7 +766,7 @@ def reset_game(game_data, default_data):
 
 def reset_game_callback():
     reset_game(game_data, default_data)
-    save_game(game_data)
+    save_game(game_data, steam)
 
     pygame.quit()
 
@@ -963,7 +964,7 @@ def get_spin_time_remaining(game_data):
     if remaining <= 0:
         extras["spin_the_wheel_ready"] = True
         extras["spin_the_wheel_next_time"] = 0
-        save_game(game_data)
+        save_game(game_data, steam)
         return 0
 
     return remaining
@@ -1017,7 +1018,7 @@ def show_crash_screen(screen, error_text):
 
 
 
-game_data = load_game(default_data)
+game_data = load_game(default_data, steam)
 
 pygame.mixer.music.load(resource_path("assets/audio/Click-a-Duck Main Theme.mp3"))
 pygame.mixer.music.play(-1)
@@ -1170,7 +1171,7 @@ while running:
                 if show_warning_clear_data and clear_button_rect and cancel_button_rect:
                     if clear_button_rect.collidepoint(event.pos):
                         reset_game_callback()
-                        save_game(game_data)
+                        save_game(game_data, steam)
                         show_warning_clear_data = False
                         click_sound.play()
 
@@ -1192,6 +1193,9 @@ while running:
                         game_data["ducks"] += DPC
                         game_data["allTimeDucks"] += DPC
                         add_tarot_progress(game_data, DPC)
+
+                        if steam.initialized:
+                            steam.unlock_achievement("FIRST_SPLASH")  # test achievement
                         
                         ducks.remove(duck)
                         duck_pop_effects.append(DuckPopEffect(duck.image, duck.rect.center))
@@ -1345,7 +1349,7 @@ while running:
 
                             elif key == "save_game":
                                 if current_time > save_cooldown_until:
-                                    save_game(game_data)
+                                    save_game(game_data, steam)
                                     save_message_timer = current_time + 3000
                                     save_cooldown_until = current_time + 1500
                                     if game_data["settings"]["sfx"] == True:
@@ -1417,7 +1421,7 @@ while running:
                             if game_data["settings"]["music"] == True:
                                 pygame.mixer.music.set_volume(game_data["settings"]["volume"])
 
-                            save_game(game_data)
+                            save_game(game_data, steam)
 
                 if show_donate:
                     for rect, key in donate_hover_rects:
@@ -1434,7 +1438,7 @@ while running:
                                     game_data["extras"]["spin_the_wheel_ready"] = False
                                     game_data["extras"]["spin_the_wheel_next_time"] = round(time.time() + 86400, 2)
 
-                                    save_game(game_data)
+                                    save_game(game_data, steam)
 
                 if show_tarot_card_frame:
                     for rect, key in tarot_card_rects:
@@ -1476,7 +1480,7 @@ while running:
                                 MagicalAutoClicker(pos, magical_auto_clicker_image)
                             )
                         
-                    save_game(game_data)
+                    save_game(game_data, steam)
                 elif cost > 0:
                     cannot_afford_message = f"Cannot afford, need {cost - game_data['ducks']:,} more ducks!"
                     cannot_afford_timer = current_time + 3000
@@ -1597,7 +1601,7 @@ while running:
 
     #----Auto Save----#
     if current_time - last_save_time > 5000:
-        save_game(game_data)
+        save_game(game_data, steam)
         last_save_time = current_time
 
 
@@ -2005,6 +2009,8 @@ while running:
     
     console.draw(screen, fonts["small"])
     
+    steam.run_callbacks()
+
     pygame.display.flip()
 
     clock.tick(int(60 * game_data.get("globalGameSpeed", 1)))
