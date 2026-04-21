@@ -269,6 +269,9 @@ spin_the_wheel_boost_active = False
 last_stock_tick = 0
 stock_tick_delay = 1000
 
+last_achievement_check = 0
+check_interval = 1.0
+
 
 #---------------------#
 #--------AUDIO--------#
@@ -507,6 +510,27 @@ special_tooltips = {
 
 tooltip_hover_start = {}
 enhancements_info = {}
+
+achievement_flags = {
+    "GETTING_THE_HANG_OF_IT": False,
+    "SMALL_FLOCK": False,
+    "QUACK_STARTER": False,
+    "QUACK_NOVICE": False,
+    "TINY_POOL_PARTY": False,
+    "DUCK_COLLECTOR": False,
+    "AUTOMATION_BEGINS": False,
+    "GROWING_OPERATIONS": False,
+    "EFFICIENCY_MATTERS": False,
+    "HANDS-FREE_INCOME": False,
+    "HALF_MILLION_EARNINGS": False,
+    "UPGRADE_ADDICT": False,
+    "EFFICIENCY_GROWTH": False,
+    "MILLIONAIRE_DUCK": False,
+    "BILLIONAIRE_DUCK": False,
+    "UNSTOPPABLE_GROWTH": False,
+    "LARGE_POOL_PARTY": False,
+    "TRILLIONAIRE_POND": False,
+}
 
 
 #---------------------#
@@ -1195,7 +1219,7 @@ while running:
                         add_tarot_progress(game_data, DPC)
 
                         if steam.initialized:
-                            steam.unlock_achievement("FIRST_SPLASH")  # test achievement
+                            steam.unlock_achievement("FIRST_SPLASH")
                         
                         ducks.remove(duck)
                         duck_pop_effects.append(DuckPopEffect(duck.image, duck.rect.center))
@@ -1707,6 +1731,82 @@ while running:
         if effect.dead():
             duck_pop_effects.remove(effect)
 
+
+    #----Getting the Hang of It Steam Achievement----#
+    if current_time - last_achievement_check >= check_interval:
+        if steam.initialized:
+            
+            if not achievement_flags["GETTING_THE_HANG_OF_IT"] and game_data["Ducks"] >= 100:
+                if steam.is_achievement_unlocked("GETTING_THE_HANG_OF_IT"):
+                    achievement_flags["GETTING_THE_HANG_OF_IT"] = True
+                else:
+                    steam.unlock_achievement("GETTING_THE_HANG_OF_IT")
+                    achievement_flags["GETTING_THE_HANG_OF_IT"] = True
+
+            if not achievement_flags["SMALL_FLOCK"] and game_data["Ducks"] >= 1000:
+                if steam.is_achievement_unlocked("SMALL_FLOCK"):
+                    achievement_flags["SMALL_FLOCK"] = True
+                else:
+                    steam.unlock_achievement("SMALL_FLOCK")
+                    achievement_flags["SMALL_FLOCK"] = True
+
+            if not achievement_flags["DUCK_COLLECTOR"] and game_data["Ducks"] >= 5000:
+                if steam.is_achievement_unlocked("DUCK_COLLECTOR"):
+                    achievement_flags["DUCK_COLLECTOR"] = True
+                else:
+                    steam.unlock_achievement("DUCK_COLLECTOR")
+                    achievement_flags["DUCK_COLLECTOR"] = True
+
+            if not achievement_flags["GROWING_OPERATIONS"] and game_data["Ducks"] >= 50000:
+                if steam.is_achievement_unlocked("GROWING_OPERATIONS"):
+                    achievement_flags["GROWING_OPERATIONS"] = True
+                else:
+                    steam.unlock_achievement("GROWING_OPERATIONS")
+                    achievement_flags["GROWING_OPERATIONS"] = True
+
+            if not achievement_flags["HALF_MILLION_EARNINGS"] and game_data["Ducks"] >= 500000:
+                if steam.is_achievement_unlocked("HALF_MILLION_EARNINGS"):
+                    achievement_flags["HALF_MILLION_EARNINGS"] = True
+                else:
+                    steam.unlock_achievement("HALF_MILLION_EARNINGS")
+                    achievement_flags["HALF_MILLION_EARNINGS"] = True
+
+            if not achievement_flags["MILLIONAIRE_DUCK"] and game_data["Ducks"] >= 1000000:
+                if steam.is_achievement_unlocked("MILLIONAIRE_DUCK"):
+                    achievement_flags["MILLIONAIRE_DUCK"] = True
+                else:
+                    steam.unlock_achievement("MILLIONAIRE_DUCK")
+                    achievement_flags["MILLIONAIRE_DUCK"] = True
+
+            if not achievement_flags["BILLIONAIRE_DUCK"] and game_data["Ducks"] >= 1000000000:
+                if steam.is_achievement_unlocked("BILLIONAIRE_DUCK"):
+                    achievement_flags["BILLIONAIRE_DUCK"] = True
+                else:
+                    steam.unlock_achievement("BILLIONAIRE_DUCK")
+                    achievement_flags["BILLIONAIRE_DUCK"] = True
+
+            if not achievement_flags["TRILLIONAIRE_POND"] and game_data["Ducks"] >= 1000000000000:
+                if steam.is_achievement_unlocked("TRILLIONAIRE_POND"):
+                    achievement_flags["TRILLIONAIRE_POND"] = True
+                else:
+                    steam.unlock_achievement("TRILLIONAIRE_POND")
+                    achievement_flags["TRILLIONAIRE_POND"] = True
+
+            if not achievement_flags["TINY_POOL_PARTY"] and game_data["maxDucksInPool"] >= 10:
+                if steam.is_achievement_unlocked("TINY_POOL_PARTY"):
+                    achievement_flags["TINY_POOL_PARTY"] = True
+                else:
+                    steam.unlock_achievement("TINY_POOL_PARTY")
+                    achievement_flags["TINY_POOL_PARTY"] = True
+
+            if not achievement_flags["LARGE_POOL_PARTY"] and game_data["maxDucksInPool"] >= 100:
+                if steam.is_achievement_unlocked("LARGE_POOL_PARTY"):
+                    achievement_flags["LARGE_POOL_PARTY"] = True
+                else:
+                    steam.unlock_achievement("LARGE_POOL_PARTY")
+                    achievement_flags["LARGE_POOL_PARTY"] = True
+
+        last_achievement_check = current_time
 
     #----draw enhancements----#
     enhancements_hover_rects = draw_enhancements(screen, game_data, enhancement_icons, enhancement_positions)

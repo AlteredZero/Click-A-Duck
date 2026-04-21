@@ -42,6 +42,11 @@ class SteamManager:
 
             self._dll.SteamAPI_ISteamUserStats_RequestCurrentStats(self._stats)
 
+            self._dll.SteamAPI_ISteamUserStats_GetAchievement.restype = ctypes.c_bool
+            self._dll.SteamAPI_ISteamUserStats_GetAchievement.argtypes = [
+                ctypes.c_void_p, ctypes.c_char_p, ctypes.p_bool
+            ]
+
             self.initialized = True
             print("[Steam] Initialized successfully")
 
@@ -56,6 +61,20 @@ class SteamManager:
             self._dll.SteamAPI_RunCallbacks()
         except Exception as e:
             print(f"[Steam] Callback error: {e}")
+
+    def is_achievement_unlocked(self, achievement_id: str) -> bool:
+        if not self.initialized:
+            return False
+        
+        achieved = ctypes.c_bool(False)
+        
+        success = self._dll.SteamAPI_ISteamUserStats_GetAchievement(
+            self._stats,
+            achievement_id.encode('utf-8'),
+            ctypes.byref(achieved)
+        )
+        
+        return success and achieved.value
 
     def unlock_achievement(self, achievement_id: str):
         if not self.initialized:
