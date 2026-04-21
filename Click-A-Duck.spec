@@ -1,19 +1,12 @@
 # -*- mode: python ; coding: utf-8 -*-
-from PyInstaller.utils.hooks import collect_all
-
-datas = [('assets', 'assets'), ('data', 'data'), ('steam_appid.txt', '.')]
-binaries = [('SteamworksPy64.dll', '.'), ('steam_api64.dll', '.')]
-hiddenimports = []
-tmp_ret = collect_all('steamworks')
-datas += tmp_ret[0]; binaries += tmp_ret[1]; hiddenimports += tmp_ret[2]
 
 
 a = Analysis(
     ['main.py'],
     pathex=[],
-    binaries=binaries,
-    datas=datas,
-    hiddenimports=hiddenimports,
+    binaries=[('steam_api64.dll', '.')],
+    datas=[('assets', 'assets'), ('data', 'data'), ('steam_appid.txt', '.')],
+    hiddenimports=[],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],

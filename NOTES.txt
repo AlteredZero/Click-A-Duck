@@ -4,27 +4,6 @@ NOTES
 
 TO DO:
 
-[ ] ACHIEVEMENTS TO DO:
-    [//] First Splash – Click your first duck
-    [//] Getting the Hang of It – Reach 100 ducks
-    [//] Small Flock – Reach 1,000 ducks
-    [/] Quack Starter – Buy your first upgrade
-    [/] Quack Novice – Buy your first enhancement
-    [/] Tiny Pool Party – Have 10 ducks in the pool at once
-    [//] Duck Collector – Reach 5,000 ducks
-    [/] Automation Begins – Unlock your first auto generator
-    [//] Growing Operation – Reach 50,000 ducks
-    [/] Efficiency Matters – Buy 30 upgrades
-    [/] Hands-Free Income – Reach 1,000 ducks per second
-    [//] Half-Million Earnings – Reach 500,000 ducks
-    [/] Upgrade Addict – Buy 75 enhancement
-    [/] Efficiency Growth – Buy 100 upgrades
-    [//] Millionaire Ducks – Reach 1,000,000 ducks
-    [//] Billionaire Pond – Reach 1,000,000,000 ducks
-    [/] Unstoppable Growth – Reach 100,000 ducks per second
-    [//] Large Pool Party – Have 100 ducks in the pool at once
-    [//] Trillionaire Pond – Reach 1,000,000,000,000 ducks. Unreal.
-
 [ ] add quack sound pitch randomizer
 [/] fix the support/donate page
 [ ] make all descriptions consistent with the (DPS) and (DPC) and wording
@@ -35,6 +14,26 @@ TO DO:
 [ ] add flappy bird arcade game enhancement - TBD
 
 
+[X] ACHIEVEMENTS TO DO:
+    [X] First Splash – Click your first duck
+    [X] Getting the Hang of It – Reach 100 ducks
+    [X] Small Flock – Reach 1,000 ducks
+    [X] Quack Starter – Buy your first upgrade
+    [X] Quack Novice – Buy your first enhancement
+    [X] Tiny Pool Party – Have 10 ducks in the pool at once
+    [X] Duck Collector – Reach 5,000 ducks
+    [X] Automation Begins – Unlock your first auto generator
+    [X] Growing Operation – Reach 50,000 ducks
+    [X] Efficiency Matters – Buy 30 upgrades
+    [X] Hands-Free Income – Reach 1,000 ducks per second
+    [X] Half-Million Earnings – Reach 500,000 ducks
+    [X] Upgrade Addict – Buy 50 enhancements
+    [X] Efficiency Growth – Buy 100 upgrades
+    [X] Millionaire Ducks – Reach 1,000,000 ducks
+    [X] Billionaire Pond – Reach 1,000,000,000 ducks
+    [X] Unstoppable Growth – Reach 100,000 ducks per second
+    [X] Large Pool Party – Have 100 ducks in the pool at once
+    [X] Trillionaire Pond – Reach 1,000,000,000,000 ducks. Unreal.
 [X] make sfx option work enable/disable
 [X] make music option work enable/disable
 [X] add music to the game

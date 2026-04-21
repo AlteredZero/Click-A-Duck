@@ -26,6 +26,8 @@
     "duckBeacon": 0,
     "globalGameSpeed": 1,
     "allTimeDucks": 0,
+    "upgradesPurchased": 0,
+    "enhancementsPurchased": 0,
     "purchases":{
         "orangeDuckB": false,
         "yellowPoolB": false,

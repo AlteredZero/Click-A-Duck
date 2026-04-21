@@ -370,6 +370,8 @@ class UpgradeManager:
                 if button.can_afford(game_data):
                     button.purchase(game_data)
                     button.update_cost(game_data)
+                    game_data["upgradesPurchased"] += 1
+                    
                     return True, button.cost
                 else:
                     if game_data["settings"]["sfx"] == True:
@@ -389,6 +391,8 @@ class UpgradeManager:
 
                     if buttonE.one_time:
                         self.buttons_enhancements.remove(buttonE)
+
+                    game_data["enhancementsPurchased"] += 1
 
                     return True, buttonE.cost
                 else:

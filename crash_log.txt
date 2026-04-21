@@ -1,0 +1,41 @@
+2026-04-21 18:36:57,436 - ERROR:
+Traceback (most recent call last):
+  File "c:\Users\topzg\OneDrive\Documents\Click-A-Duck\main.py", line 2198, in <module>
+    main()
+  File "c:\Users\topzg\OneDrive\Documents\Click-A-Duck\main.py", line 1757, in main
+    if not achievement_flags["GETTING_THE_HANG_OF_IT"] and game_data["Ducks"] >= 100:
+                                                           ~~~~~~~~~^^^^^^^^^
+KeyError: 'Ducks'
+
+2026-04-21 18:42:54,321 - ERROR:
+Traceback (most recent call last):
+  File "c:\Users\topzg\OneDrive\Documents\Click-A-Duck\main.py", line 2198, in <module>
+    main()
+  File "c:\Users\topzg\OneDrive\Documents\Click-A-Duck\main.py", line 1758, in main
+    if steam.is_achievement_unlocked("GETTING_THE_HANG_OF_IT"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\topzg\OneDrive\Documents\Click-A-Duck\steam_manager.py", line 71, in is_achievement_unlocked
+    success = self._dll.SteamAPI_ISteamUserStats_GetAchievement(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: exception: access violation writing 0x0000000000000001
+
+2026-04-21 18:48:56,384 - ERROR:
+Traceback (most recent call last):
+  File "c:\Users\topzg\OneDrive\Documents\Click-A-Duck\main.py", line 2199, in <module>
+    main()
+  File "c:\Users\topzg\OneDrive\Documents\Click-A-Duck\main.py", line 1842, in main
+    if not achievement_flags["QUACK_STARTER"] and game_data["upgradesPurchased"] >= 1:
+                                                  ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'upgradesPurchased'
+
+2026-04-21 18:52:37,173 - ERROR:
+Traceback (most recent call last):
+  File "c:\Users\topzg\OneDrive\Documents\Click-A-Duck\main.py", line 2208, in <module>
+    main()
+  File "c:\Users\topzg\OneDrive\Documents\Click-A-Duck\main.py", line 1919, in main
+    draw_animated_tooltip(
+  File "c:\Users\topzg\OneDrive\Documents\Click-A-Duck\main.py", line 738, in draw_animated_tooltip
+    tooltip_hover_start.pop(key, None)
+    ^^^^^^^^^^^^^^^^^^^
+NameError: name 'tooltip_hover_start' is not defined
+

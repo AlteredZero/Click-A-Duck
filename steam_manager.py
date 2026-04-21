@@ -6,6 +6,12 @@ class SteamManager:
     def __init__(self):
         self.initialized = False
         self._dll = None
+        self._stats = None
+
+    @property
+    def is_ready(self):
+        """Helper property to check if steam is usable"""
+        return self.initialized and self._stats is not None
 
     def init(self):
         try:
@@ -13,46 +19,69 @@ class SteamManager:
                 base_path = os.path.dirname(sys.executable)
             else:
                 base_path = os.path.dirname(os.path.abspath(__file__))
-
+            
             dll_path = os.path.join(base_path, "steam_api64.dll")
+            
+            if not os.path.exists(dll_path):
+                print(f"[Steam] DLL not found at: {dll_path}")
+                return
+
             self._dll = ctypes.CDLL(dll_path)
 
-            # Define the functions we need
             self._dll.SteamAPI_Init.restype = ctypes.c_bool
             self._dll.SteamAPI_RunCallbacks.restype = None
             self._dll.SteamAPI_Shutdown.restype = None
 
             if not self._dll.SteamAPI_Init():
-                print("[Steam] SteamAPI_Init failed")
+                print("[Steam] SteamAPI_Init failed. Is Steam running?")
                 return
 
-            # Get the UserStats interface
             self._dll.SteamAPI_SteamUserStats_v012.restype = ctypes.c_void_p
             self._stats = self._dll.SteamAPI_SteamUserStats_v012()
+            
+            if not self._stats:
+                print("[Steam] Failed to get UserStats interface")
+                return
 
-            # Define achievement functions
             self._dll.SteamAPI_ISteamUserStats_RequestCurrentStats.restype = ctypes.c_bool
             self._dll.SteamAPI_ISteamUserStats_RequestCurrentStats.argtypes = [ctypes.c_void_p]
-
+            
             self._dll.SteamAPI_ISteamUserStats_SetAchievement.restype = ctypes.c_bool
             self._dll.SteamAPI_ISteamUserStats_SetAchievement.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
-
+            
             self._dll.SteamAPI_ISteamUserStats_StoreStats.restype = ctypes.c_bool
             self._dll.SteamAPI_ISteamUserStats_StoreStats.argtypes = [ctypes.c_void_p]
-
-            self._dll.SteamAPI_ISteamUserStats_RequestCurrentStats(self._stats)
-
+            
             self._dll.SteamAPI_ISteamUserStats_GetAchievement.restype = ctypes.c_bool
             self._dll.SteamAPI_ISteamUserStats_GetAchievement.argtypes = [
-                ctypes.c_void_p, ctypes.c_char_p, ctypes.p_bool
+                ctypes.c_void_p, 
+                ctypes.c_char_p, 
+                ctypes.POINTER(ctypes.c_bool)
             ]
 
+            self._dll.SteamAPI_ISteamUserStats_RequestCurrentStats(self._stats)
             self.initialized = True
             print("[Steam] Initialized successfully")
-
+            
         except Exception as e:
             print(f"[Steam] Failed to initialize: {e}")
             self.initialized = False
+
+    def is_achievement_unlocked(self, achievement_id: str) -> bool:
+        if not self.is_ready:
+            return False
+            
+        try:
+            achieved = ctypes.c_bool(False)
+            success = self._dll.SteamAPI_ISteamUserStats_GetAchievement(
+                self._stats, 
+                achievement_id.encode('utf-8'), 
+                ctypes.byref(achieved)
+            )
+            return success and achieved.value
+        except Exception as e:
+            print(f"[Steam] Error checking achievement: {e}")
+            return False
 
     def run_callbacks(self):
         if not self.initialized:
@@ -61,20 +90,6 @@ class SteamManager:
             self._dll.SteamAPI_RunCallbacks()
         except Exception as e:
             print(f"[Steam] Callback error: {e}")
-
-    def is_achievement_unlocked(self, achievement_id: str) -> bool:
-        if not self.initialized:
-            return False
-        
-        achieved = ctypes.c_bool(False)
-        
-        success = self._dll.SteamAPI_ISteamUserStats_GetAchievement(
-            self._stats,
-            achievement_id.encode('utf-8'),
-            ctypes.byref(achieved)
-        )
-        
-        return success and achieved.value
 
     def unlock_achievement(self, achievement_id: str):
         if not self.initialized:
@@ -93,8 +108,8 @@ class SteamManager:
         if not self.initialized:
             return False
         try:
-            self._dll.SteamAPI_SteamRemoteStorage_v016.restype = ctypes.c_void_p
-            storage = self._dll.SteamAPI_SteamRemoteStorage_v016()
+            self._dll.SteamAPI_SteamRemoteStorage_v014.restype = ctypes.c_void_p
+            storage = self._dll.SteamAPI_SteamRemoteStorage_v014()
 
             self._dll.SteamAPI_ISteamRemoteStorage_FileWrite.restype = ctypes.c_bool
             self._dll.SteamAPI_ISteamRemoteStorage_FileWrite.argtypes = [
@@ -116,8 +131,8 @@ class SteamManager:
         if not self.initialized:
             return None
         try:
-            self._dll.SteamAPI_SteamRemoteStorage_v016.restype = ctypes.c_void_p
-            storage = self._dll.SteamAPI_SteamRemoteStorage_v016()
+            self._dll.SteamAPI_SteamRemoteStorage_v014.restype = ctypes.c_void_p
+            storage = self._dll.SteamAPI_SteamRemoteStorage_v014()
 
             self._dll.SteamAPI_ISteamRemoteStorage_GetFileSize.restype = ctypes.c_int32
             self._dll.SteamAPI_ISteamRemoteStorage_GetFileSize.argtypes = [

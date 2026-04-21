@@ -12,6 +12,7 @@ import os
 import sys
 import traceback
 import subprocess
+import logging
 from save_manager import load_game, save_game
 from fonts import load_fonts
 from options import draw_options, open_options    
@@ -29,6 +30,32 @@ from magical_auto_clicker import MagicalAutoClicker
 from duck_pop_effect import DuckPopEffect
 from console import Console
 from steam_manager import steam
+
+logging.basicConfig(
+    filename='crash_log.txt', 
+    level=logging.ERROR,
+    format='%(asctime)s - %(levelname)s:\n%(message)s',
+    filemode='a'
+)
+
+def handle_exception(exc_type, exc_value, exc_traceback):
+    if issubclass(exc_type, KeyboardInterrupt):
+        sys.__excepthook__(exc_type, exc_value, exc_traceback)
+        return
+        
+    error_msg = "".join(traceback.format_exception(exc_type, exc_value, exc_traceback))
+    logging.error("Uncaught exception:\n%s", error_msg)
+    
+    try:
+        import ctypes
+        ctypes.windll.user32.MessageBoxW(0, "The game has crashed. See crash_log.txt for details.", "Game Error", 0x10)
+    except:
+        pass
+
+    pygame.quit()
+    sys.exit(1)
+
+
 
 
 #---------------------#
@@ -119,9 +146,15 @@ def loading_screen(screen, screen_width, screen_height, scale, fonts):
         pygame.display.flip()
         pygame.time.delay(15)
 
+
+#---------------------#
+#------MAIN INIT------#
+#---------------------#
+
 steam.init()
 pygame.init()
 pygame.mixer.init()
+
 
 screen = pygame.display.set_mode((0, 0), pygame.NOFRAME)
 screen_width, screen_height = screen.get_size()
@@ -317,6 +350,8 @@ default_data = {
     "duckBeacon": 0,
     "globalGameSpeed": 1,
     "allTimeDucks": 0,
+    "upgradesPurchased": 0,
+    "enhancementsPurchased": 0,
     "purchases":{
         "orangeDuckB": False,
         "yellowPoolB": False,
@@ -512,6 +547,7 @@ tooltip_hover_start = {}
 enhancements_info = {}
 
 achievement_flags = {
+    "FIRST_SPLASH": False,
     "GETTING_THE_HANG_OF_IT": False,
     "SMALL_FLOCK": False,
     "QUACK_STARTER": False,
@@ -525,8 +561,8 @@ achievement_flags = {
     "HALF_MILLION_EARNINGS": False,
     "UPGRADE_ADDICT": False,
     "EFFICIENCY_GROWTH": False,
-    "MILLIONAIRE_DUCK": False,
-    "BILLIONAIRE_DUCK": False,
+    "MILLIONAIRE_DUCKS": False,
+    "BILLIONAIRE_POND": False,
     "UNSTOPPABLE_GROWTH": False,
     "LARGE_POOL_PARTY": False,
     "TRILLIONAIRE_POND": False,
@@ -1030,7 +1066,7 @@ def show_crash_screen(screen, error_text):
     while True:
         screen.fill((30, 0, 0))
         for i, line in enumerate(lines):
-            error_surface = fonts["large"](line, True, (255, 255, 255))
+            error_surface = fonts["large"].render(line, True, (255, 255, 255))
             screen.blit(error_surface, (10, 10 + (i * 20)))
         
         pygame.display.flip()
@@ -1043,6 +1079,15 @@ def show_crash_screen(screen, error_text):
 
 
 game_data = load_game(default_data, steam)
+
+for key, value in default_data.items():
+    if key not in game_data:
+        game_data[key] = value
+        print(f"Repairing save: Added missing key '{key}'")
+
+if "achievement_flags" not in game_data:
+    game_data["achievement_flags"] = {}
+
 
 pygame.mixer.music.load(resource_path("assets/audio/Click-a-Duck Main Theme.mp3"))
 pygame.mixer.music.play(-1)
@@ -1172,7 +1217,7 @@ while running:
     #---------------------#
     #----FOR LOOPS/IF's---#
     #---------------------#
- 
+
 
     #----Pygame Event----#
     for event in pygame.event.get():
@@ -1218,8 +1263,9 @@ while running:
                         game_data["allTimeDucks"] += DPC
                         add_tarot_progress(game_data, DPC)
 
-                        if steam.initialized:
+                        if steam.initialized and not achievement_flags["FIRST_SPLASH"]:
                             steam.unlock_achievement("FIRST_SPLASH")
+                            achievement_flags["FIRST_SPLASH"] = True
                         
                         ducks.remove(duck)
                         duck_pop_effects.append(DuckPopEffect(duck.image, duck.rect.center))
@@ -1387,7 +1433,7 @@ while running:
                                     pygame.mixer.music.set_volume(game_data["settings"]["volume"])
                                 else:
                                     pygame.mixer.music.set_volume(0.0)
- 
+
                             elif key == "sfx":
                                 game_data["settings"][key] = not game_data["settings"][key]
 
@@ -1735,76 +1781,133 @@ while running:
     #----Getting the Hang of It Steam Achievement----#
     if current_time - last_achievement_check >= check_interval:
         if steam.initialized:
-            
-            if not achievement_flags["GETTING_THE_HANG_OF_IT"] and game_data["Ducks"] >= 100:
-                if steam.is_achievement_unlocked("GETTING_THE_HANG_OF_IT"):
-                    achievement_flags["GETTING_THE_HANG_OF_IT"] = True
-                else:
-                    steam.unlock_achievement("GETTING_THE_HANG_OF_IT")
-                    achievement_flags["GETTING_THE_HANG_OF_IT"] = True
+            if steam.is_ready:
+                
+                if not achievement_flags["GETTING_THE_HANG_OF_IT"] and game_data["ducks"] >= 100:
+                    if steam.is_achievement_unlocked("GETTING_THE_HANG_OF_IT"):
+                        achievement_flags["GETTING_THE_HANG_OF_IT"] = True
+                    else:
+                        steam.unlock_achievement("GETTING_THE_HANG_OF_IT")
+                        achievement_flags["GETTING_THE_HANG_OF_IT"] = True
 
-            if not achievement_flags["SMALL_FLOCK"] and game_data["Ducks"] >= 1000:
-                if steam.is_achievement_unlocked("SMALL_FLOCK"):
-                    achievement_flags["SMALL_FLOCK"] = True
-                else:
-                    steam.unlock_achievement("SMALL_FLOCK")
-                    achievement_flags["SMALL_FLOCK"] = True
+                if not achievement_flags["SMALL_FLOCK"] and game_data["ducks"] >= 1000:
+                    if steam.is_achievement_unlocked("SMALL_FLOCK"):
+                        achievement_flags["SMALL_FLOCK"] = True
+                    else:
+                        steam.unlock_achievement("SMALL_FLOCK")
+                        achievement_flags["SMALL_FLOCK"] = True
 
-            if not achievement_flags["DUCK_COLLECTOR"] and game_data["Ducks"] >= 5000:
-                if steam.is_achievement_unlocked("DUCK_COLLECTOR"):
-                    achievement_flags["DUCK_COLLECTOR"] = True
-                else:
-                    steam.unlock_achievement("DUCK_COLLECTOR")
-                    achievement_flags["DUCK_COLLECTOR"] = True
+                if not achievement_flags["DUCK_COLLECTOR"] and game_data["ducks"] >= 5000:
+                    if steam.is_achievement_unlocked("DUCK_COLLECTOR"):
+                        achievement_flags["DUCK_COLLECTOR"] = True
+                    else:
+                        steam.unlock_achievement("DUCK_COLLECTOR")
+                        achievement_flags["DUCK_COLLECTOR"] = True
 
-            if not achievement_flags["GROWING_OPERATIONS"] and game_data["Ducks"] >= 50000:
-                if steam.is_achievement_unlocked("GROWING_OPERATIONS"):
-                    achievement_flags["GROWING_OPERATIONS"] = True
-                else:
-                    steam.unlock_achievement("GROWING_OPERATIONS")
-                    achievement_flags["GROWING_OPERATIONS"] = True
+                if not achievement_flags["GROWING_OPERATIONS"] and game_data["ducks"] >= 50000:
+                    if steam.is_achievement_unlocked("GROWING_OPERATIONS"):
+                        achievement_flags["GROWING_OPERATIONS"] = True
+                    else:
+                        steam.unlock_achievement("GROWING_OPERATIONS")
+                        achievement_flags["GROWING_OPERATIONS"] = True
 
-            if not achievement_flags["HALF_MILLION_EARNINGS"] and game_data["Ducks"] >= 500000:
-                if steam.is_achievement_unlocked("HALF_MILLION_EARNINGS"):
-                    achievement_flags["HALF_MILLION_EARNINGS"] = True
-                else:
-                    steam.unlock_achievement("HALF_MILLION_EARNINGS")
-                    achievement_flags["HALF_MILLION_EARNINGS"] = True
+                if not achievement_flags["HALF_MILLION_EARNINGS"] and game_data["ducks"] >= 500000:
+                    if steam.is_achievement_unlocked("HALF_MILLION_EARNINGS"):
+                        achievement_flags["HALF_MILLION_EARNINGS"] = True
+                    else:
+                        steam.unlock_achievement("HALF_MILLION_EARNINGS")
+                        achievement_flags["HALF_MILLION_EARNINGS"] = True
 
-            if not achievement_flags["MILLIONAIRE_DUCK"] and game_data["Ducks"] >= 1000000:
-                if steam.is_achievement_unlocked("MILLIONAIRE_DUCK"):
-                    achievement_flags["MILLIONAIRE_DUCK"] = True
-                else:
-                    steam.unlock_achievement("MILLIONAIRE_DUCK")
-                    achievement_flags["MILLIONAIRE_DUCK"] = True
+                if not achievement_flags["MILLIONAIRE_DUCKS"] and game_data["ducks"] >= 1000000:
+                    if steam.is_achievement_unlocked("MILLIONAIRE_DUCKS"):
+                        achievement_flags["MILLIONAIRE_DUCKS"] = True
+                    else:
+                        steam.unlock_achievement("MILLIONAIRE_DUCKS")
+                        achievement_flags["MILLIONAIRE_DUCKS"] = True
 
-            if not achievement_flags["BILLIONAIRE_DUCK"] and game_data["Ducks"] >= 1000000000:
-                if steam.is_achievement_unlocked("BILLIONAIRE_DUCK"):
-                    achievement_flags["BILLIONAIRE_DUCK"] = True
-                else:
-                    steam.unlock_achievement("BILLIONAIRE_DUCK")
-                    achievement_flags["BILLIONAIRE_DUCK"] = True
+                if not achievement_flags["BILLIONAIRE_POND"] and game_data["ducks"] >= 1000000000:
+                    if steam.is_achievement_unlocked("BILLIONAIRE_POND"):
+                        achievement_flags["BILLIONAIRE_POND"] = True
+                    else:
+                        steam.unlock_achievement("BILLIONAIRE_POND")
+                        achievement_flags["BILLIONAIRE_POND"] = True
 
-            if not achievement_flags["TRILLIONAIRE_POND"] and game_data["Ducks"] >= 1000000000000:
-                if steam.is_achievement_unlocked("TRILLIONAIRE_POND"):
-                    achievement_flags["TRILLIONAIRE_POND"] = True
-                else:
-                    steam.unlock_achievement("TRILLIONAIRE_POND")
-                    achievement_flags["TRILLIONAIRE_POND"] = True
+                if not achievement_flags["TRILLIONAIRE_POND"] and game_data["ducks"] >= 1000000000000:
+                    if steam.is_achievement_unlocked("TRILLIONAIRE_POND"):
+                        achievement_flags["TRILLIONAIRE_POND"] = True
+                    else:
+                        steam.unlock_achievement("TRILLIONAIRE_POND")
+                        achievement_flags["TRILLIONAIRE_POND"] = True
 
-            if not achievement_flags["TINY_POOL_PARTY"] and game_data["maxDucksInPool"] >= 10:
-                if steam.is_achievement_unlocked("TINY_POOL_PARTY"):
-                    achievement_flags["TINY_POOL_PARTY"] = True
-                else:
-                    steam.unlock_achievement("TINY_POOL_PARTY")
-                    achievement_flags["TINY_POOL_PARTY"] = True
+                if not achievement_flags["TINY_POOL_PARTY"] and game_data["maxDucksInPool"] >= 10:
+                    if steam.is_achievement_unlocked("TINY_POOL_PARTY"):
+                        achievement_flags["TINY_POOL_PARTY"] = True
+                    else:
+                        steam.unlock_achievement("TINY_POOL_PARTY")
+                        achievement_flags["TINY_POOL_PARTY"] = True
 
-            if not achievement_flags["LARGE_POOL_PARTY"] and game_data["maxDucksInPool"] >= 100:
-                if steam.is_achievement_unlocked("LARGE_POOL_PARTY"):
-                    achievement_flags["LARGE_POOL_PARTY"] = True
-                else:
-                    steam.unlock_achievement("LARGE_POOL_PARTY")
-                    achievement_flags["LARGE_POOL_PARTY"] = True
+                if not achievement_flags["LARGE_POOL_PARTY"] and game_data["maxDucksInPool"] >= 100:
+                    if steam.is_achievement_unlocked("LARGE_POOL_PARTY"):
+                        achievement_flags["LARGE_POOL_PARTY"] = True
+                    else:
+                        steam.unlock_achievement("LARGE_POOL_PARTY")
+                        achievement_flags["LARGE_POOL_PARTY"] = True
+
+                if not achievement_flags["HANDS-FREE_INCOME"] and game_data["ducksPerSecond"] >= 10:
+                    if steam.is_achievement_unlocked("FREE_INCOME"):
+                        achievement_flags["FREE_INCOME"] = True
+                    else:
+                        steam.unlock_achievement("FREE_INCOME")
+                        achievement_flags["FREE_INCOME"] = True
+
+                if not achievement_flags["UNSTOPPABLE_GROWTH"] and game_data["ducksPerSecond"] >= 100:
+                    if steam.is_achievement_unlocked("UNSTOPPABLE_GROWTH"):
+                        achievement_flags["UNSTOPPABLE_GROWTH"] = True
+                    else:
+                        steam.unlock_achievement("UNSTOPPABLE_GROWTH")
+                        achievement_flags["UNSTOPPABLE_GROWTH"] = True
+
+                if not achievement_flags["QUACK_STARTER"] and game_data["upgradesPurchased"] >= 1:
+                    if steam.is_achievement_unlocked("QUACK_STARTER"):
+                        achievement_flags["QUACK_STARTER"] = True
+                    else:
+                        steam.unlock_achievement("QUACK_STARTER")
+                        achievement_flags["QUACK_STARTER"] = True
+
+                if not achievement_flags["QUACK_NOVICE"] and game_data["enhancementsPurchased"] >= 1:
+                    if steam.is_achievement_unlocked("QUACK_NOVICE"):
+                        achievement_flags["QUACK_NOVICE"] = True
+                    else:
+                        steam.unlock_achievement("QUACK_NOVICE")
+                        achievement_flags["QUACK_NOVICE"] = True
+
+                if not achievement_flags["EFFICIENCY_MATTERS"] and game_data["upgradesPurchased"] >= 30:
+                    if steam.is_achievement_unlocked("EFFICIENCY_MATTERS"):
+                        achievement_flags["EFFICIENCY_MATTERS"] = True
+                    else:
+                        steam.unlock_achievement("EFFICIENCY_MATTERS")
+                        achievement_flags["EFFICIENCY_MATTERS"] = True
+
+                if not achievement_flags["UPGRADE_ADDICT"] and game_data["enhancementsPurchased"] >= 50:
+                    if steam.is_achievement_unlocked("UPGRADE_ADDICT"):
+                        achievement_flags["UPGRADE_ADDICT"] = True
+                    else:
+                        steam.unlock_achievement("UPGRADE_ADDICT")
+                        achievement_flags["UPGRADE_ADDICT"] = True
+
+                if not achievement_flags["EFFICIENCY_GROWTH"] and game_data["upgradesPurchased"] >= 100:
+                    if steam.is_achievement_unlocked("EFFICIENCY_GROWTH"):
+                        achievement_flags["EFFICIENCY_GROWTH"] = True
+                    else:
+                        steam.unlock_achievement("EFFICIENCY_GROWTH")
+                        achievement_flags["EFFICIENCY_GROWTH"] = True
+
+                if not achievement_flags["AUTOMATION_BEGINS"] and game_data["purchases"]["megaDuckFeederB"] == True:
+                    if steam.is_achievement_unlocked("AUTOMATION_BEGINS"):
+                        achievement_flags["AUTOMATION_BEGINS"] = True
+                    else:
+                        steam.unlock_achievement("AUTOMATION_BEGINS")
+                        achievement_flags["AUTOMATION_BEGINS"] = True
 
         last_achievement_check = current_time
 
@@ -2057,7 +2160,7 @@ while running:
 
     if not hovering and shiny_hover_rect and shiny_hover_rect.collidepoint(mouse_pos):
         hovering = True
- 
+
     if not hovering and spin_hover_rect and spin_hover_rect.collidepoint(mouse_pos):
         hovering = True
 
