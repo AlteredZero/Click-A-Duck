@@ -113,7 +113,7 @@
         "tarot_cards_earned_today": 0,
         "tarot_last_reset_time": 0,
         "duck_stock": {
-            "current_price": 0,
+            "current_price": 100,
             "history": [100],
             "shares_owned": 0,
             "avg_price": 0

@@ -17,7 +17,7 @@ from save_manager import load_game, save_game
 from fonts import load_fonts
 from options import draw_options, open_options    
 from stats import draw_stats, open_stats
-from donate import draw_donate, open_donate
+from socials import draw_socials, open_socials
 from spin_the_wheel import draw_SpinTheWheel, open_SpinTheWheel, spin_the_wheel, sping_the_wheel_reward_frame
 from tarot_cards import draw_tarot_cards_button, open_tarot_card_frame, pull_tarot_card, add_tarot_progress, get_tarot_goal, update_tarot_reset
 from duck_company_stock import draw_duck_company_stock_button, open_duck_company_stock_frame, tick_stock_market, buy_stock, sell_stock
@@ -260,7 +260,11 @@ cancel_button_rect = None
 
 save_cooldown_until = 0
 
-support_url = "https://ko-fi.com/altered_games" # CHANGE URL
+youtube_url = "https://www.youtube.com/@AlteredDeveloper"
+discord_url = "https://discord.gg/CaNjDqpP4F"
+x_url = "https://x.com/Altered_Games_"
+cashapp_url = "https://cash.app/$AlteredDan"
+venmo_url = "https://venmo.com/Altered_Stuff"
 
 support_button = None
 
@@ -289,9 +293,17 @@ the_duck_stock_icon = pygame.image.load(resource_path("assets/Images/DuckCompany
 
 exclamation_icon = pygame.image.load(resource_path("assets/Images/ExclamationIcon.png")).convert_alpha()
 
+youtube_logo = pygame.image.load(resource_path("assets/Images/YoutubeLogo.png")).convert_alpha()
+discord_logo = pygame.image.load(resource_path("assets/Images/DiscordLogo.png")).convert_alpha()
+x_logo = pygame.image.load(resource_path("assets/Images/XLogo.png")).convert_alpha()
+cashapp_logo = pygame.image.load(resource_path("assets/Images/CashappLogo.png")).convert_alpha()
+venmo_logo = pygame.image.load(resource_path("assets/Images/VenmoLogo.png")).convert_alpha()
+
 spin_the_wheel_rect = None
 
 tarot_cards_rect = None
+
+duck_company_stock_rect = None
 
 help_button_rect = None
 
@@ -437,7 +449,7 @@ default_data = {
         "tarot_cards_earned_today": 0,
         "tarot_last_reset_time": 0,
         "duck_stock": {
-            "current_price": 0,
+            "current_price": 100,
             "history": [100],
             "shares_owned": 0,
             "avg_price": 0
@@ -1170,7 +1182,7 @@ while running:
 
     options_rect = draw_options(screen, mouse_pos, fonts)
     stats_rect = draw_stats(screen, mouse_pos, fonts)
-    donate_rect = draw_donate(screen, mouse_pos, fonts)
+    donate_rect = draw_socials(screen, mouse_pos, fonts)
 
     if game_data["purchases"]["spinTheWheelB"]:
         spin_the_wheel_rect = draw_SpinTheWheel(screen, spin_the_wheel_icon)
@@ -1496,7 +1508,16 @@ while running:
                 if show_donate:
                     for rect, key in donate_hover_rects:
                         if rect.collidepoint(event.pos):
-                            webbrowser.open(support_url)
+                            if key == "youtube_logo":
+                                webbrowser.open(youtube_url)
+                            elif key == "discord_logo":
+                                webbrowser.open(discord_url)
+                            elif key == "x_logo":
+                                webbrowser.open(x_url)
+                            elif key == "cashapp_logo":
+                                webbrowser.open(cashapp_url)
+                            elif key == "venmo_logo":
+                                webbrowser.open(venmo_url)
 
                 if show_spin_the_wheel:
                     for rect, key in spin_the_wheel_rects:
@@ -2003,7 +2024,7 @@ while running:
 
     #----donate frame----#
     if show_donate:
-        donate_hover_rects = open_donate(screen, fonts, game_data, draw_animated_text)
+        donate_hover_rects = open_socials(screen, fonts, draw_animated_text, youtube_logo, discord_logo, x_logo, cashapp_logo, venmo_logo)
 
 
     #----spin the wheel frame----#

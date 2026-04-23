@@ -5,7 +5,6 @@ base_width = 2560
 base_height = 1440
 
 
-
 def draw_duck_company_stock_button(screen, tarot_card_icon):
 
     screen_width, screen_height = screen.get_size()
@@ -34,7 +33,14 @@ def draw_duck_company_stock_button(screen, tarot_card_icon):
 
 
 def tick_stock_market(game_data):
-    stock = game_data["extras"]["duck_stock"]
+    extras = game_data.setdefault("extras", {})
+
+    stock = extras.setdefault("duck_stock", {
+        "current_price": 100,
+        "history": [100],
+        "shares_owned": 0,
+        "avg_price": 0
+    })
 
     earnings_base = game_data["ducksPerClick"] + game_data["ducksPerSecond"]
     target_price = earnings_base * 50
@@ -168,7 +174,7 @@ def open_duck_company_stock_frame(screen, fonts, game_data, draw_animated_text):
     current_price = stock_data["current_price"]
     shares = stock_data.get("shares_owned", 0)
     current_value = shares * current_price
-    cost_basis = shares * game_data["extras"].get("avg_price", 0)
+    cost_basis = shares * stock_data.get("avg_price", 0)
     profit = current_value - cost_basis
 
     draw_animated_text(

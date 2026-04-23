@@ -225,7 +225,6 @@ def open_options(screen, fonts, game_data, mouse_pos, draw_animated_text):
         "wipe_save_text"
     )
 
-
     clickable_rects.append((save_rect, "save_game"))
     clickable_rects.append((quit_rect, "quit_game"))
     clickable_rects.append((wipe_rect, "wipe_save"))
