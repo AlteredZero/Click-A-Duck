@@ -176,7 +176,7 @@ class UpgradeButton:
             game_data["ducksPerSecond"] += game_data["duckNests"] * 6
 
         elif self.title == "Auto Clicker Speed +1":
-            game_data["magicalAutoClickerSpeed"] += 0.5
+            game_data["magicalAutoClickerSpeed"] += 0.3
 
         elif self.title == "Spin The Wheel":
             pass
