@@ -82,7 +82,8 @@ def calculate_time_based_costs(target_hours=4):
 
         # Ensure minimum cost and reasonable maximum
         new_cost = max(new_cost, 1000)
-        new_cost = min(new_cost, 1000000000)  # Cap at 1 billion
+        # Keep pattern going instead of flattening at 1 billion
+        new_cost = min(new_cost, 10000000000)  # Cap at 10 billion
 
         new_costs.append(new_cost)
 
