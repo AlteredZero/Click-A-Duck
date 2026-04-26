@@ -89,7 +89,7 @@
   "enhancements": [
     {
       "title": "Orange Duck",
-      "cost": 1500,
+      "cost": 1575,
       "icon": "assets/Images/OrangeDuck.png",
       "save_key": "duckColor",
       "duck_color": "orange",
@@ -102,7 +102,7 @@
     },
     {
       "title": "Yellow Pool",
-      "cost": 5000,
+      "cost": 5250,
       "icon": "assets/Images/YellowPool.png",
       "save_key": "poolColor",
       "duck_color": null,
@@ -115,7 +115,7 @@
     },
     {
       "title": "Magical Auto Clicker",
-      "cost": 10000,
+      "cost": 10500,
       "icon": "assets/Images/MagicalAutoClicker.png",
       "save_key": "magicalAutoClickers",
       "duck_color": null,
@@ -128,7 +128,7 @@
     },
     {
       "title": "Mega Duck Feeder",
-      "cost": 10000,
+      "cost": 10500,
       "icon": "assets/Images/MegaDuckFeeder.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,
@@ -141,7 +141,7 @@
     },
     {
       "title": "Radiant Plumage",
-      "cost": 12000,
+      "cost": 12600,
       "icon": "assets/Images/ShinyDuck.png",
       "save_key": "shinyDuckChance",
       "duck_color": null,
@@ -154,7 +154,7 @@
     },
     {
       "title": "Golden Strong Cursor",
-      "cost": 14000,
+      "cost": 14700,
       "icon": "assets/Images/StrongGoldCursor.png",
       "save_key": "ducksPerClick",
       "duck_color": null,
@@ -167,7 +167,7 @@
     },
     {
       "title": "Luxury Nesting Grounds",
-      "cost": 15000,
+      "cost": 15750,
       "icon": "assets/Images/PremiumDuckNest.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,
@@ -180,7 +180,7 @@
     },
     {
       "title": "Fortune Feathers",
-      "cost": 17000,
+      "cost": 17850,
       "icon": "assets/Images/CritChance1.png",
       "save_key": "criticalChance",
       "duck_color": null,
@@ -193,7 +193,7 @@
     },
     {
       "title": "Auto Clicker Speed +1",
-      "cost": 17000,
+      "cost": 17850,
       "icon": "assets/Images/MagicalAutoClickerSpeedIncrease.png",
       "save_key": "magicalAutoClickerSpeed",
       "duck_color": null,
@@ -206,12 +206,12 @@
     },
     {
       "title": "Purple Duck",
-      "cost": 17000,
+      "cost": 17850,
       "icon": "assets/Images/PurpleDuck.png",
       "save_key": "duckColor",
       "duck_color": "purple",
-      "bonus": 150,
-      "description": "Changes the Duck color to purple, granting +150 Ducks per click (DPC).",
+      "bonus": 130,
+      "description": "Changes the Duck color to purple, granting +130 Ducks per click (DPC).",
       "save_key2": null,
       "one_time": true,
       "pool_color": null,
@@ -219,7 +219,7 @@
     },
     {
       "title": "Feather Fountain",
-      "cost": 25000,
+      "cost": 26250,
       "icon": "assets/Images/FeatherFountain.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,
@@ -232,7 +232,7 @@
     },
     {
       "title": "Quack Amplifier",
-      "cost": 40000,
+      "cost": 42000,
       "icon": "assets/Images/QuackAmplifier.png",
       "save_key": "multiplierDPC",
       "duck_color": null,
@@ -245,12 +245,12 @@
     },
     {
       "title": "Duck Magnet",
-      "cost": 70000,
+      "cost": 73500,
       "icon": "assets/Images/DuckMagnet.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,
-      "bonus": 150,
-      "description": "Ducks from nearby ponds mysteriously find their way here, permanently increases Ducks per second by +150.",
+      "bonus": 120,
+      "description": "Ducks from nearby ponds mysteriously find their way here, permanently increases Ducks per second by +120.",
       "save_key2": null,
       "one_time": true,
       "pool_color": null,
@@ -258,11 +258,11 @@
     },
     {
       "title": "Hot Pink Pool",
-      "cost": 90000,
+      "cost": 94500,
       "icon": "assets/Images/HotPinkPool.png",
       "save_key": "poolColor",
       "duck_color": null,
-      "bonus": 500,
+      "bonus": 400,
       "description": "Changes the pool color to hot pink, making all Ducks feel like divas, granting +400 Ducks per click (DPC).",
       "save_key2": null,
       "one_time": true,
@@ -271,12 +271,12 @@
     },
     {
       "title": "Rubber Duck Army",
-      "cost": 100000,
+      "cost": 105000,
       "icon": "assets/Images/DuckArmy.png",
       "save_key": null,
       "duck_color": null,
-      "bonus": 300,
-      "description": "Here to serve and protect the duck empire, granting +300 DPS and +300 DPC permanently.",
+      "bonus": 250,
+      "description": "Here to serve and protect the duck empire, granting +250 DPS and +250 DPC permanently.",
       "save_key2": null,
       "one_time": true,
       "pool_color": null,
@@ -284,7 +284,7 @@
     },
     {
       "title": "Radiant Plumage II",
-      "cost": 130000,
+      "cost": 370856,
       "icon": "assets/Images/ShinyDuck.png",
       "save_key": "shinyDuckChance",
       "duck_color": null,
@@ -297,12 +297,12 @@
     },
     {
       "title": "Turquoise Duck",
-      "cost": 180000,
+      "cost": 403491,
       "icon": "assets/Images/TurquoiseDuck1.png",
       "save_key": "duckColor",
       "duck_color": "turquoise",
-      "bonus": 800,
-      "description": "Changes the Duck color to turquoise, looks like the ocean, granting +800 Ducks per click (DPC).",
+      "bonus": 600,
+      "description": "Changes the Duck color to turquoise, looks like the ocean, granting +600 Ducks per click (DPC).",
       "save_key2": null,
       "one_time": true,
       "pool_color": null,
@@ -310,7 +310,7 @@
     },
     {
       "title": "Spin The Wheel",
-      "cost": 210000,
+      "cost": 664280,
       "icon": "assets/Images/Spin-The-Wheel.png",
       "save_key": null,
       "duck_color": null,
@@ -323,7 +323,7 @@
     },
     {
       "title": "Fortune Feathers II",
-      "cost": 230000,
+      "cost": 717423,
       "icon": "assets/Images/CritChance1.png",
       "save_key": "criticalChance",
       "duck_color": null,
@@ -336,12 +336,12 @@
     },
     {
       "title": "Duck Heater",
-      "cost": 265000,
+      "cost": 772425,
       "icon": "assets/Images/DuckHeater.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,
-      "bonus": 500,
-      "description": "Makes the ducks feel nice and warm, especially perfect for the winter season. Gives +500 DPS.",
+      "bonus": 400,
+      "description": "Makes the ducks feel nice and warm, especially perfect for the winter season. Gives +400 DPS.",
       "save_key2": null,
       "one_time": true,
       "pool_color": null,
@@ -349,12 +349,12 @@
     },
     {
       "title": "Bread Storm Machine",
-      "cost": 295000,
+      "cost": 1007377,
       "icon": "assets/Images/BreadStormMachine.png",
       "save_key": null,
       "duck_color": null,
-      "bonus": 500,
-      "description": "A magical machine that makes it literally rain bread, though the ducks aren't complaining. Gives +500 DPS and +500 DPC",
+      "bonus": 300,
+      "description": "A magical machine that makes it literally rain bread, though the ducks aren't complaining. Gives +300 DPS and +300 DPC",
       "save_key2": null,
       "one_time": true,
       "pool_color": null,
@@ -362,12 +362,12 @@
     },
     {
       "title": "Coral Pool",
-      "cost": 350000,
+      "cost": 1078901,
       "icon": "assets/Images/CoralPool.png",
       "save_key": "poolColor",
       "duck_color": null,
-      "bonus": 1000,
-      "description": "Changes the pool color to a nice coral color, making all Ducks feel euphoric. Grants +1000 Ducks per click (DPC).",
+      "bonus": 700,
+      "description": "Changes the pool color to a nice coral color, making all Ducks feel euphoric. Grants +700 Ducks per click (DPC).",
       "save_key2": null,
       "one_time": true,
       "pool_color": "coral",
@@ -375,12 +375,12 @@
     },
     {
       "title": "Duck DLC",
-      "cost": 425000,
+      "cost": 1495603,
       "icon": "assets/Images/DuckDLC.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,
-      "bonus": 700,
-      "description": "Adds an expansion to the game, giving more ducks. That's it. Gives +700 Ducks per second.",
+      "bonus": 500,
+      "description": "Adds an expansion to the game, giving more ducks. That's it. Gives +500 Ducks per second.",
       "save_key2": null,
       "one_time": true,
       "pool_color": null,
@@ -388,7 +388,7 @@
     },
     {
       "title": "Magical Auto Clicker",
-      "cost": 495000,
+      "cost": 1850784,
       "icon": "assets/Images/MagicalAutoClicker.png",
       "save_key": "magicalAutoClickers",
       "duck_color": null,
@@ -401,12 +401,12 @@
     },
     {
       "title": "Duck CEO",
-      "cost": 570000,
+      "cost": 1996583,
       "icon": "assets/Images/DuckCEO.png",
       "save_key": null,
       "duck_color": null,
-      "bonus": 750,
-      "description": "The ducks elected a leader. things got organized fast. Grants +750 DPS and +750 DPC",
+      "bonus": 500,
+      "description": "The ducks elected a leader. things got organized fast. Grants +500 DPS and +500 DPC",
       "save_key2": null,
       "one_time": true,
       "pool_color": null,
@@ -414,7 +414,7 @@
     },
     {
       "title": "Hydro-Quack Pump",
-      "cost": 655000,
+      "cost": 2121370,
       "icon": "assets/Images/Hydro-Quack Pump.png",
       "save_key": "ducksPerClick",
       "duck_color": null,
@@ -427,7 +427,7 @@
     },
     {
       "title": "Flock Router",
-      "cost": 750000,
+      "cost": 3060414,
       "icon": "assets/Images/FlockRouter.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,
@@ -440,7 +440,7 @@
     },
     {
       "title": "Pond Overclocker",
-      "cost": 875000,
+      "cost": 3842558,
       "icon": "assets/Images/PondOverclock.png",
       "save_key": "ducksPerClick",
       "duck_color": null,
@@ -453,7 +453,7 @@
     },
     {
       "title": "Auto Clicker Speed +1",
-      "cost": 1000000,
+      "cost": 5123889,
       "icon": "assets/Images/MagicalAutoClickerSpeedIncrease.png",
       "save_key": "magicalAutoClickerSpeed",
       "duck_color": null,
@@ -466,7 +466,7 @@
     },
     {
       "title": "Fortune Feathers III",
-      "cost": 1150000,
+      "cost": 5683673,
       "icon": "assets/Images/CritChance1.png",
       "save_key": "criticalChance",
       "duck_color": null,
@@ -479,7 +479,7 @@
     },
     {
       "title": "Lime Duck",
-      "cost": 1300000,
+      "cost": 5997255,
       "icon": "assets/Images/LimeDuck.png",
       "save_key": "duckColor",
       "duck_color": "lime",
@@ -492,7 +492,7 @@
     },
     {
       "title": "Duck Industries",
-      "cost": 1475000,
+      "cost": 7907856,
       "icon": "assets/Images/DuckIndustries.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,
@@ -505,7 +505,7 @@
     },
     {
       "title": "Duck Hotel",
-      "cost": 1650000,
+      "cost": 9394426,
       "icon": "assets/Images/DuckHotel.png",
       "save_key": "null",
       "duck_color": null,
@@ -518,7 +518,7 @@
     },
     {
       "title": "Crumb Trails",
-      "cost": 1800000,
+      "cost": 9881762,
       "icon": "assets/Images/BreadcrumbsDuck.png",
       "save_key": "ducksPerClick",
       "duck_color": null,
@@ -531,7 +531,7 @@
     },
     {
       "title": "Cyan Pool",
-      "cost": 2000000,
+      "cost": 13411451,
       "icon": "assets/Images/CyanPool.png",
       "save_key": "poolColor",
       "duck_color": null,
@@ -544,7 +544,7 @@
     },
     {
       "title": "Radiant Plumage III",
-      "cost": 2150000,
+      "cost": 17976569,
       "icon": "assets/Images/ShinyDuck.png",
       "save_key": "shinyDuckChance",
       "duck_color": null,
@@ -557,7 +557,7 @@
     },
     {
       "title": "Pond Lantern",
-      "cost": 2300000,
+      "cost": 18859989,
       "icon": "assets/Images/PondLantern.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,
@@ -570,7 +570,7 @@
     },
     {
       "title": "Tarot Cards",
-      "cost": 2486271,
+      "cost": 25947192,
       "icon": "assets/Images/TarotCardsIcon.png",
       "save_key": null,
       "duck_color": null,
@@ -583,7 +583,7 @@
     },
     {
       "title": "Decorative Pond Arch",
-      "cost": 2600000,
+      "cost": 27181437,
       "icon": "assets/Images/DecorativeDuckArch.png",
       "save_key": "multiplierDPC",
       "duck_color": null,
@@ -596,7 +596,7 @@
     },
     {
       "title": "Enchanted Waterwheel",
-      "cost": 3000000,
+      "cost": 42682009,
       "icon": "assets/Images/EnhantedWaterWheel.png",
       "save_key": "multiplierDPS",
       "duck_color": null,
@@ -609,7 +609,7 @@
     },
     {
       "title": "Platinum Strong Cursor",
-      "cost": 3550000,
+      "cost": 58047532,
       "icon": "assets/Images/PlatinumStrongCursor.png",
       "save_key": "ducksPerClick",
       "duck_color": null,
@@ -622,7 +622,7 @@
     },
     {
       "title": "Opulent Duck Nest",
-      "cost": 4100000,
+      "cost": 60688695,
       "icon": "assets/Images/OpulentDuckNest.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,
@@ -635,7 +635,7 @@
     },
     {
       "title": "Fortune Feathers IV",
-      "cost": 4850000,
+      "cost": 63412285,
       "icon": "assets/Images/CritChance1.png",
       "save_key": "criticalChance",
       "duck_color": null,
@@ -648,7 +648,7 @@
     },
     {
       "title": "Duck 2.0",
-      "cost": 5500000,
+      "cost": 66220543,
       "icon": "assets/Images/Duck2.0.png",
       "save_key": "ducksPerClick",
       "duck_color": null,
@@ -661,7 +661,7 @@
     },
     {
       "title": "Duck Multiverse Portal",
-      "cost": 6350000,
+      "cost": 80866167,
       "icon": "assets/Images/DuckMultiversePortal.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,
@@ -674,7 +674,7 @@
     },
     {
       "title": "Orange Blue Duck",
-      "cost": 7100000,
+      "cost": 93371206,
       "icon": "assets/Images/OrangeBlueDuck.png",
       "save_key": "duckColor",
       "duck_color": "orangeBlue",
@@ -687,7 +687,7 @@
     },
     {
       "title": "Friendly Butterfly",
-      "cost": 7500000,
+      "cost": 113734390,
       "icon": "assets/Images/monarchButterfly.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,
@@ -700,7 +700,7 @@
     },
     {
       "title": "Magical Auto Clicker",
-      "cost": 7950000,
+      "cost": 128990651,
       "icon": "assets/Images/MagicalAutoClicker.png",
       "save_key": "magicalAutoClickers",
       "duck_color": null,
@@ -713,7 +713,7 @@
     },
     {
       "title": "Gray Pool",
-      "cost": 8800000,
+      "cost": 134423246,
       "icon": "assets/Images/GrayPool.png",
       "save_key": "poolColor",
       "duck_color": null,
@@ -726,7 +726,7 @@
     },
     {
       "title": "Mechanical Bread Shaker",
-      "cost": 9999999,
+      "cost": 162868132,
       "icon": "assets/Images/MechanicalBreadShaker.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,
@@ -739,7 +739,7 @@
     },
     {
       "title": "Duck Python Terminal",
-      "cost": 11000000,
+      "cost": 181755811,
       "icon": "assets/Images/DuckPythonTerminal.png",
       "save_key": "null",
       "duck_color": null,
@@ -752,7 +752,7 @@
     },
     {
       "title": "Nest Skyscraper",
-      "cost": 12150000,
+      "cost": 189098746,
       "icon": "assets/Images/NestSkyscrapper.png",
       "save_key": "ducksPerClick",
       "duck_color": null,
@@ -765,7 +765,7 @@
     },
     {
       "title": "Nest Expansion Permit",
-      "cost": 13250000,
+      "cost": 226750841,
       "icon": "assets/Images/NestExpansionPermit.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,
@@ -778,7 +778,7 @@
     },
     {
       "title": "Thermal Nesting Stones",
-      "cost": 14400000,
+      "cost": 256964499,
       "icon": "assets/Images/ThermalStones.png",
       "save_key": "ducksPerClick",
       "duck_color": null,
@@ -791,7 +791,7 @@
     },
     {
       "title": "The Duck Company Stock",
-      "cost": 15000000,
+      "cost": 305504998,
       "icon": "assets/Images/DuckCompanyStockMarketPurchaseIcon.png",
       "save_key": null,
       "duck_color": null,
@@ -804,7 +804,7 @@
     },
     {
       "title": "Radiant Plumage IV",
-      "cost": 15650000,
+      "cost": 317385748,
       "icon": "assets/Images/ShinyDuck.png",
       "save_key": "shinyDuckChance",
       "duck_color": null,
@@ -817,7 +817,7 @@
     },
     {
       "title": "Duck Logistics Board",
-      "cost": 16800000,
+      "cost": 329619526,
       "icon": "assets/Images/DuckLogisitcsBoard.png",
       "save_key": "ducksPerClick",
       "duck_color": null,
@@ -830,7 +830,7 @@
     },
     {
       "title": "Flock Supervisor Post",
-      "cost": 17950000,
+      "cost": 392956065,
       "icon": "assets/Images/FlockSupervisor.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,
@@ -843,7 +843,7 @@
     },
     {
       "title": "Water Level Regulator",
-      "cost": 19250000,
+      "cost": 440116122,
       "icon": "assets/Images/WaterLevelRegulator.png",
       "save_key": "multiplierDPC",
       "duck_color": null,
@@ -856,7 +856,7 @@
     },
     {
       "title": "Heavy-Duty Bread Crates",
-      "cost": 20500000,
+      "cost": 776319311,
       "icon": "assets/Images/HeavyBreadCrates.png",
       "save_key": "multiplierDPS",
       "duck_color": null,
@@ -869,7 +869,7 @@
     },
     {
       "title": "Fortune Feathers V",
-      "cost": 21800000,
+      "cost": 1000000000,
       "icon": "assets/Images/CritChance1.png",
       "save_key": "criticalChance",
       "duck_color": null,
@@ -882,7 +882,7 @@
     },
     {
       "title": "Red Blue Duck",
-      "cost": 23000000,
+      "cost": 1000000000,
       "icon": "assets/Images/RedBlueDuck.png",
       "save_key": "duckColor",
       "duck_color": "redblue",
@@ -895,7 +895,7 @@
     },
     {
       "title": "Flock Conditioning",
-      "cost": 24300000,
+      "cost": 1000000000,
       "icon": "assets/Images/DuckConditioning.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,
@@ -908,7 +908,7 @@
     },
     {
       "title": "Special Water Filter",
-      "cost": 25750000,
+      "cost": 1000000000,
       "icon": "assets/Images/SophisticatedWaterFilter.png",
       "save_key": "ducksPerClick",
       "duck_color": null,
@@ -921,7 +921,7 @@
     },
     {
       "title": "Scarlett Pool",
-      "cost": 26400000,
+      "cost": 1000000000,
       "icon": "assets/Images/ScarlettPool.png",
       "save_key": "poolColor",
       "duck_color": null,
@@ -934,7 +934,7 @@
     },
     {
       "title": "Duck Matrix",
-      "cost": 28250000,
+      "cost": 1000000000,
       "icon": "assets/Images/DuckMatrix.png",
       "save_key": "ducksPerSecond",
       "duck_color": null,

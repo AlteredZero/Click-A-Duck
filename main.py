@@ -580,6 +580,11 @@ achievement_flags = {
     "TRILLIONAIRE_POND": False,
 }
 
+cannot_afford_ui_state = {
+    "message": "",
+    "timer": 0
+}
+
 
 #---------------------#
 #--------LISTS--------#
@@ -1088,6 +1093,9 @@ def show_crash_screen(screen, error_text):
                 pygame.quit()
                 sys.exit()
 
+def cannot_afford(cost):
+    cannot_afford_ui_state["message"] = f"Cannot afford, need {int(cost - game_data['ducks']):,} more ducks!"
+    cannot_afford_ui_state["timer"] = pygame.time.get_ticks() + 3000
 
 
 game_data = load_game(default_data, steam)
@@ -1192,7 +1200,6 @@ while running:
         
     if game_data["purchases"]["theDuckCompanyStockB"]:
         duck_company_stock_rect = draw_duck_company_stock_button(screen, the_duck_stock_icon)
-
 
     target = game_data["ducks"]
 
@@ -1548,7 +1555,7 @@ while running:
                     for rect, action in duck_company_stock_rects:
                         if rect.collidepoint(mouse_pos):
                             if key == "buy_button":
-                                buy_stock(game_data)
+                                buy_stock(game_data, cannot_afford)
                             elif key == "sell_button":
                                 sell_stock(game_data)
 
@@ -1573,8 +1580,8 @@ while running:
                         
                     save_game(game_data, steam)
                 elif cost > 0:
-                    cannot_afford_message = f"Cannot afford, need {cost - game_data['ducks']:,} more ducks!"
-                    cannot_afford_timer = current_time + 3000
+                    cannot_afford_ui_state["message"] = f"Cannot afford, need {int(cost - game_data['ducks']):,} more ducks!"
+                    cannot_afford_ui_state["timer"] = current_time + 3000
 
 
     #----shiny active check----#
@@ -2064,8 +2071,8 @@ while running:
 
 
     #----cannot afford message----#
-    if cannot_afford_message and current_time < cannot_afford_timer:
-        cannot_afford_text = fonts["large"].render(cannot_afford_message, False, (255, 255, 255))
+    if cannot_afford_ui_state["message"] and current_time < cannot_afford_ui_state["timer"]:
+        cannot_afford_text = fonts["large"].render(cannot_afford_ui_state["message"], False, (255, 255, 255))
         screen.blit(cannot_afford_text, cannot_afford_text.get_rect(centerx=screen_width // 2, y=300))
 
 

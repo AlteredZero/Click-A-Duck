@@ -92,7 +92,7 @@ def draw_stock_graph(screen, menu_rect, stock_history, sx, sy, fonts):
     screen.blit(min_label, (graph_area.right + sx(10), graph_area.bottom - sy(20)))"""
 
 
-def buy_stock(game_data):
+def buy_stock(game_data, cannot_afford):
     stock = game_data["extras"]["duck_stock"]
     price = stock["current_price"]
 
@@ -102,6 +102,9 @@ def buy_stock(game_data):
         total_cost = stock["avg_price"] * stock["shares_owned"]
         stock["shares_owned"] += 1
         stock["avg_price"] = (total_cost + price) / stock["shares_owned"]
+    
+    else:
+        cannot_afford(price)
 
 
 def sell_stock(game_data):

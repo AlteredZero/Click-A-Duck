@@ -4,16 +4,19 @@ NOTES
 
 TO DO:
 
-[ ] add quack sound pitch randomizer
-[/] fix the support/donate page
+[ ] NERF ALL DPC AND DPS Enhancements
+[/] NERF spin the wheel
 [ ] make all descriptions consistent with the (DPS) and (DPC) and wording
 [ ] add crit power enhancements throughout the enhancements list
 [ ] add card flip sfx
+[ ] add quack sound pitch randomizer
 [ ] add cursor size enhancement - TBD
 [ ] add arcade enhancement - TBD
 [ ] add flappy bird arcade game enhancement - TBD
 
 
+[X] Show cannot afford text to stock market
+[X] fix the support/donate page
 [X] ACHIEVEMENTS TO DO:
     [X] First Splash – Click your first duck
     [X] Getting the Hang of It – Reach 100 ducks
