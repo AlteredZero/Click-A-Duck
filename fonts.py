@@ -9,6 +9,7 @@ base_sizes = {
     "large": 28,
     "small": 23,
     "verysmall": 21,
+    "tiny": 16
 }
 
 def load_fonts(scale=1.0):

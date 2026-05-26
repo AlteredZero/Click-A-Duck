@@ -62,6 +62,7 @@ class MagicalAutoClicker:
                 DPC, crit = get_current_dpc()
 
                 game_data["ducks"] += DPC
+                game_data["allTimeDucks"] += DPC
                 add_tarot_progress(game_data, DPC)
 
                 floating_texts.append(

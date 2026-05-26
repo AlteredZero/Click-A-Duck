@@ -101,7 +101,9 @@
         "music": true,
         "sfx": true,
         "duckText": true,
-        "magicalAutoClickers": true
+        "magicalAutoClickers": true,
+        "window_mode": "borderless",
+        "resolution": [1920, 1080]
     },
     "extras": {
         "spin_the_wheel_ready": true,

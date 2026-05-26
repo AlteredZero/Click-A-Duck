@@ -103,7 +103,7 @@ class UpgradeButton:
 
         if self.save_key == "spawnTime":
             game_data[self.save_key] *= 0.95
-            game_data[self.save_key] = max(0, round(game_data[self.save_key], 2))
+            game_data[self.save_key] = max(0.01, round(game_data[self.save_key], 3))
 
         elif self.save_key == "shinyDuckChance":
             game_data[self.save_key] += 0.0001
@@ -150,11 +150,11 @@ class UpgradeButton:
                     game_data[self.save_key] += self.bonus
 
         elif self.title == "Reinforced Cursor":
-            game_data["multiplierDPC"] += 0.001
+            game_data["multiplierDPC"] += 0.01
             game_data["multiplierDPC"] = round(game_data["multiplierDPC"], 4)
         
         elif self.title == "Duck Coop":
-            game_data["multiplierDPS"] += 0.001
+            game_data["multiplierDPS"] += 0.01
             game_data["multiplierDPS"] = round(game_data["multiplierDPS"], 4)
 
         elif self.title == "Duck Beacon":

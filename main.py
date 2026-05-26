@@ -65,6 +65,9 @@ def handle_exception(exc_type, exc_value, exc_traceback):
 def loading_screen(screen, screen_width, screen_height, scale, fonts):
     clock = pygame.time.Clock()
 
+    pygame.display.set_caption("Click-A-Duck")
+    pygame.display.set_icon(pygame.image.load(resource_path("assets/Images/Duck1.png")).convert_alpha())
+
     duck_image = pygame.image.load(resource_path("assets/Images/Duck1.png")).convert_alpha()
     duck_image = pygame.transform.scale(duck_image, (int(80 * scale), int(80 * scale)))
 
@@ -155,9 +158,177 @@ steam.init()
 pygame.init()
 pygame.mixer.init()
 
+#------DEFAULT DATA DICTIONARY------#
+default_data = {
+    "ducks": 0,
+    "ducksPerClick": 1,
+    "ducksPerSecond": 0,
+    "maxDucksInPool": 1,
+    "spawnTime": 3, 
+    "DPCUpgradeBought": 0,
+    "reainforcedCursorB": 0,
+    "poolSize": 1,
+    "playtime": 0,
+    "cursorSize": 1,
+    "duckColor": "yellow",
+    "poolColor": "green",
+    "magicalAutoClickers": 0,
+    "magicalAutoClickerSpeed": 1,
+    "multiplierDPC": 1.0,
+    "multiplierDPS": 1.0,
+    "twoDuckSpawnChance": 0.0,
+    "shinyDuckChance": 0.0,
+    "criticalChance": 0.0,
+    "criticalPower": 1.1,
+    "duckNests": 0,
+    "goldenDuckStatue": 0,
+    "quakingSpeaker": 0,
+    "duckCoop": 0,
+    "duckBeacon": 0,
+    "globalGameSpeed": 1,
+    "allTimeDucks": 0,
+    "upgradesPurchased": 0,
+    "enhancementsPurchased": 0,
+    "purchases":{
+        "orangeDuckB": False,
+        "yellowPoolB": False,
+        "magicalAutoClickerB": False,
+        "megaDuckFeederB": False,
+        "radiantPlungeB": False,
+        "GoldenStrongCursorB": False,
+        "LuxuryNestGroundB": False,
+        "fortuneFeathersB": False,
+        "autoClickerSpeedB": False,
+        "purpleDuckB": False,
+        "featherFountainB": False,
+        "quackAmplifierB": False,
+        "duckMagnetB": False,
+        "hotPinkPoolB": False,
+        "rubberDuckArmyB": False,
+        "radiantPlungeIIB": False,
+        "TurquoiseDuckB": False,
+        "spinTheWheelB": False,
+        "fortuneFeathersIIB": False,
+        "DuckHeaterB": False,
+        "BreadStormMachineB": False,
+        "coralPoolB": False,
+        "duckDlc": False,
+        "magicalAutoClickerB2": False,
+        "duckCeoB": False,
+        "hydroQuackPumpB": False,
+        "flockRouterB": False,
+        "pondOverclockerB": False,
+        "autoClickerSpeedB2": False,
+        "fortuneFeathersIIIB": False,
+        "limeDuckB": False,
+        "duckIndustriesB": False,
+        "duckHotelB": False,
+        "crumbTrailsB": False,
+        "cyanPoolB": False,
+        "radiantPlungeIIIB": False,
+        "pondLanternB": False,
+        "tarotCardsB": False,
+        "decorativePondArchB": False,
+        "enchantedWaterWheelB": False,
+        "platinumStrongCursorB": False,
+        "opulentNestingGroundsB": False,
+        "fortuneFeathersIVB": False,
+        "duck2.0B": False,
+        "duckMultiversePortalB": False,
+        "orangeBlueDuckB": False,
+        "friendlyButterflyB": False,
+        "magicalAutoClickerB3": False,
+        "grayPoolB": False,
+        "mechanicalBreakShaker": False,
+        "duckPythonTerminalB": False,
+        "nestSkyscrapperB": False,
+        "nestExpansionPermitB": False,
+        "thermalNestingStonesB": False,
+        "theDuckCompanyStockB": False,
+        "radiantPlungeIVB": False,
+        "duckLogisticsBoardB": False,
+        "flockSupervisorPostB": False,
+        "waterLevelRegulatorB": False,
+        "heavyDutyBreadCratesB": False,
+        "fortuneFeathersVB": False,
+        "redBlueDuckB": False,
+        "advancedFlockConditioningB": False,
+        "sophisticatedWaterFilterB": False,
+        "scarlettpoolB": False,
+        "duckMatrixB": False
+    },
+    "settings": {
+        "volume": 0.5,
+        "music": True,
+        "sfx": True,
+        "duckText": True,
+        "magicalAutoClickers": True,
+        "window_mode": "borderless",
+        "resolution": [1920, 1080]
+    },
+    "extras": {
+        "spin_the_wheel_ready": True,
+        "spin_the_wheel_next_time": 0,
+        "tarrot_cards_ready": True,
+        "tarrot_cards_available": 0,
+        "tarot_progress": 0,
+        "tarot_goal": 0,
+        "tarot_cards_earned_today": 0,
+        "tarot_last_reset_time": 0,
+        "duck_stock": {
+            "current_price": 100,
+            "history": [100],
+            "shares_owned": 0,
+            "avg_price": 0
+        }
+    }
+}
 
-screen = pygame.display.set_mode((0, 0), pygame.NOFRAME)
+game_data = load_game(default_data, steam)
+
+#------SETUP------#
+
+settings = game_data["settings"]
+
+if "window_mode" not in settings:
+    settings["window_mode"] = "borderless"
+
+if "resolution" not in settings:
+    settings["resolution"] = [1920, 1080]
+
+resolution = tuple(settings["resolution"])
+mode = settings["window_mode"]
+
+if mode == "fullscreen":
+
+    screen = pygame.display.set_mode(
+        resolution,
+        pygame.FULLSCREEN
+    )
+
+elif mode == "borderless":
+
+    screen = pygame.display.set_mode(
+        (0, 0),
+        pygame.NOFRAME
+    )
+
+else:
+
+    screen = pygame.display.set_mode(
+        resolution,
+        pygame.RESIZABLE
+    )
+
 screen_width, screen_height = screen.get_size()
+
+base_width = 2560
+base_height = 1440
+
+scale_x = screen_width / base_width
+scale_y = screen_height / base_height
+
+scale = min(scale_x, scale_y)
 
 base_width = 2560
 base_height = 1440
@@ -317,6 +488,12 @@ stock_tick_delay = 1000
 last_achievement_check = 0
 check_interval = 1.0
 
+crit_clicked = False
+
+bought_stock = False
+
+pulled_tarot_card = False
+
 
 #---------------------#
 #--------AUDIO--------#
@@ -333,129 +510,6 @@ music_sound = pygame.mixer.Sound(resource_path("assets/audio/Click-a-Duck Main T
 #---------------------#
 #----DICTIONARIES-----#
 #---------------------#
-
-default_data = {
-    "ducks": 0,
-    "ducksPerClick": 1,
-    "ducksPerSecond": 0,
-    "maxDucksInPool": 1,
-    "spawnTime": 3, 
-    "DPCUpgradeBought": 0,
-    "reainforcedCursorB": 0,
-    "poolSize": 1,
-    "playtime": 0,
-    "cursorSize": 1,
-    "duckColor": "yellow",
-    "poolColor": "green",
-    "magicalAutoClickers": 0,
-    "magicalAutoClickerSpeed": 1,
-    "multiplierDPC": 1.0,
-    "multiplierDPS": 1.0,
-    "twoDuckSpawnChance": 0.0,
-    "shinyDuckChance": 0.0,
-    "criticalChance": 0.0,
-    "criticalPower": 1.1,
-    "duckNests": 0,
-    "goldenDuckStatue": 0,
-    "quakingSpeaker": 0,
-    "duckCoop": 0,
-    "duckBeacon": 0,
-    "globalGameSpeed": 1,
-    "allTimeDucks": 0,
-    "upgradesPurchased": 0,
-    "enhancementsPurchased": 0,
-    "purchases":{
-        "orangeDuckB": False,
-        "yellowPoolB": False,
-        "magicalAutoClickerB": False,
-        "megaDuckFeederB": False,
-        "radiantPlungeB": False,
-        "GoldenStrongCursorB": False,
-        "LuxuryNestGroundB": False,
-        "fortuneFeathersB": False,
-        "autoClickerSpeedB": False,
-        "purpleDuckB": False,
-        "featherFountainB": False,
-        "quackAmplifierB": False,
-        "duckMagnetB": False,
-        "hotPinkPoolB": False,
-        "rubberDuckArmyB": False,
-        "radiantPlungeIIB": False,
-        "TurquoiseDuckB": False,
-        "spinTheWheelB": False,
-        "fortuneFeathersIIB": False,
-        "DuckHeaterB": False,
-        "BreadStormMachineB": False,
-        "coralPoolB": False,
-        "duckDlc": False,
-        "magicalAutoClickerB2": False,
-        "duckCeoB": False,
-        "hydroQuackPumpB": False,
-        "flockRouterB": False,
-        "pondOverclockerB": False,
-        "autoClickerSpeedB2": False,
-        "fortuneFeathersIIIB": False,
-        "limeDuckB": False,
-        "duckIndustriesB": False,
-        "duckHotelB": False,
-        "crumbTrailsB": False,
-        "cyanPoolB": False,
-        "radiantPlungeIIIB": False,
-        "pondLanternB": False,
-        "tarotCardsB": False,
-        "decorativePondArchB": False,
-        "enchantedWaterWheelB": False,
-        "platinumStrongCursorB": False,
-        "opulentNestingGroundsB": False,
-        "fortuneFeathersIVB": False,
-        "duck2.0B": False,
-        "duckMultiversePortalB": False,
-        "orangeBlueDuckB": False,
-        "friendlyButterflyB": False,
-        "magicalAutoClickerB3": False,
-        "grayPoolB": False,
-        "mechanicalBreakShaker": False,
-        "duckPythonTerminalB": False,
-        "nestSkyscrapperB": False,
-        "nestExpansionPermitB": False,
-        "thermalNestingStonesB": False,
-        "theDuckCompanyStockB": False,
-        "radiantPlungeIVB": False,
-        "duckLogisticsBoardB": False,
-        "flockSupervisorPostB": False,
-        "waterLevelRegulatorB": False,
-        "heavyDutyBreadCratesB": False,
-        "fortuneFeathersVB": False,
-        "redBlueDuckB": False,
-        "advancedFlockConditioningB": False,
-        "sophisticatedWaterFilterB": False,
-        "scarlettpoolB": False,
-        "duckMatrixB": False
-    },
-    "settings": {
-        "volume": 0.5,
-        "music": True,
-        "sfx": True,
-        "duckText": True,
-        "magicalAutoClickers": True
-    },
-    "extras": {
-        "spin_the_wheel_ready": True,
-        "spin_the_wheel_next_time": 0,
-        "tarrot_cards_ready": True,
-        "tarrot_cards_available": 0,
-        "tarot_progress": 0,
-        "tarot_goal": 0,
-        "tarot_cards_earned_today": 0,
-        "tarot_last_reset_time": 0,
-        "duck_stock": {
-            "current_price": 100,
-            "history": [100],
-            "shares_owned": 0,
-            "avg_price": 0
-        }
-    }
-}
 
 duck_images = {
     "yellow": load_scaled("assets/Images/Duck1.png", 60, 60),
@@ -578,6 +632,18 @@ achievement_flags = {
     "UNSTOPPABLE_GROWTH": False,
     "LARGE_POOL_PARTY": False,
     "TRILLIONAIRE_POND": False,
+    "LUCKY_QUACK": False,
+    "SHINY_HUNTER": False,
+    "MAGICAL_ASSISTANT": False,
+    "DUCK_FACTORY": False,
+    "OVERFLOWING_POND": False,
+    "SPIN_TO_WIN": False,
+    "DUCK_INVESTMENT": False,
+    "TAKING_CHANCES": False,
+    "MAXIMUM_EFFICIENCY": False,
+    "DEDICATED_DUCK_KEEPER": False,
+    "NOVICE_DUCK_KEEPER": False,
+    "INSANE_DUCK_KEEPER": False,
 }
 
 cannot_afford_ui_state = {
@@ -724,6 +790,7 @@ def get_current_dps():
 
 
 def get_current_dpc():
+    global crit_clicked
     dpc = game_data["ducksPerClick"]
     multiplierDPC = game_data["multiplierDPC"]
     critical_chance = game_data["criticalChance"]
@@ -744,6 +811,7 @@ def get_current_dpc():
     if roll < critical_chance:
         dpc *= critical_power
         crit = True
+        crit_clicked = True
 
     return int(dpc), crit
 
@@ -839,6 +907,21 @@ def reset_game(game_data, default_data):
     game_data.update(default_data)
     magical_auto_clickers.clear()
     ducks.clear()
+
+
+def restart_game():
+
+    save_game(game_data, steam)
+
+    pygame.quit()
+
+    if getattr(sys, 'frozen', False):
+        subprocess.Popen([sys.executable])
+
+    else:
+        subprocess.Popen([sys.executable] + sys.argv)
+
+    sys.exit()
 
 
 def reset_game_callback():
@@ -1093,12 +1176,75 @@ def show_crash_screen(screen, error_text):
                 pygame.quit()
                 sys.exit()
 
+
 def cannot_afford(cost):
     cannot_afford_ui_state["message"] = f"Cannot afford, need {int(cost - game_data['ducks']):,} more ducks!"
     cannot_afford_ui_state["timer"] = pygame.time.get_ticks() + 3000
 
 
-game_data = load_game(default_data, steam)
+def apply_display_settings():
+
+    global screen
+    global screen_width
+    global screen_height
+    global scale
+    global scale_x
+    global scale_y
+    global fonts
+    global background
+
+    settings = game_data["settings"]
+
+    resolution = tuple(settings["resolution"])
+
+    mode = settings["window_mode"]
+
+    if mode == "fullscreen":
+
+        screen = pygame.display.set_mode(
+            resolution,
+            pygame.FULLSCREEN
+        )
+
+    elif mode == "borderless":
+
+        screen = pygame.display.set_mode(
+            (0, 0),
+            pygame.NOFRAME
+        )
+
+    else:
+
+        screen = pygame.display.set_mode(
+            resolution,
+            pygame.RESIZABLE
+        )
+
+    screen_width, screen_height = screen.get_size()
+
+    scale_x = screen_width / base_width
+    scale_y = screen_height / base_height
+
+    scale = min(scale_x, scale_y)
+
+    fonts = load_fonts(scale)
+
+    background = pygame.image.load(
+        resource_path("assets/Images/BackgroundBlue.png")
+    ).convert_alpha()
+
+    background = pygame.transform.scale(
+        background,
+        (screen_width, screen_height)
+    )
+
+settings = game_data["settings"]
+
+if "window_mode" not in settings:
+    settings["window_mode"] = "borderless"
+
+if "resolution" not in settings:
+    settings["resolution"] = [1920, 1080]
 
 for key, value in default_data.items():
     if key not in game_data:
@@ -1479,6 +1625,7 @@ while running:
                                     floating_texts_enabled = game_data["settings"]["duckText"]
 
                             elif key == "magicalAutoClickers":
+
                                 game_data["settings"][key] = not game_data["settings"][key]
 
                                 if game_data["settings"]["magicalAutoClickers"] == True:
@@ -1491,6 +1638,46 @@ while running:
 
                                 else:
                                     magical_auto_clickers.clear()
+
+
+                            elif key == "window_mode":
+
+                                modes = [
+                                    "fullscreen",
+                                    "borderless",
+                                    "windowed"
+                                ]
+
+                                current = game_data["settings"]["window_mode"]
+
+                                next_index = (modes.index(current) + 1) % len(modes)
+
+                                game_data["settings"]["window_mode"] = modes[next_index]
+
+                                restart_game()
+
+
+                            elif key == "change_resolution":
+
+                                resolutions = [
+                                    [1280, 720],
+                                    [1600, 900],
+                                    [1920, 1080],
+                                    [2560, 1440]
+                                ]
+
+                                current = game_data["settings"]["resolution"]
+
+                                if current not in resolutions:
+                                    current = [1920, 1080]
+
+                                current_index = resolutions.index(current)
+
+                                next_index = (current_index + 1) % len(resolutions)
+
+                                game_data["settings"]["resolution"] = resolutions[next_index]
+
+                                restart_game()
 
 
                             else:
@@ -1543,6 +1730,7 @@ while running:
                         if rect.collidepoint(event.pos):
                             if key == "pull_card_button":
                                 pull_tarot_card(tarot_cards_list, game_data)
+                                pulled_tarot_card = True
 
                                 game_data["extras"]["tarrot_cards_available"] -= 1
 
@@ -1556,6 +1744,7 @@ while running:
                         if rect.collidepoint(mouse_pos):
                             if key == "buy_button":
                                 buy_stock(game_data, cannot_afford)
+                                bought_stock = True
                             elif key == "sell_button":
                                 sell_stock(game_data)
 
@@ -1881,14 +2070,14 @@ while running:
                         steam.unlock_achievement("LARGE_POOL_PARTY")
                         achievement_flags["LARGE_POOL_PARTY"] = True
 
-                if not achievement_flags["HANDS-FREE_INCOME"] and game_data["ducksPerSecond"] >= 10:
-                    if steam.is_achievement_unlocked("FREE_INCOME"):
-                        achievement_flags["FREE_INCOME"] = True
+                if not achievement_flags["HANDS-FREE_INCOME"] and game_data["ducksPerSecond"] >= 1000:
+                    if steam.is_achievement_unlocked("HANDS-FREE_INCOME"):
+                        achievement_flags["HANDS-FREE_INCOME"] = True
                     else:
-                        steam.unlock_achievement("FREE_INCOME")
-                        achievement_flags["FREE_INCOME"] = True
+                        steam.unlock_achievement("HANDS-FREE_INCOME")
+                        achievement_flags["HANDS-FREE_INCOME"] = True
 
-                if not achievement_flags["UNSTOPPABLE_GROWTH"] and game_data["ducksPerSecond"] >= 100:
+                if not achievement_flags["UNSTOPPABLE_GROWTH"] and game_data["ducksPerSecond"] >= 100000:
                     if steam.is_achievement_unlocked("UNSTOPPABLE_GROWTH"):
                         achievement_flags["UNSTOPPABLE_GROWTH"] = True
                     else:
@@ -1936,6 +2125,90 @@ while running:
                     else:
                         steam.unlock_achievement("AUTOMATION_BEGINS")
                         achievement_flags["AUTOMATION_BEGINS"] = True
+
+                if not achievement_flags["LUCKY_QUACK"] and crit_clicked == True:
+                    if steam.is_achievement_unlocked("LUCKY_QUACK"):
+                        achievement_flags["LUCKY_QUACK"] = True
+                    else:
+                        steam.unlock_achievement("LUCKY_QUACK")
+                        achievement_flags["LUCKY_QUACK"] = True
+
+                if not achievement_flags["SHINY_HUNTER"] and shiny_active == True:
+                    if steam.is_achievement_unlocked("SHINY_HUNTER"):
+                        achievement_flags["SHINY_HUNTER"] = True
+                    else:
+                        steam.unlock_achievement("SHINY_HUNTER")
+                        achievement_flags["SHINY_HUNTER"] = True
+
+                if not achievement_flags["MAGICAL_ASSISTANT"] and game_data["magicalAutoClickers"] >= 1:
+                    if steam.is_achievement_unlocked("MAGICAL_ASSISTANT"):
+                        achievement_flags["MAGICAL_ASSISTANT"] = True
+                    else:
+                        steam.unlock_achievement("MAGICAL_ASSISTANT")
+                        achievement_flags["MAGICAL_ASSISTANT"] = True
+
+                if not achievement_flags["DUCK_FACTORY"] and game_data["ducksPerSecond"] >= 1000000:
+                    if steam.is_achievement_unlocked("DUCK_FACTORY"):
+                        achievement_flags["DUCK_FACTORY"] = True
+                    else:
+                        steam.unlock_achievement("DUCK_FACTORY")
+                        achievement_flags["DUCK_FACTORY"] = True
+
+                if not achievement_flags["OVERFLOWING_POND"] and game_data["maxDucksInPool"] >= 200:
+                    if steam.is_achievement_unlocked("OVERFLOWING_POND"):
+                        achievement_flags["OVERFLOWING_POND"] = True
+                    else:
+                        steam.unlock_achievement("OVERFLOWING_POND")
+                        achievement_flags["OVERFLOWING_POND"] = True
+
+                if not achievement_flags["SPIN_TO_WIN"] and spin_the_wheel_boost_active == True:
+                    if steam.is_achievement_unlocked("SPIN_TO_WIN"):
+                        achievement_flags["SPIN_TO_WIN"] = True
+                    else:
+                        steam.unlock_achievement("SPIN_TO_WIN")
+                        achievement_flags["SPIN_TO_WIN"] = True
+
+                if not achievement_flags["DUCK_INVESTMENT"] and bought_stock == True:
+                    if steam.is_achievement_unlocked("DUCK_INVESTMENT"):
+                        achievement_flags["DUCK_INVESTMENT"] = True
+                    else:
+                        steam.unlock_achievement("DUCK_INVESTMENT")
+                        achievement_flags["DUCK_INVESTMENT"] = True
+
+                if not achievement_flags["TAKING_CHANCES"] and pulled_tarot_card == True:
+                    if steam.is_achievement_unlocked("TAKING_CHANCES"):
+                        achievement_flags["TAKING_CHANCES"] = True
+                    else:
+                        steam.unlock_achievement("TAKING_CHANCES")
+                        achievement_flags["TAKING_CHANCES"] = True
+
+                if not achievement_flags["MAXIMUM_EFFICIENCY"] and  game_data["upgradesPurchased"] >= 250:
+                    if steam.is_achievement_unlocked("MAXIMUM_EFFICIENCY"):
+                        achievement_flags["MAXIMUM_EFFICIENCY"] = True
+                    else:
+                        steam.unlock_achievement("MAXIMUM_EFFICIENCY")
+                        achievement_flags["MAXIMUM_EFFICIENCY"] = True
+
+                if not achievement_flags["DEDICATED_DUCK_KEEPER"] and  game_data["playtime"] >= 36000:
+                    if steam.is_achievement_unlocked("DEDICATED_DUCK_KEEPER"):
+                        achievement_flags["DEDICATED_DUCK_KEEPER"] = True
+                    else:
+                        steam.unlock_achievement("DEDICATED_DUCK_KEEPER")
+                        achievement_flags["DEDICATED_DUCK_KEEPER"] = True
+
+                if not achievement_flags["NOVICE_DUCK_KEEPER"] and  game_data["playtime"] >= 3600:
+                    if steam.is_achievement_unlocked("NOVICE_DUCK_KEEPER"):
+                        achievement_flags["NOVICE_DUCK_KEEPER"] = True
+                    else:
+                        steam.unlock_achievement("NOVICE_DUCK_KEEPER")
+                        achievement_flags["NOVICE_DUCK_KEEPER"] = True
+
+                if not achievement_flags["INSANE_DUCK_KEEPER"] and  game_data["playtime"] >= 360000:
+                    if steam.is_achievement_unlocked("INSANE_DUCK_KEEPER"):
+                        achievement_flags["INSANE_DUCK_KEEPER"] = True
+                    else:
+                        steam.unlock_achievement("INSANE_DUCK_KEEPER")
+                        achievement_flags["INSANE_DUCK_KEEPER"] = True
 
         last_achievement_check = current_time
 

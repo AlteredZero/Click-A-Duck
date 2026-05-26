@@ -4,8 +4,17 @@ NOTES
 
 TO DO:
 
-[ ] NERF ALL DPC AND DPS Enhancements
-[/] NERF spin the wheel
+[X] Fix 1000 DPS achievement not being awarded in steam
+[X] Fix All time ducks dont properly add up
+[X] Fix Duck Coop' should give you +0.1% Ducks per second but only gives you  +0.001%
+[X] Reinforced Cursor' seems to break at some point aswell
+[X] change duck spawn time to be faster
+[X] add screen mode (fullscreen, windowed, etc) setting in settings
+[ ] add cursor bubble for clicking
+[X] add 6 new achievements
+[X] add resolution setting
+
+
 [ ] make all descriptions consistent with the (DPS) and (DPC) and wording
 [ ] add crit power enhancements throughout the enhancements list
 [ ] add card flip sfx
@@ -15,6 +24,8 @@ TO DO:
 [ ] add flappy bird arcade game enhancement - TBD
 
 
+[X] NERF ALL DPC AND DPS Enhancements
+[X] NERF spin the wheel
 [X] Show cannot afford text to stock market
 [X] fix the support/donate page
 [X] ACHIEVEMENTS TO DO:
