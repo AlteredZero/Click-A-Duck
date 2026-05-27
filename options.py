@@ -300,4 +300,13 @@ def open_options(screen, fonts, game_data, mouse_pos, draw_animated_text):
     clickable_rects.append((quit_rect, "quit_game"))
     clickable_rects.append((wipe_rect, "wipe_save"))
 
+    draw_animated_text(
+        screen,
+        "v1.1",
+        fonts["verysmall"],
+        (255,255,255),
+        (wipe_rect.centerx, wipe_rect.bottom + sy(30)),
+        "version_text"
+    )
+
     return clickable_rects

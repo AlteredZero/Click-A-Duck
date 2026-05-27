@@ -300,35 +300,15 @@ resolution = tuple(settings["resolution"])
 mode = settings["window_mode"]
 
 if mode == "fullscreen":
-
-    screen = pygame.display.set_mode(
-        resolution,
-        pygame.FULLSCREEN
-    )
+    screen = pygame.display.set_mode(resolution, pygame.FULLSCREEN)
 
 elif mode == "borderless":
+    screen = pygame.display.set_mode((0, 0), pygame.NOFRAME)
 
-    screen = pygame.display.set_mode(
-        (0, 0),
-        pygame.NOFRAME
-    )
-
-else:
-
-    screen = pygame.display.set_mode(
-        resolution,
-        pygame.RESIZABLE
-    )
+elif mode == "windowed":
+    screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
 
 screen_width, screen_height = screen.get_size()
-
-base_width = 2560
-base_height = 1440
-
-scale_x = screen_width / base_width
-scale_y = screen_height / base_height
-
-scale = min(scale_x, scale_y)
 
 base_width = 2560
 base_height = 1440
@@ -1200,25 +1180,13 @@ def apply_display_settings():
     mode = settings["window_mode"]
 
     if mode == "fullscreen":
-
-        screen = pygame.display.set_mode(
-            resolution,
-            pygame.FULLSCREEN
-        )
+        screen = pygame.display.set_mode(resolution, pygame.FULLSCREEN)
 
     elif mode == "borderless":
+        screen = pygame.display.set_mode((0, 0), pygame.NOFRAME)
 
-        screen = pygame.display.set_mode(
-            (0, 0),
-            pygame.NOFRAME
-        )
-
-    else:
-
-        screen = pygame.display.set_mode(
-            resolution,
-            pygame.RESIZABLE
-        )
+    elif mode == "windowed":
+        screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
 
     screen_width, screen_height = screen.get_size()
 
@@ -1463,7 +1431,7 @@ while running:
 
                     if show_options:
                         keys_to_reset = ["options_title", "volume_text", "vol_minus", "vol_plus",
-                                        "save_game_text", "quit_game_text", "wipe_save_text"]
+                                        "save_game_text", "quit_game_text", "wipe_save_text", "version_text", "resolution_text", "warning_text_1", "fullscreen_text", "warning_text_2"]
                         keys_to_reset += [f"options_line_{i}" for i in range(10)]
                         
                         for key in keys_to_reset:

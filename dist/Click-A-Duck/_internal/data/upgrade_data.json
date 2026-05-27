@@ -55,7 +55,7 @@
       "save_key": "multiplierDPC",
       "duck_color": null,
       "bonus": null,
-      "description": "A heavier cursor making each click more impactful, granting +0.1% Ducks per click multiplier.",
+      "description": "A heavier cursor making each click more impactful, granting +0.01% Ducks per click multiplier.",
       "save_key2": "reainforcedCursorB",
       "one_time": false,
       "pool_color": null
@@ -67,7 +67,7 @@
       "save_key": "multiplierDPS",
       "duck_color": null,
       "bonus": null,
-      "description": "Keeps the duck population growing more steadily, +0.1% Ducks per second multiplier.",
+      "description": "Keeps the duck population growing more steadily, +0.01% Ducks per second multiplier.",
       "save_key2": "duckCoop",
       "one_time": false,
       "pool_color": null

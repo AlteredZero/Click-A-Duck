@@ -1,0 +1,32 @@
+{
+  "addducks": { "type": "add", "target": "ducks" },
+  "setducks": { "type": "set", "target": "ducks" },
+
+  "setdpc": { "type": "set", "target": "ducksPerClick" },
+  "adddpc": { "type": "add", "target": "ducksPerClick" },
+
+  "setdps": { "type": "set", "target": "ducksPerSecond" },
+  "adddps": { "type": "add", "target": "ducksPerSecond" },
+
+  "setdpcmultiplier": { "type": "set", "target": "multiplierDPC" },
+  "setdpsmultiplier": { "type": "set", "target": "multiplierDPS" },
+
+  "simulate": { "type": "simulate" },
+  "globalgamespeed": { "type": "speed" },
+  "timeto": { "type": "timeto" },
+  "niltimeto": { "type": "niltimeto" },
+
+  "quit": { "type": "quit"},
+  "save": { "type": "save"},
+  "reset": { "type": "reset"},
+  "stats": { "type": "stats"},
+  "help": { "type": "help"},
+  "close": { "type": "close"},
+
+  "preset1": { "type": "preset1"},
+  "preset2": { "type": "preset2"},
+  "preset3": { "type": "preset3"},
+
+  "y": { "type": "y"},
+  "n": { "type": "n"}
+}
