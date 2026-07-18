@@ -20,14 +20,14 @@ A fast-paced, multi-threaded idle clicker game about exponential growth and auto
 
 ---
 
-## 👥 Credits & Contacts
+## Credits & Contacts
 
 * **Creator & Lead Developer:** Altered / Altered Games
 * **Contact Email:** [topzgameplayer@gmail.com](mailto:topzgameplayer@gmail.com)
 
 ---
 
-## 🌐 Community & Socials
+## Community & Socials
 
 * **YouTube:** [@AlteredDeveloper](https://www.youtube.com/@AlteredDeveloper)
 * **Discord:** [Join the Community](https://discord.gg/CaNjDqpP4F)
