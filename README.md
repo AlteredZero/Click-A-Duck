@@ -8,7 +8,7 @@ A fast-paced, multi-threaded idle clicker game about exponential growth and auto
 
 ---
 
-## 🛠️ Tech Stack & Development Environment
+## Tech Stack & Development Environment
 
 * **Language:** Python 3.10
 * **IDE:** Visual Studio Code (VS Code)
